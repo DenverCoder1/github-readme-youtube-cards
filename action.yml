@@ -36,6 +36,10 @@ runs:
     - name: Checkout
       uses: actions/checkout@v3
 
+    - name: Install Python dependencies
+      shell: bash
+      run: poetry install --with action
+
     - name: Generate Readme Update
       id: "generate-readme-update"
       shell: bash
