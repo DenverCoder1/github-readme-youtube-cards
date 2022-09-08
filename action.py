@@ -16,7 +16,8 @@ def parse_video(video: Dict[str, Any]) -> str:
         "timestamp": time.mktime(video["published_parsed"]),
         "views": video["media_statistics"]["views"],
     }
-    return f'![{params["title"]}]({base_url}?{urllib.parse.urlencode(params)} "{params["title"]}")'
+    md = f'![{params["title"]}]({base_url}?{urllib.parse.urlencode(params)} "{params["title"]}")'
+    return md.replace("/", "\\/")
 
 
 def parse_videos(channel_id: str, num_videos: int) -> str:

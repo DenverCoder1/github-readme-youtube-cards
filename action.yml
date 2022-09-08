@@ -56,7 +56,7 @@ runs:
         BEGIN_TAG: "<!-- BEGIN ${{ inputs.comment_tag_name }} -->"
         END_TAG: "<!-- END ${{ inputs.comment_tag_name }} -->"
       run: |
-        UPDATE=$(cat README.md | perl -0777 -pe 's#(${{ env.BEGIN_TAG }})(?:.|\n)*?(${{ env.END_TAG }})#${1}\n${{ steps.generate-readme-update.outputs.readme_update }}\n${2}#g')
+        UPDATE=$(cat README.md | perl -0777 -pe 's/(${{ env.BEGIN_TAG }})(?:.|\n)*?(${{ env.END_TAG }})/${1}\n${{ steps.generate-readme-update.outputs.readme_update }}\n${2}/g')
         echo "${UPDATE}" > README.md
 
     - name: Commit changes
