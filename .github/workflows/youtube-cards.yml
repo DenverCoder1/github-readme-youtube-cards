@@ -1,4 +1,4 @@
-name: Latest YouTube Videos
+name: GitHub Readme YouTube Cards
 on:
   schedule:
     # Runs every hour, on the hour
