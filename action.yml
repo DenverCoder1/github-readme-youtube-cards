@@ -1,0 +1,46 @@
+name: "GitHub Readme YouTube Cards"
+author: "Jonah Lawrence"
+description: "Workflow for displaying recent YouTube videos as SVG cards in your readme"
+branding:
+  icon: "grid"
+  color: "red"
+
+inputs:
+  channel_id:
+    description: "The channel ID to use for the feed"
+    required: true
+  comment_tag_name:
+    description: "The name of the comment tag to use for the cards"
+    required: false
+    default: "YOUTUBE-CARDS"
+  max_post_count:
+    description: "The maximum number of posts to display"
+    required: false
+    default: "6"
+  committer_username:
+    description: "The username of the committer"
+    required: false
+    default: "github_actions"
+  committer_email:
+    description: "The email address of the committer"
+    required: false
+    default: "41898282+github-actions[bot]@users.noreply.github.com"
+
+runs:
+  using: "composite"
+  steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+
+    - name: Blog Post Workflow
+      uses: gautamkrishnar/blog-post-workflow@master
+      id: blog-post-workflow
+      with:
+        feed_list: https://www.youtube.com/feeds/videos.xml?channel_id=${{ inputs.channel_id }}
+        custom_tags: "videoId/yt:videoId/,community/media:comunity"
+        max_post_count: ${{ inputs.max_post_count }}
+        output_only: true
+
+    - name: Format JSON Output
+      shell: bash
+      run: echo ${{ steps.blog-post-workflow.outputs.results }}
