@@ -72,7 +72,7 @@ runs:
         BEGIN_TAG: "<!-- BEGIN ${{ inputs.comment_tag_name }} -->"
         END_TAG: "<!-- END ${{ inputs.comment_tag_name }} -->"
       run: |
-        if [ -z "${{ steps.generate-readme-update.outputs.readme_update }}" ]; then
+        if [ -z '${{ steps.generate-readme-update.outputs.readme_update }}' ]; then
           echo "Python script finished with no output. Exiting with error."
           exit 1
         fi
