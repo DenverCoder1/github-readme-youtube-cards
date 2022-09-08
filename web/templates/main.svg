@@ -1,0 +1,27 @@
+<!-- https://github.com/DenverCoder1/github-readme-youtube-cards -->
+<svg xmlns='http://www.w3.org/2000/svg'
+    xmlns:xlink='http://www.w3.org/1999/xlink' width="{{ width }}" height="{{ height }}" viewBox="0 0 {{ width }} {{ height }}">
+    <defs>
+        <clipPath id="image-clip">
+            <use xlink:href="#rect" />
+        </clipPath>
+    </defs>
+    <!-- outer rectangle -->
+    <rect id="rect" rx="5" height="99%" width="99%" fill="{{ background_color }}" />
+    <!-- thumbnail image -->
+    <g>
+        <image href="{{ thumbnail }}" height="{{ image_height }}" width="{{ width }}" clip-path="url(#image-clip)" />
+    </g>
+    <!-- title -->
+    <g transform="translate(10, {{ image_height + 30 }})">
+        <text fill="{{ title_color }}" font-family="Segoe UI, Ubuntu, Arial, sans-serif" font-weight="600" font-size="15px">
+            {{ title }}
+        </text>
+    </g>
+    <!-- views and date -->
+    <g transform="translate(10, {{ image_height + 55 }})">
+        <text fill="{{ stats_color }}" font-family="Segoe UI, Ubuntu, Roboto, Arial, sans-serif" font-weight="400" font-size="13px">
+            {{ stats }}
+        </text>
+    </g>
+</svg>

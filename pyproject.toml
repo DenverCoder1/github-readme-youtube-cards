@@ -1,0 +1,27 @@
+[tool.poetry]
+name = "github-readme-youtube-cards"
+version = "1.0.0"
+description = "Workflow for displaying recent YouTube videos as SVG cards in your readme"
+authors = ["Jonah Lawrence <jonah@freshidea.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+
+[tool.poetry.group.dev.dependencies]
+black = "^22.8.0"
+tox = "^3.26.0"
+
+[tool.poetry.group.web.dependencies]
+Flask = "^2.2.2"
+gunicorn = "^20.1.0"
+
+[tool.poetry.group.action.dependencies]
+feedparser = "^6.0.10"
+
+[build-system]
+requires = [
+    "setuptools >= 35.0.2",
+    "setuptools_scm >= 2.0.0, <3"
+]
+build-backend = "setuptools.build_meta"
