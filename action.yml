@@ -37,11 +37,11 @@ inputs:
     description: "The color of the stats text"
     required: false
     default: "#dedede"
-  committer_name:
+  author_name:
     description: "The name of the committer"
     required: false
     default: "GitHub Actions"
-  committer_email:
+  author_email:
     description: "The email address of the committer"
     required: false
     default: "41898282+github-actions[bot]@users.noreply.github.com"
@@ -79,5 +79,5 @@ runs:
       uses: EndBug/add-and-commit@v9
       with:
         message: "docs(readme): Update YouTube cards"
-        committer_name: "${{ inputs.committer_name }}"
-        committer_email: "${{ inputs.committer_email }}"
+        author_name: "${{ inputs.author_name }}"
+        author_email: "${{ inputs.author_email }}"
