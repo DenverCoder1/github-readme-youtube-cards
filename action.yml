@@ -43,12 +43,14 @@ runs:
 
     - name: Install Python dependencies
       shell: bash
-      run: poetry install --with action
+      run: |
+        python -m pip install -U poetry
+        poetry install --with action
 
     - name: Generate Readme Update
       id: "generate-readme-update"
       shell: bash
-      run: echo ::set-output name=readme_update::$(python3 action.py --channel "${{ inputs.channel_id }}" --max-videos ${{ inputs.max_videos }} --base-url "${{ inputs.base_url }}")
+      run: echo ::set-output name=readme_update::$(python action.py --channel "${{ inputs.channel_id }}" --max-videos ${{ inputs.max_videos }} --base-url "${{ inputs.base_url }}")
 
     - name: Update README
       shell: bash
