@@ -37,7 +37,7 @@ class VideoParser:
             "title_color": self._title_color,
             "stats_color": self._stats_color,
         }
-        md = f'![{params["title"]}]({self._base_url}?{urllib.parse.urlencode(params)} "{params["title"]}")'
+        md = f'[![{params["title"]}]({self._base_url}?{urllib.parse.urlencode(params)} "{params["title"]}")]({params["link"]})'
         return md.replace("/", "\\/")
 
     def parse_videos(self) -> str:
