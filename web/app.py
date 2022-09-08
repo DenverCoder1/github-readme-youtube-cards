@@ -26,8 +26,6 @@ def render():
         diff = format_relative_time(publish_datetime) if publish_datetime else None
         video_id = validate_video_id(request, "id", required=True)
         thumbnail = jpeg_data_uri(f"https://i.ytimg.com/vi/{video_id}/mqdefault.jpg")
-        image_height = width * 0.56
-        height = image_height + 80
         stats = f"{views} views • {diff}" if views and diff else ""
         if views and not diff:
             stats = f"{views} views"
@@ -37,8 +35,6 @@ def render():
             response=render_template(
                 "main.svg",
                 width=width,
-                height=height,
-                image_height=image_height,
                 background_color=background_color,
                 title_color=title_color,
                 stats_color=stats_color,

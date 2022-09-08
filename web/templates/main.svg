@@ -1,6 +1,6 @@
 <!-- https://github.com/DenverCoder1/github-readme-youtube-cards -->
 <svg xmlns='http://www.w3.org/2000/svg'
-    xmlns:xlink='http://www.w3.org/1999/xlink' width="{{ width }}" height="{{ height }}" viewBox="0 0 {{ width }} {{ height }}">
+    xmlns:xlink='http://www.w3.org/1999/xlink' width="{{ width }}" height="{{ width * 0.56 + 80 }}" viewBox="0 0 {{ width }} {{ width * 0.56 + 80 }}">
     <defs>
         <clipPath id="image-clip">
             <use xlink:href="#rect" />
@@ -10,16 +10,16 @@
     <rect id="rect" rx="5" height="99%" width="99%" fill="{{ background_color }}" />
     <!-- thumbnail image -->
     <g>
-        <image href="{{ thumbnail }}" height="{{ image_height }}" width="{{ width }}" clip-path="url(#image-clip)" />
+        <image href="{{ thumbnail }}" height="{{ width * 0.56 }}" width="{{ width }}" clip-path="url(#image-clip)" />
     </g>
     <!-- title -->
-    <g transform="translate(10, {{ image_height + 30 }})">
+    <g transform="translate(10, {{ width * 0.56 + 30 }})">
         <text fill="{{ title_color }}" font-family="Segoe UI, Ubuntu, Arial, sans-serif" font-weight="600" font-size="15px">
             {{ title }}
         </text>
     </g>
     <!-- views and date -->
-    <g transform="translate(10, {{ image_height + 55 }})">
+    <g transform="translate(10, {{ width * 0.56 + 55 }})">
         <text fill="{{ stats_color }}" font-family="Segoe UI, Ubuntu, Roboto, Arial, sans-serif" font-weight="400" font-size="13px">
             {{ stats }}
         </text>
