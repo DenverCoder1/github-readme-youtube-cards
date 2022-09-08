@@ -5,7 +5,7 @@ from typing import Any
 
 import feedparser
 
-BASE_URL = "http://127.0.0.1:8000/web/"
+base_url = ""
 
 
 def parse_video(video: dict[str, Any]) -> str:
@@ -16,7 +16,7 @@ def parse_video(video: dict[str, Any]) -> str:
         "timestamp": time.mktime(video["published_parsed"]),
         "views": video["media_statistics"]["views"],
     }
-    return f'![{params["title"]}]({BASE_URL}?{urllib.parse.urlencode(params)} "{params["title"]}")'
+    return f'![{params["title"]}]({base_url}?{urllib.parse.urlencode(params)} "{params["title"]}")'
 
 
 def parse_videos(channel_id: str, num_videos: int) -> str:
@@ -29,7 +29,6 @@ def parse_videos(channel_id: str, num_videos: int) -> str:
 if __name__ == "__main__":
     parser = ArgumentParser()
     parser.add_argument(
-        "-c",
         "--channel",
         dest="channel_id",
         help="YouTube channel ID",
@@ -42,6 +41,14 @@ if __name__ == "__main__":
         default=6,
         type=int,
     )
+    parser.add_argument(
+        "--base-url",
+        dest="base_url",
+        help="Base URL for the readme",
+        default="https://youtube-cards.onrender.com/",
+    )
     args = parser.parse_args()
+
+    base_url = args.base_url
 
     print(parse_videos(args.channel_id, args.max_videos))

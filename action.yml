@@ -13,14 +13,18 @@ inputs:
     description: "The name of the comment tag to use for the cards"
     required: false
     default: "YOUTUBE-CARDS"
-  max_post_count:
-    description: "The maximum number of posts to display"
+  max_videos:
+    description: "The maximum number of videos to display"
     required: false
     default: "6"
-  committer_username:
-    description: "The username of the committer"
+  base_url:
+    description: "The base URL to use for the cards"
     required: false
-    default: "github_actions"
+    default: "https://youtube-cards.onrender.com/"
+  committer_name:
+    description: "The name of the committer"
+    required: false
+    default: "GitHub Actions"
   committer_email:
     description: "The email address of the committer"
     required: false
@@ -32,15 +36,23 @@ runs:
     - name: Checkout
       uses: actions/checkout@v3
 
-    - name: Blog Post Workflow
-      uses: gautamkrishnar/blog-post-workflow@master
-      id: blog-post-workflow
-      with:
-        feed_list: https://www.youtube.com/feeds/videos.xml?channel_id=${{ inputs.channel_id }}
-        custom_tags: videoId/yt:videoId/,media/media:group
-        max_post_count: ${{ inputs.max_post_count }}
-        output_only: true
-
-    - name: Format JSON Output
+    - name: Generate Readme Update
+      id: "generate-readme-update"
       shell: bash
-      run: echo ${{ steps.blog-post-workflow.outputs.results }}
+      run: echo ::set-output name=readme_update::$(python3 action.py --channel "${{ inputs.channel_id }}" --max-videos ${{ inputs.max_videos }} --base-url "${{ inputs.base_url }}")
+
+    - name: Update README
+      shell: bash
+      env:
+        BEGIN_TAG: "<!-- BEGIN ${{ inputs.comment_tag_name }} -->"
+        END_TAG: "<!-- END ${{ inputs.comment_tag_name }} -->"
+      run: |
+        UPDATE=$(cat README.md | perl -0777 -pe 's#(${{ env.BEGIN_TAG }})(?:.|\n)*?(${{ env.END_TAG }})#${1}\n${{ steps.generate-readme-update.outputs.readme_update }}\n${2}#g')
+        echo "${UPDATE}" > README.md
+
+    - name: Commit changes
+      uses: EndBug/add-and-commit@v9
+      with:
+        message: "docs(readme): Update YouTube cards"
+        committer_name: "${{ inputs.committer_name }}"
+        committer_email: "${{ inputs.committer_email }}"
