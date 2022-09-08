@@ -72,6 +72,10 @@ runs:
         BEGIN_TAG: "<!-- BEGIN ${{ inputs.comment_tag_name }} -->"
         END_TAG: "<!-- END ${{ inputs.comment_tag_name }} -->"
       run: |
+        if [ -z "${{ steps.generate-readme-update.outputs.readme_update }}" ]; then
+          echo "Python script finished with no output. Exiting with error."
+          exit 1
+        fi
         UPDATE=$(cat README.md | perl -0777 -pe 's/(${{ env.BEGIN_TAG }})(?:.|\n)*?(${{ env.END_TAG }})/${1}\n${{ steps.generate-readme-update.outputs.readme_update }}\n${2}/g')
         echo "${UPDATE}" > README.md
 
