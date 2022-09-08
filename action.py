@@ -13,7 +13,7 @@ def parse_video(video: Dict[str, Any]) -> str:
     params = {
         "id": video["yt_videoid"],
         "title": video["title"],
-        "timestamp": time.mktime(video["published_parsed"]),
+        "timestamp": int(time.mktime(video["published_parsed"])),
         "views": video["media_statistics"]["views"],
     }
     md = f'![{params["title"]}]({base_url}?{urllib.parse.urlencode(params)} "{params["title"]}")'
