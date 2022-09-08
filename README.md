@@ -12,7 +12,6 @@
     <img src="https://img.shields.io/discord/819650821314052106?color=7289DA&logo=discord&logoColor=white&style=for-the-badge"/></a>
 </p>
 
-
 ## Basic Usage
 
 1. Add the following snippet to your markdown file where you want the cards to appear.
@@ -70,6 +69,7 @@ See [action.yml](https://github.com/DenverCoder1/github-readme-youtube-cards/blo
 | `stats_color`      | The color of the stats text                       | "#dedede"                                               |
 | `author_name`      | The name of the commit author                     | "GitHub Actions"                                        |
 | `author_email`     | The email address of the commit author            | "41898282+github-actions[bot]@users.noreply.github.com" |
+| `commit_message`   | The commit message to use for the commit          | "docs(readme): Update YouTube cards"                    |
 
 ## Contributing
 
