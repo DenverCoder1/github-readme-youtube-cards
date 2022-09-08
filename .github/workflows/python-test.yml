@@ -31,8 +31,8 @@ jobs:
       - name: Install and configure Poetry
         uses: snok/install-poetry@v1
 
-      - name: Install dependencies
-        run: poetry install --with dev
-
-      - name: Test with pytest
-        run: tox
+      - name: Install dependencies and run tests
+        run: |
+          source .venv/bin/activate
+          poetry install --with dev
+          tox
