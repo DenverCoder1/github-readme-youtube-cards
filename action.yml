@@ -21,6 +21,22 @@ inputs:
     description: "The base URL to use for the cards"
     required: false
     default: "https://youtube-cards.onrender.com/"
+  card_width:
+    description: "The width of the SVG cards"
+    required: false
+    default: "250"
+  background_color:
+    description: "The background color of the SVG cards"
+    required: false
+    default: "#0d1117"
+  title_color:
+    description: "The color of the title text"
+    required: false
+    default: "#ffffff"
+  stats_color:
+    description: "The color of the stats text"
+    required: false
+    default: "#dedede"
   committer_name:
     description: "The name of the committer"
     required: false
@@ -48,7 +64,7 @@ runs:
     - name: Generate Readme Update
       id: "generate-readme-update"
       shell: bash
-      run: echo ::set-output name=readme_update::$(python action.py --channel "${{ inputs.channel_id }}" --max-videos ${{ inputs.max_videos }} --base-url "${{ inputs.base_url }}")
+      run: echo ::set-output name=readme_update::$(python action.py --channel "${{ inputs.channel_id }}" --max-videos ${{ inputs.max_videos }} --base-url "${{ inputs.base_url }}" --card-width ${{ inputs.card_width }} --background-color "${{ inputs.background_color }}" --title-color "${{ inputs.title_color }}" --stats-color "${{ inputs.stats_color }}")
 
     - name: Update README
       shell: bash
