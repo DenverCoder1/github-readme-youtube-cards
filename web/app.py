@@ -3,7 +3,7 @@ from datetime import datetime
 from flask import Flask, render_template, request
 from flask.wrappers import Response
 
-from .utils import format_metric, format_relative_time, jpeg_data_uri, trim_text
+from .utils import fetch_views, format_relative_time, jpeg_data_uri, trim_text
 from .validate import validate_color, validate_int, validate_string, validate_video_id
 
 app = Flask(__name__)
@@ -17,20 +17,16 @@ def render():
         title_color = validate_color(request, "title_color", default="#ffffff")
         stats_color = validate_color(request, "stats_color", default="#dedede")
         title = trim_text(validate_string(request, "title"), (width - 32) // 8)
-        views = validate_int(request, "views", default=-1)
-        views = format_metric(views) if views >= 0 else None
         publish_timestamp = validate_int(request, "timestamp", default=0)
-        publish_datetime = (
-            datetime.fromtimestamp(int(publish_timestamp)) if publish_timestamp else None
-        )
-        diff = format_relative_time(publish_datetime) if publish_datetime else None
         video_id = validate_video_id(request, "id", required=True)
         thumbnail = jpeg_data_uri(f"https://i.ytimg.com/vi/{video_id}/mqdefault.jpg")
-        stats = f"{views} views • {diff}" if views and diff else ""
-        if views and not diff:
-            stats = f"{views} views"
-        if diff and not views:
-            stats = diff
+        views = fetch_views(video_id)
+        diff = (
+            format_relative_time(datetime.fromtimestamp(int(publish_timestamp)))
+            if publish_timestamp
+            else ""
+        )
+        stats = f"{views} • {diff}" if views and diff else (views or diff)
         response = Response(
             response=render_template(
                 "main.svg",
@@ -48,4 +44,9 @@ def render():
         response.headers["Content-Type"] = "image/svg+xml; charset=utf-8"
         return response
     except Exception as e:
-        return f"Error: {e}"
+        status = getattr(e, "status", getattr(e, "code", None)) or 400
+        return Response(
+            response=render_template("error.svg", message=str(e), code=status),
+            status=status,
+            mimetype="image/svg+xml",
+        )

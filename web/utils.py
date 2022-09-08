@@ -1,6 +1,9 @@
 import codecs
 from datetime import datetime
-from urllib.request import urlopen
+from typing import Optional
+from urllib.error import HTTPError
+import orjson
+from urllib.request import Request, urlopen
 
 
 def format_relative_time(date: datetime) -> str:
@@ -44,16 +47,6 @@ def format_relative_time(date: datetime) -> str:
     return f"{round(days_diff / 365)} years ago"
 
 
-def format_metric(num: float) -> str:
-    """Format number with metric suffix (ex. 1.2K, 1.2M)"""
-    units = ["", "K", "M", "B", "T"]
-    for unit in units:
-        if abs(num) < 1000:
-            return f"{num:.1f}{unit}".replace(".0", "")
-        num /= 1000
-    return f"{round(num)}"
-
-
 def jpeg_data_uri(url: str) -> str:
     """Return base-64 data URI for jpeg image at a given URL"""
     with urlopen(url) as response:
@@ -65,3 +58,16 @@ def trim_text(text: str, max_length: int) -> str:
     if len(text) <= max_length:
         return text
     return text[: max_length - 1].strip() + "…"
+
+
+def fetch_views(video_id: str) -> str:
+    """Get number of views for a YouTube video as a formatted metric"""
+    try:
+        req = Request(f"https://img.shields.io/youtube/views/{video_id}.json")
+        req.add_header("User-Agent", "GitHub Readme YouTube Cards")
+        with urlopen(req) as response:
+            value = orjson.loads(response.read()).get("value", "")
+            # replace G with B for billion and convert to uppercase
+            return f"{value.replace('G', 'B').upper()} views" if value else ""
+    except Exception:
+        return ""

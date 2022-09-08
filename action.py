@@ -31,7 +31,6 @@ class VideoParser:
             "id": video["yt_videoid"],
             "title": video["title"],
             "timestamp": int(time.mktime(video["published_parsed"])),
-            "views": video["media_statistics"]["views"],
             "width": self._card_width,
             "background_color": self._background_color,
             "title_color": self._title_color,
