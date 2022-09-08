@@ -40,7 +40,6 @@ runs:
       uses: actions/setup-python@v4
       with:
         python-version: "3.10"
-        cache: "poetry"
 
     - name: Install Python dependencies
       shell: bash
