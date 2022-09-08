@@ -37,7 +37,7 @@ runs:
       id: blog-post-workflow
       with:
         feed_list: https://www.youtube.com/feeds/videos.xml?channel_id=${{ inputs.channel_id }}
-        custom_tags: videoId/yt:videoId/,community/media:community
+        custom_tags: videoId/yt:videoId/,media/media:group
         max_post_count: ${{ inputs.max_post_count }}
         output_only: true
 
