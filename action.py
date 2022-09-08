@@ -1,14 +1,14 @@
 import time
 import urllib.parse
 from argparse import ArgumentParser
-from typing import Any
+from typing import Any, Dict
 
 import feedparser
 
 base_url = ""
 
 
-def parse_video(video: dict[str, Any]) -> str:
+def parse_video(video: Dict[str, Any]) -> str:
     """Parse video entry and return the contents for the readme"""
     params = {
         "id": video["yt_videoid"],

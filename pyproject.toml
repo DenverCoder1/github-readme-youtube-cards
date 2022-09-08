@@ -6,7 +6,7 @@ authors = ["Jonah Lawrence <jonah@freshidea.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.9"
+python = "^3.8"
 
 [tool.poetry.group.dev.dependencies]
 black = "^22.8.0"
