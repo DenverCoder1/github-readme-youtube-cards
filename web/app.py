@@ -3,7 +3,14 @@ from datetime import datetime
 from flask import Flask, render_template, request
 from flask.wrappers import Response
 
-from .utils import fetch_views, format_relative_time, jpeg_data_uri, trim_text
+from .utils import (
+    estimate_duration_width,
+    fetch_views,
+    format_relative_time,
+    jpeg_data_uri,
+    seconds_to_duration,
+    trim_text,
+)
 from .validate import validate_color, validate_int, validate_string, validate_video_id
 
 app = Flask(__name__)
@@ -18,6 +25,7 @@ def render():
         stats_color = validate_color(request, "stats_color", default="#dedede")
         title = trim_text(validate_string(request, "title"), (width - 32) // 8)
         publish_timestamp = validate_int(request, "timestamp", default=0)
+        duration_seconds = validate_int(request, "duration", default=0)
         video_id = validate_video_id(request, "id", required=True)
         thumbnail = jpeg_data_uri(f"https://i.ytimg.com/vi/{video_id}/mqdefault.jpg")
         views = fetch_views(video_id)
@@ -27,6 +35,8 @@ def render():
             else ""
         )
         stats = f"{views} • {diff}" if views and diff else (views or diff)
+        duration = seconds_to_duration(duration_seconds)
+        duration_width = estimate_duration_width(duration)
         response = Response(
             response=render_template(
                 "main.svg",
@@ -37,6 +47,8 @@ def render():
                 title=title,
                 stats=stats,
                 thumbnail=thumbnail,
+                duration=duration,
+                duration_width=duration_width,
             ),
             status=200,
             mimetype="image/svg+xml",

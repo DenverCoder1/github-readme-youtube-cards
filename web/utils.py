@@ -71,3 +71,20 @@ def fetch_views(video_id: str) -> str:
             return f"{value.replace('G', 'B').upper()} views" if value else ""
     except Exception:
         return ""
+
+
+def seconds_to_duration(seconds: int) -> str:
+    """Convert seconds to a formatted duration (ex. "1:23")"""
+    hours = seconds // 3600
+    minutes = (seconds % 3600) // 60
+    seconds = seconds % 60
+    if hours:
+        return f"{hours}:{minutes:02d}:{seconds:02d}"
+    return f"{minutes}:{seconds:02d}"
+
+
+def estimate_duration_width(duration: str) -> int:
+    """Estimate width of duration string"""
+    num_digits = len([c for c in duration if c.isdigit()])
+    num_colons = len([c for c in duration if c == ":"])
+    return num_digits * 7 + num_colons * 5 + 8
