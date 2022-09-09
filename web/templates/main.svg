@@ -12,6 +12,15 @@
     <g>
         <image href="{{ thumbnail }}" height="{{ width * 0.56 }}" width="{{ width }}" clip-path="url(#image-clip)" />
     </g>
+    {% if duration != "0:00" %}
+    <!-- video duration -->
+    <g transform="translate({{ width - 8 - duration_width }}, {{ width * 0.56 - 22 }})">
+        <rect x="0" y="0" rx="2" width="{{ duration_width }}" height="16" fill="#000000bb"/>
+        <text x="{{ duration_width / 2 }}" y="9" dominant-baseline="middle" text-anchor="middle" fill="#ffffff" font-family="Segoe UI, Ubuntu, Arial, sans-serif" font-weight="600" font-size="13px">
+            {{ duration }}
+        </text>
+    </g>
+    {% endif %}
     <!-- title -->
     <g transform="translate(10, {{ width * 0.56 + 30 }})">
         <text fill="{{ title_color }}" font-family="Segoe UI, Ubuntu, Arial, sans-serif" font-weight="600" font-size="15px">

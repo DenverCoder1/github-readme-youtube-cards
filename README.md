@@ -57,19 +57,21 @@ Make sure to change the `channel_id` to your YouTube channel ID. See below for a
 
 See [action.yml](https://github.com/DenverCoder1/github-readme-youtube-cards/blob/main/action.yml).
 
-| Option             | Description                                       | Default                                                 |
-| ------------------ | ------------------------------------------------- | ------------------------------------------------------- |
-| `channel_id`       | The channel ID to use for the feed                | Required                                                |
-| `comment_tag_name` | The name in the comment tag for replacing content | "YOUTUBE-CARDS"                                         |
-| `max_videos`       | The maximum number of videos to display           | 6                                                       |
-| `base_url`         | The base URL to use for the cards                 | "https://ytcards.demolab.com/"                   |
-| `card_width`       | The width of the SVG cards                        | 250                                                     |
-| `background_color` | The background color of the SVG cards             | "#0d1117"                                               |
-| `title_color`      | The color of the title text                       | "#ffffff"                                               |
-| `stats_color`      | The color of the stats text                       | "#dedede"                                               |
-| `author_name`      | The name of the commit author                     | "GitHub Actions"                                        |
-| `author_email`     | The email address of the commit author            | "41898282+github-actions[bot]@users.noreply.github.com" |
-| `commit_message`   | The commit message to use for the commit          | "docs(readme): Update YouTube cards"                    |
+| Option             | Description                                                             | Default                                                 |
+| ------------------ | ----------------------------------------------------------------------- | ------------------------------------------------------- |
+| `channel_id`       | The channel ID to use for the feed                                      | **Required**                                            |
+| `comment_tag_name` | The name in the comment tag for replacing content                       | "YOUTUBE-CARDS"                                         |
+| `youtube_api_key`  | The API key to use for additional features marked below                 | ""                                                      |
+| `max_videos`       | The maximum number of videos to display                                 | 6                                                       |
+| `base_url`         | The base URL to use for the cards                                       | "https://ytcards.demolab.com/"                          |
+| `card_width`       | The width of the SVG cards                                              | 250                                                     |
+| `background_color` | The background color of the SVG cards                                   | "#0d1117"                                               |
+| `title_color`      | The color of the title text                                             | "#ffffff"                                               |
+| `stats_color`      | The color of the stats text                                             | "#dedede"                                               |
+| `show_duration`    | Whether to show the duration of the videos. Requires `youtube_api_key`. | "false"                                                 |
+| `author_name`      | The name of the commit author                                           | "GitHub Actions"                                        |
+| `author_email`     | The email address of the commit author                                  | "41898282+github-actions[bot]@users.noreply.github.com" |
+| `commit_message`   | The commit message to use for the commit                                | "docs(readme): Update YouTube cards"                    |
 
 ## Contributing
 

@@ -1,7 +1,14 @@
 import re
 from datetime import datetime, timedelta
 
-from web.utils import fetch_views, format_relative_time, jpeg_data_uri, trim_text
+from web.utils import (
+    estimate_duration_width,
+    fetch_views,
+    format_relative_time,
+    jpeg_data_uri,
+    seconds_to_duration,
+    trim_text,
+)
 
 
 def test_fetch_views():
@@ -138,3 +145,20 @@ def test_trim_text():
     assert trim_text("abcdefghijklmnopqrstuvwxyz", 100) == "abcdefghijklmnopqrstuvwxyz"
     assert trim_text("abcdefghijklmnopqrstuvwxyz", 10) == "abcdefghi…"
     assert trim_text("abcdefghij", 10) == "abcdefghij"
+
+
+def test_seconds_to_duration():
+    assert seconds_to_duration(0) == "0:00"
+    assert seconds_to_duration(1) == "0:01"
+    assert seconds_to_duration(60) == "1:00"
+    assert seconds_to_duration(61) == "1:01"
+    assert seconds_to_duration(3600) == "1:00:00"
+    assert seconds_to_duration(3601) == "1:00:01"
+    assert seconds_to_duration(3661) == "1:01:01"
+
+
+def test_estimate_duration_width():
+    assert estimate_duration_width("1:00") == 34
+    assert estimate_duration_width("10:00") == 41
+    assert estimate_duration_width("1:00:00") == 53
+    assert estimate_duration_width("10:00:00") == 60
