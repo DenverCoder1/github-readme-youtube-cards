@@ -23,7 +23,7 @@ def render():
         background_color = validate_color(request, "background_color", default="#0d1117")
         title_color = validate_color(request, "title_color", default="#ffffff")
         stats_color = validate_color(request, "stats_color", default="#dedede")
-        title = trim_text(validate_string(request, "title"), (width - 20) // 7)
+        title = trim_text(validate_string(request, "title"), (width - 20) // 8)
         publish_timestamp = validate_int(request, "timestamp", default=0)
         duration_seconds = validate_int(request, "duration", default=0)
         video_id = validate_video_id(request, "id", required=True)
