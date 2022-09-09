@@ -20,7 +20,7 @@ inputs:
   base_url:
     description: "The base URL to use for the cards"
     required: false
-    default: "https://youtube-cards.onrender.com/"
+    default: "https://ytcards.demolab.com/"
   card_width:
     description: "The width of the SVG cards"
     required: false
