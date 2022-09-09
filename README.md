@@ -61,25 +61,27 @@ See [action.yml](https://github.com/DenverCoder1/github-readme-youtube-cards/blo
 
 Check out the [Wiki](https://github.com/DenverCoder1/github-readme-youtube-cards/wiki) for frequently asked questions.
 
-| Option                   | Description                                                                  | Default                                                 |
-| ------------------------ | ---------------------------------------------------------------------------- | ------------------------------------------------------- |
-| `channel_id`             | The channel ID to use for the feed                                           | **Required**                                            |
-| `comment_tag_name`       | The name in the comment tag for replacing content                            | "YOUTUBE-CARDS"                                         |
-| `youtube_api_key`        | The API key to use for additional features marked below                      | ""                                                      |
-| `max_videos`             | The maximum number of videos to display                                      | 6                                                       |
-| `base_url`               | The base URL to use for the cards                                            | "https://ytcards.demolab.com/"                          |
-| `card_width`             | The width of the SVG cards                                                   | 250                                                     |
-| `background_color`       | The background color of the SVG cards                                        | "#0d1117"                                               |
-| `title_color`            | The color of the title text                                                  | "#ffffff"                                               |
-| `stats_color`            | The color of the stats text                                                  | "#dedede"                                               |
-| `theme_context_light`    | JSON theme for light mode (keys: background_color, title_color, stats_color) | "{}"                                                    |
-| `theme_context_dark`     | JSON theme for dark mode (keys: background_color, title_color, stats_color)  | "{}"                                                    |
-| `show_duration` ![][key] | Whether to show the duration of the videos.                                  | "false"                                                 |
-| `author_name`            | The name of the commit author                                                | "GitHub Actions"                                        |
-| `author_email`           | The email address of the commit author                                       | "41898282+github-actions[bot]@users.noreply.github.com" |
-| `commit_message`         | The commit message to use for the commit                                     | "docs(readme): Update YouTube cards"                    |
+| Option                   | Description                                                                    | Default                                                 |
+| ------------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------- |
+| `channel_id`             | The channel ID to use for the feed                                             | **Required**                                            |
+| `comment_tag_name`       | The name in the comment tag for replacing content                              | "YOUTUBE-CARDS"                                         |
+| `youtube_api_key`        | The API key to use for additional features marked below                        | ""                                                      |
+| `max_videos`             | The maximum number of videos to display                                        | 6                                                       |
+| `base_url`               | The base URL to use for the cards                                              | "https://ytcards.demolab.com/"                          |
+| `card_width`             | The width of the SVG cards                                                     | 250                                                     |
+| `background_color`       | The background color of the SVG cards                                          | "#0d1117"                                               |
+| `title_color`            | The color of the title text                                                    | "#ffffff"                                               |
+| `stats_color`            | The color of the stats text                                                    | "#dedede"                                               |
+| `theme_context_light`    | JSON theme for light mode (keys: background_color, title_color, stats_color)\* | "{}"                                                    |
+| `theme_context_dark`     | JSON theme for dark mode (keys: background_color, title_color, stats_color)\*  | "{}"                                                    |
+| `show_duration` ![][key] | Whether to show the duration of the videos.                                    | "false"                                                 |
+| `author_name`            | The name of the commit author                                                  | "GitHub Actions"                                        |
+| `author_email`           | The email address of the commit author                                         | "41898282+github-actions[bot]@users.noreply.github.com" |
+| `commit_message`         | The commit message to use for the commit                                       | "docs(readme): Update YouTube cards"                    |
 
-![key][key] YouTube API Key required. See the [Wiki](https://github.com/DenverCoder1/github-readme-youtube-cards/wiki/Setting-Up-the-Action-with-a-YouTube-API-Key) for more information.
+![key][key] YouTube API Key required. See [Setting Up the Action with a YouTube API Key](https://github.com/DenverCoder1/github-readme-youtube-cards/wiki/Setting-Up-the-Action-with-a-YouTube-API-Key) in the wiki for more information.
+
+\* See [Setting Theme Contexts for Light and Dark Mode](https://github.com/DenverCoder1/github-readme-youtube-cards/wiki/Setting-Theme-Contexts-for-Light-and-Dark-Mode) in the wiki for more information.
 
 [key]: https://user-images.githubusercontent.com/20955511/189419733-84384135-c5c4-4a20-a439-f832d5ad5f5d.png
 
