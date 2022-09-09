@@ -1,9 +1,8 @@
 import codecs
 from datetime import datetime
-from typing import Optional
-from urllib.error import HTTPError
-import orjson
 from urllib.request import Request, urlopen
+
+import orjson
 
 
 def format_relative_time(date: datetime) -> str:
