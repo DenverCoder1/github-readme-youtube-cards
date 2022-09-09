@@ -45,6 +45,8 @@ jobs:
 
 Make sure to change the `channel_id` to your YouTube channel ID. See below for advanced configuration.
 
+The [cron expression](https://crontab.cronhub.io/) in the example above is set to run at the top of every hour. The first time, you may want to [trigger the workflow manually](https://github.com/DenverCoder1/github-readme-youtube-cards/wiki/Running-the-GitHub-Action-Manually).
+
 ## Live Example
 
 <!-- prettier-ignore-start -->
