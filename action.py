@@ -20,6 +20,8 @@ class VideoParser:
         title_color: str,
         stats_color: str,
         youtube_api_key: Optional[str],
+        theme_context_light: Dict[str, str],
+        theme_context_dark: Dict[str, str],
         show_duration: bool,
     ):
         self._base_url = base_url
@@ -30,6 +32,8 @@ class VideoParser:
         self._title_color = title_color
         self._stats_color = stats_color
         self._youtube_api_key = youtube_api_key
+        self._theme_context_light = theme_context_light
+        self._theme_context_dark = theme_context_dark
         self._show_duration = show_duration
         self._youtube_data = {}
 
@@ -110,8 +114,18 @@ class VideoParser:
             content_details = self._youtube_data[video_id]["contentDetails"]
             if self._show_duration:
                 params["duration"] = self.parse_iso8601_duration(content_details["duration"])
-        md = f'[![{params["title"]}]({self._base_url}?{urllib.parse.urlencode(params)} "{params["title"]}")]({video["link"]})'
-        return md.replace("/", "\\/").replace("'", "\\'")
+        # translate video to standard markdown
+        backslash_escaped_title = params["title"].replace('"', '\\"')
+        result = f'[![{params["title"]}]({self._base_url}?{urllib.parse.urlencode(params)} "{backslash_escaped_title}")]({video["link"]})'
+        # if theme context is set, create two versions with theme context specified
+        if self._theme_context_dark or self._theme_context_light:
+            dark_params = params | self._theme_context_dark
+            light_params = params | self._theme_context_light
+            result = (
+                f'[![{params["title"]}]({self._base_url}?{urllib.parse.urlencode(dark_params)} "{backslash_escaped_title}")]({video["link"]}#gh-dark-mode-only)'
+                f'[![{params["title"]}]({self._base_url}?{urllib.parse.urlencode(light_params)} "{backslash_escaped_title}")]({video["link"]}#gh-light-mode-only)'
+            )
+        return result.replace("/", "\\/").replace("'", "\\'")
 
     def parse_videos(self) -> str:
         """Parse video feed and return the contents for the readme"""
@@ -169,6 +183,18 @@ if __name__ == "__main__":
         default="#dedede",
     )
     parser.add_argument(
+        "--theme-context-light",
+        dest="theme_context_light",
+        help="JSON theme for light mode (keys: background_color, title_color, stats_color)",
+        default="{}",
+    )
+    parser.add_argument(
+        "--theme-context-dark",
+        dest="theme_context_dark",
+        help="JSON theme for dark mode (keys: background_color, title_color, stats_color)",
+        default="{}",
+    )
+    parser.add_argument(
         "--youtube-api-key",
         dest="youtube_api_key",
         help="YouTube API key",
@@ -196,6 +222,8 @@ if __name__ == "__main__":
         stats_color=args.stats_color,
         youtube_api_key=args.youtube_api_key,
         show_duration=args.show_duration == "true",
+        theme_context_light=json.loads(args.theme_context_light),
+        theme_context_dark=json.loads(args.theme_context_dark),
     )
 
     print(video_parser.parse_videos())
