@@ -117,18 +117,13 @@ class VideoParser:
         # translate video to standard markdown
         backslash_escaped_title = params["title"].replace('"', '\\"')
         result = f'[![{params["title"]}]({self._base_url}?{urllib.parse.urlencode(params)} "{backslash_escaped_title}")]({video["link"]})'
-        # if theme context is set, create a picture element with the theme settings
-        if self._theme_context_light or self._theme_context_dark:
-            html_escaped_title = params["title"].replace('"', "&quot;")
-            light_params = params | self._theme_context_light
+        # if theme context is set, create two versions with theme context specified
+        if self._theme_context_dark or self._theme_context_light:
             dark_params = params | self._theme_context_dark
+            light_params = params | self._theme_context_light
             result = (
-                f'<a href="{video["link"]}">\n'
-                f"  <picture>\n"
-                f'    <source media="(prefers-color-scheme: dark)" srcset="{self._base_url}?{urllib.parse.urlencode(dark_params)}">\n'
-                f'    <img src="{self._base_url}?{urllib.parse.urlencode(light_params)}" alt="{html_escaped_title}" title="{html_escaped_title}">\n'
-                "  </picture>\n"
-                "</a>"
+                f'[![{params["title"]}]({self._base_url}?{urllib.parse.urlencode(dark_params)} "{backslash_escaped_title}")]({video["link"]}#gh-dark-mode-only)'
+                f'[![{params["title"]}]({self._base_url}?{urllib.parse.urlencode(light_params)} "{backslash_escaped_title}")]({video["link"]}#gh-light-mode-only)'
             )
         return result.replace("/", "\\/").replace("'", "\\'")
 
