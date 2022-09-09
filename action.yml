@@ -68,7 +68,7 @@ runs:
     - name: Generate Readme Update
       id: "generate-readme-update"
       shell: bash
-      run: echo ::set-output name=readme_update::$(python action.py --channel "${{ inputs.channel_id }}" --max-videos ${{ inputs.max_videos }} --base-url "${{ inputs.base_url }}" --card-width ${{ inputs.card_width }} --background-color "${{ inputs.background_color }}" --title-color "${{ inputs.title_color }}" --stats-color "${{ inputs.stats_color }}")
+      run: echo ::set-output name=readme_update::$(python ${{ github.action_path }}/action.py --channel "${{ inputs.channel_id }}" --max-videos ${{ inputs.max_videos }} --base-url "${{ inputs.base_url }}" --card-width ${{ inputs.card_width }} --background-color "${{ inputs.background_color }}" --title-color "${{ inputs.title_color }}" --stats-color "${{ inputs.stats_color }}")
 
     - name: Update README
       shell: bash
