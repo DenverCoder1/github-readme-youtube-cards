@@ -73,7 +73,7 @@ Check out the [Wiki](https://github.com/DenverCoder1/github-readme-youtube-cards
 | `title_color`            | The color of the title text                                                  | "#ffffff"                                               |
 | `stats_color`            | The color of the stats text                                                  | "#dedede"                                               |
 | `theme_context_light`    | JSON theme for light mode (keys: background_color, title_color, stats_color) | "{}"                                                    |
-| `theme_context_dark`     | JSON theme for dark mode (keys: background_color, title_color, stats_color)  | "{}"                                                |
+| `theme_context_dark`     | JSON theme for dark mode (keys: background_color, title_color, stats_color)  | "{}"                                                    |
 | `show_duration` ![][key] | Whether to show the duration of the videos.                                  | "false"                                                 |
 | `author_name`            | The name of the commit author                                                | "GitHub Actions"                                        |
 | `author_email`           | The email address of the commit author                                       | "41898282+github-actions[bot]@users.noreply.github.com" |
