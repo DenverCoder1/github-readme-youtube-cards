@@ -65,6 +65,10 @@ inputs:
     description: "The commit message to use for the commit"
     required: false
     default: "docs(readme): Update YouTube cards"
+  readme_path:
+    description: "The path to the readme file"
+    required: false
+    default: "README.md"
 
 runs:
   using: "composite"
@@ -84,20 +88,22 @@ runs:
     - name: Generate Readme Update
       id: "generate-readme-update"
       shell: bash
-      run: echo ::set-output name=readme_update::$(python ${{ github.action_path }}/action.py --channel "${{ inputs.channel_id }}" --max-videos ${{ inputs.max_videos }} --base-url "${{ inputs.base_url }}" --card-width ${{ inputs.card_width }} --background-color "${{ inputs.background_color }}" --title-color "${{ inputs.title_color }}" --stats-color "${{ inputs.stats_color }}" --youtube-api-key "${{ inputs.youtube_api_key }}" --show-duration "${{ inputs.show_duration }}" --theme-context-light '${{ inputs.theme_context_light }}' --theme-context-dark '${{ inputs.theme_context_dark }}')
-
-    - name: Update README
-      shell: bash
-      env:
-        BEGIN_TAG: "<!-- BEGIN ${{ inputs.comment_tag_name }} -->"
-        END_TAG: "<!-- END ${{ inputs.comment_tag_name }} -->"
       run: |
-        if [ -z '${{ steps.generate-readme-update.outputs.readme_update }}' ]; then
-          echo "Python script finished with no output. Exiting with error."
-          exit 1
-        fi
-        UPDATE=$(cat README.md | perl -0777 -pe 's/(${{ env.BEGIN_TAG }})(?:.|\n)*?(${{ env.END_TAG }})/${1}\n${{ steps.generate-readme-update.outputs.readme_update }}\n${2}/g')
-        echo "${UPDATE}" > README.md
+        UPDATE=$(python ${{ github.action_path }}/action.py \
+                --channel "${{ inputs.channel_id }}" \
+                --comment-tag-name "${{ inputs.comment_tag_name }}" \
+                --max-videos ${{ inputs.max_videos }} \
+                --base-url "${{ inputs.base_url }}" \
+                --card-width ${{ inputs.card_width }} \
+                --background-color "${{ inputs.background_color }}" \
+                --title-color "${{ inputs.title_color }}" \
+                --stats-color "${{ inputs.stats_color }}" \
+                --youtube-api-key "${{ inputs.youtube_api_key }}" \
+                --show-duration "${{ inputs.show_duration }}" \
+                --theme-context-light '${{ inputs.theme_context_light }}' \
+                --theme-context-dark '${{ inputs.theme_context_dark }}' \
+                --readme-path "${{ inputs.readme_path }}" \
+        ) || exit 1
 
     - name: Commit changes
       uses: EndBug/add-and-commit@v9

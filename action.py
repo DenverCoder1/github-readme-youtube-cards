@@ -116,16 +116,15 @@ class VideoParser:
                 params["duration"] = self.parse_iso8601_duration(content_details["duration"])
         # translate video to standard markdown
         backslash_escaped_title = params["title"].replace('"', '\\"')
-        result = f'[![{params["title"]}]({self._base_url}?{urllib.parse.urlencode(params)} "{backslash_escaped_title}")]({video["link"]})'
         # if theme context is set, create two versions with theme context specified
         if self._theme_context_dark or self._theme_context_light:
             dark_params = params | self._theme_context_dark
             light_params = params | self._theme_context_light
-            result = (
+            return (
                 f'[![{params["title"]}]({self._base_url}?{urllib.parse.urlencode(dark_params)} "{backslash_escaped_title}")]({video["link"]}#gh-dark-mode-only)'
                 f'[![{params["title"]}]({self._base_url}?{urllib.parse.urlencode(light_params)} "{backslash_escaped_title}")]({video["link"]}#gh-light-mode-only)'
             )
-        return result.replace("/", "\\/").replace("'", "\\'")
+        return f'[![{params["title"]}]({self._base_url}?{urllib.parse.urlencode(params)} "{backslash_escaped_title}")]({video["link"]})'
 
     def parse_videos(self) -> str:
         """Parse video feed and return the contents for the readme"""
@@ -136,6 +135,25 @@ class VideoParser:
         return "\n".join(map(self.parse_video, videos))
 
 
+class FileUpdater:
+    """Update the readme file"""
+
+    @staticmethod
+    def update(readme_path: str, comment_tag: str, replace_content: str):
+        """Replace the text between the begin and end tags with the replace content"""
+        begin_tag = f"<!-- BEGIN {comment_tag} -->"
+        end_tag = f"<!-- END {comment_tag} -->"
+        with open(readme_path, "r") as readme_file:
+            readme = readme_file.read()
+        begin_index = readme.find(begin_tag)
+        end_index = readme.find(end_tag)
+        if begin_index == -1 or end_index == -1:
+            raise RuntimeError(f"Could not find tags {begin_tag} and {end_tag} in {readme_path}")
+        readme = f"{readme[:begin_index + len(begin_tag)]}\n{replace_content}\n{readme[end_index:]}"
+        with open(readme_path, "w") as readme_file:
+            readme_file.write(readme)
+
+
 if __name__ == "__main__":
     parser = ArgumentParser()
     parser.add_argument(
@@ -143,6 +161,12 @@ if __name__ == "__main__":
         dest="channel_id",
         help="YouTube channel ID",
         required=True,
+    )
+    parser.add_argument(
+        "--comment-tag-name",
+        dest="comment_tag_name",
+        help="Comment tag name",
+        default="YOUTUBE-CARDS",
     )
     parser.add_argument(
         "--max-videos",
@@ -207,6 +231,12 @@ if __name__ == "__main__":
         default="false",
         choices=("true", "false"),
     )
+    parser.add_argument(
+        "--readme-path",
+        dest="readme_path",
+        help="Path to the readme file",
+        default="README.md",
+    )
     args = parser.parse_args()
 
     if args.show_duration == "true" and not args.youtube_api_key:
@@ -226,4 +256,10 @@ if __name__ == "__main__":
         theme_context_dark=json.loads(args.theme_context_dark),
     )
 
-    print(video_parser.parse_videos())
+    video_content = video_parser.parse_videos()
+
+    # output to stdout
+    print(video_content)
+
+    # update the readme file
+    FileUpdater.update(args.readme_path, args.comment_tag_name, video_content)
