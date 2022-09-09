@@ -63,7 +63,7 @@ Check out the [Wiki](https://github.com/DenverCoder1/github-readme-youtube-cards
 
 | Option                   | Description                                             | Default                                                 |
 | ------------------------ | ------------------------------------------------------- | ------------------------------------------------------- |
-| `channel_id`             | The channel ID to use for the feed                      | **Required**                                            |
+| `channel_id`             | The channel ID to use for the feed                      | Required                                                |
 | `comment_tag_name`       | The name in the comment tag for replacing content       | "YOUTUBE-CARDS"                                         |
 | `youtube_api_key`        | The API key to use for additional features marked below | ""                                                      |
 | `max_videos`             | The maximum number of videos to display                 | 6                                                       |
@@ -73,7 +73,7 @@ Check out the [Wiki](https://github.com/DenverCoder1/github-readme-youtube-cards
 | `title_color`            | The color of the title text                             | "#ffffff"                                               |
 | `stats_color`            | The color of the stats text                             | "#dedede"                                               |
 | `theme_context_light`    | JSON object with colors for light mode\*                | "{}"                                                    |
-| `theme_context_dark`     | JSON object with colors for dark mode\*                              | "{}"                                                    |
+| `theme_context_dark`     | JSON object with colors for dark mode\*                 | "{}"                                                    |
 | `show_duration` ![][key] | Whether to show the duration of the videos.             | "false"                                                 |
 | `author_name`            | The name of the commit author                           | "GitHub Actions"                                        |
 | `author_email`           | The email address of the commit author                  | "41898282+github-actions[bot]@users.noreply.github.com" |
