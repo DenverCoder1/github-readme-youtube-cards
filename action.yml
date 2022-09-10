@@ -69,6 +69,15 @@ inputs:
     description: "The path to the readme file"
     required: false
     default: "README.md"
+  output_only:
+    description: "Whether to return the section markdown as output instead of writing to the file"
+    required: false
+    default: "false"
+
+outputs:
+  markdown:
+    description: "The section markdown as output"
+    value: ${{ steps.generate-readme-update.outputs.markdown }}
 
 runs:
   using: "composite"
@@ -104,6 +113,7 @@ runs:
                 --theme-context-dark '${{ inputs.theme_context_dark }}' \
                 --readme-path "${{ inputs.readme_path }}" \
         ) || exit 1
+        echo "::set-output name=markdown::$(echo $UPDATE)"
 
     - name: Commit changes
       uses: EndBug/add-and-commit@v9
