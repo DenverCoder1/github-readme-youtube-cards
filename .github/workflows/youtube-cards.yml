@@ -13,6 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: DenverCoder1/github-readme-youtube-cards@main
+        id: youtube-cards
         with:
           channel_id: UCipSxT7a3rn81vGLw9lqRkg
           comment_tag_name: EXAMPLE-YOUTUBE-CARDS
@@ -20,3 +21,5 @@ jobs:
           show_duration: true
           theme_context_light: '{ "background_color": "#ffffff", "title_color": "#24292f", "stats_color": "#57606a" }'
           theme_context_dark: '{ "background_color": "#0d1117", "title_color": "#ffffff", "stats_color": "#dedede" }'
+      - run: echo OUTPUT '${{ steps.youtube-cards.outputs.markdown }}'
+        shell: bash
