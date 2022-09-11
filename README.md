@@ -21,9 +21,7 @@
 <!-- END YOUTUBE-CARDS -->
 ```
 
-2. Create a folder named `.github` in your repository and inside create a folder named `workflows` if it does not exist.
-
-3. Create a file in your repo's `.github/workflows/` folder and give it a name such as `youtube-cards.yml` with the following contents.
+2. In your repo, create a `.github` folder and inside create a folder named `workflows` if it does not exist. Then create a file in your `.github/workflows/` folder and give it a name such as `youtube-cards.yml` with the following contents.
 
 <!-- prettier-ignore-start -->
 ```yml
@@ -44,11 +42,13 @@ jobs:
 ```
 <!-- prettier-ignore-end -->
 
-4. Make sure to change the `channel_id` to your YouTube channel ID.
+3. Make sure to change the `channel_id` to your YouTube channel ID.
+
+4. The [cron expression](https://crontab.cronhub.io/) in the example above is set to run at the top of every hour. The first time, you may want to [trigger the workflow manually](https://github.com/DenverCoder1/github-readme-youtube-cards/wiki/Running-the-GitHub-Action-Manually).
+
+5. You're done! Star the repo and share it with friends! ⭐
 
 See below for [advanced configuration](#advanced-configuration).
-
-The [cron expression](https://crontab.cronhub.io/) in the example above is set to run at the top of every hour. The first time, you may want to [trigger the workflow manually](https://github.com/DenverCoder1/github-readme-youtube-cards/wiki/Running-the-GitHub-Action-Manually).
 
 ## Live Example
 
