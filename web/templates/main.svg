@@ -18,7 +18,7 @@
     <rect id="rect" rx="5" height="99%" width="99%" fill="{{ background_color }}" />
     <!-- thumbnail image -->
     <g>
-        <image href="{{ thumbnail }}" height="{{ width * 0.56 }}" width="{{ width }}" clip-path="url(#image-clip)" />
+        <image height="{{ width * 0.56 }}" width="{{ width }}" clip-path="url(#image-clip)" href="{{ thumbnail }}" />
     </g>
     {% if duration != "0:00" %}
     <!-- video duration -->
