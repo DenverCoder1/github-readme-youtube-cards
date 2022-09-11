@@ -237,6 +237,13 @@ if __name__ == "__main__":
         help="Path to the readme file",
         default="README.md",
     )
+    parser.add_argument(
+        "--output-only",
+        dest="output_only",
+        help="Only output the cards, do not update the readme",
+        default="false",
+        choices=("true", "false"),
+    )
     args = parser.parse_args()
 
     if args.show_duration == "true" and not args.youtube_api_key:
@@ -262,4 +269,5 @@ if __name__ == "__main__":
     print(video_content)
 
     # update the readme file
-    FileUpdater.update(args.readme_path, args.comment_tag_name, video_content)
+    if args.output_only == "false":
+        FileUpdater.update(args.readme_path, args.comment_tag_name, video_content)
