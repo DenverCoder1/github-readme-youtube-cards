@@ -49,7 +49,8 @@ def format_relative_time(date: datetime) -> str:
 def jpeg_data_uri(url: str) -> str:
     """Return base-64 data URI for jpeg image at a given URL"""
     with urlopen(url) as response:
-        return f"data:image/jpeg;base64,{codecs.encode(response.read(), 'base64').decode('utf-8')}"
+        data = codecs.encode(response.read(), "base64").decode("utf-8").replace("\n", "")
+        return f"data:image/jpeg;base64,{data}"
 
 
 def trim_text(text: str, max_length: int) -> str:
