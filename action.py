@@ -105,10 +105,10 @@ class VideoParser:
             "id": video_id,
             "title": video["title"],
             "timestamp": int(time.mktime(video["published_parsed"])),
-            "width": self._card_width,
             "background_color": self._background_color,
             "title_color": self._title_color,
             "stats_color": self._stats_color,
+            "width": self._card_width,
         }
         if video_id in self._youtube_data:
             content_details = self._youtube_data[video_id]["contentDetails"]

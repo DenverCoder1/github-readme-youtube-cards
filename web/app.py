@@ -1,4 +1,5 @@
 from datetime import datetime
+from time import gmtime, strftime
 
 from flask import Flask, render_template, request
 from flask.wrappers import Response
@@ -62,3 +63,14 @@ def render():
             status=status,
             mimetype="image/svg+xml",
         )
+
+
+@app.after_request
+def add_header(r):
+    """Add headers to cache the response no longer than an hour."""
+    r.headers["Expires"] = strftime(
+        "%a, %d %b %Y %H:%M:%S GMT", gmtime(datetime.now().timestamp() + 3600)
+    )
+    r.headers["Last-Modified"] = strftime("%a, %d %b %Y %H:%M:%S GMT", gmtime())
+    r.headers["Cache-Control"] = "public, max-age=3600"
+    return r
