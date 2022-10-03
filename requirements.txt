@@ -1,0 +1,4 @@
+python>=3.8
+Flask>=2.2.2
+gunicorn>=20.1.0
+orjson>=3.8.0
