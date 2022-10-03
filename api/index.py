@@ -1,7 +1,7 @@
 from datetime import datetime
 from time import gmtime, strftime
 
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect
 from flask.wrappers import Response
 
 from .utils import (
@@ -24,7 +24,9 @@ app.jinja_options["autoescape"] = lambda _: True
 def render():
     try:
         width = validate_int(request, "width", default=250)
-        background_color = validate_color(request, "background_color", default="#0d1117")
+        background_color = validate_color(
+            request, "background_color", default="#0d1117"
+        )
         title_color = validate_color(request, "title_color", default="#ffffff")
         stats_color = validate_color(request, "stats_color", default="#dedede")
         title = trim_text(validate_string(request, "title"), (width - 20) // 8)
@@ -59,12 +61,9 @@ def render():
         )
         response.headers["Content-Type"] = "image/svg+xml; charset=utf-8"
         return response
-    except Exception as e:
-        status = getattr(e, "status", getattr(e, "code", None)) or 400
-        return Response(
-            response=render_template("error.svg", message=str(e), code=status),
-            status=status,
-            mimetype="image/svg+xml",
+    except Exception:
+        return redirect(
+            "https://github.com/DenverCoder1/github-readme-youtube-cards", code=302
         )
 
 
