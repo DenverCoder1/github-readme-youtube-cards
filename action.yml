@@ -20,7 +20,7 @@ inputs:
   base_url:
     description: "The base URL to use for the cards"
     required: false
-    default: "https://ytcards.demolab.com/"
+    default: "https://ytcards.vercel.app/"
   youtube_api_key:
     description: "The YouTube API key to use for additional features such a the video duration"
     required: false
