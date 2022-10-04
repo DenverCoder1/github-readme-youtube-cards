@@ -77,7 +77,7 @@ Check out the [Wiki](https://github.com/DenverCoder1/github-readme-youtube-cards
 | `comment_tag_name`    | The name in the comment tag for replacing content | "YOUTUBE-CARDS"                                         |
 | `youtube_api_key`     | The API key to use for features marked with 🔑    | ""                                                      |
 | `max_videos`          | The maximum number of videos to display           | 6                                                       |
-| `base_url`            | The base URL to use for the cards                 | "https://ytcards.vercel.app/" (may change)              |
+| `base_url`            | The base URL to use for the cards                 | "https://ytcards.demolab.com/"                          |
 | `card_width`          | The width of the SVG cards                        | 250                                                     |
 | `background_color`    | The background color of the SVG cards             | "#0d1117"                                               |
 | `title_color`         | The color of the title text                       | "#ffffff"                                               |
