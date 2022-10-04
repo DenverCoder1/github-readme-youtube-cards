@@ -179,7 +179,7 @@ if __name__ == "__main__":
         "--base-url",
         dest="base_url",
         help="Base URL for the readme",
-        default="https://ytcards.demolab.com/",
+        default="https://ytcards.vercel.app/",
     )
     parser.add_argument(
         "--card-width",
