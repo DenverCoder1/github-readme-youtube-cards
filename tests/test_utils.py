@@ -1,7 +1,7 @@
 import re
 from datetime import datetime, timedelta
 
-from web.utils import (
+from api.utils import (
     estimate_duration_width,
     fetch_views,
     format_relative_time,

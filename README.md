@@ -127,7 +127,7 @@ pip install feedparser
 ### Running the Flask server
 
 ```bash
-gunicorn web.app:app
+gunicorn api.index:app
 ```
 
 ### Running the action Python part of the workflow locally
