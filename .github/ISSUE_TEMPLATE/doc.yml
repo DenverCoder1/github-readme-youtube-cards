@@ -7,7 +7,7 @@ body:
     id: description
     attributes:
       label: Description
-      description: Description of the question or issue, also include what you tried and what didn't work
+      description: Description of the documentation issue
     validations:
       required: true
   - type: textarea
