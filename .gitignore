@@ -128,3 +128,6 @@ dmypy.json
 
 # VS Code Config
 .vscode/
+
+# Vercel Hosting
+.vercel
