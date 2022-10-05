@@ -1,0 +1,12 @@
+name: ❓ Question
+description: Have a question about the project? Ask away!
+title: '[QUESTION] <description>'
+labels: ['question']
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: Description of the question or issue
+    validations:
+      required: true

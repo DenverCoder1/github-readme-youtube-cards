@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "github-readme-youtube-cards"
-version = "1.2.1"
+version = "1.2.2"
 description = "Workflow for displaying recent YouTube videos as SVG cards in your readme"
 authors = ["Jonah Lawrence <jonah@freshidea.com>"]
 readme = "README.md"
