@@ -8,6 +8,7 @@ import i18n
 
 i18n.set("file-format", "yaml")
 i18n.set("filename_format", "{locale}.{format}")
+i18n.set("enable_memoization", True)
 i18n.load_path.append("./api/locale")
 _ = i18n.t
 
