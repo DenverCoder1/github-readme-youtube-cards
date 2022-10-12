@@ -35,3 +35,20 @@ def validate_video_id(req: Request, field: str) -> str:
 def validate_string(req: Request, field: str, default: str = "") -> str:
     """Validate a string, returns the string if valid, otherwise the default."""
     return req.args.get(field, default)
+
+
+def validate_lang(
+    req: Request, field: str, *, default: str = "en-us", required: bool = False
+) -> str:
+    """Validate a string with a locale lang, returns the string if valid, otherwise the default.
+
+    Raises ValueError if the field is required and the valid is not valid.
+    """
+    value = req.args.get(field, "")
+    locales = ["en-us", "fr"]
+    if value == "" and required:
+        raise ValueError(f"Required parameter '{field}' is missing")
+    elif value == "" or value not in locales:
+        return default
+
+    return value
