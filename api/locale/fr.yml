@@ -1,14 +1,20 @@
 fr:
   views: "%{number} vues"
-  just-now: "tout à l'heure"
-  seconds-ago: "il y a %{seconds} secondes"
-  minute-ago: "il y a 1 minute"
-  minutes-ago: "il y a %{minutes} minutes"
-  hour-ago: "il y a 1 heure"
-  hours-ago: "il y a %{hours} heures"
-  day-ago: "il y a 1 jour"
-  days-ago: "il y a ${days} jours"
-  month-ago: "il y a 1 mois"
-  months=ago: "il y a %{months} mois"
-  year-ago: "il y a 1 an"
-  years-ago: "il y a %{years} ans"
+  seconds-ago:
+    one: "il y a %{count} seconde"
+    many: "il y a %{count} secondes"
+  minutes-ago:
+    one: "il y a 1 minute"
+    many: "il y a %{count} minutes"
+  hours-ago:
+    one: "il y a 1 heure"
+    many: "il y a %{count} heures"
+  days-ago:
+    one: "il y a 1 jour"
+    many: "il y a ${count} jours"
+  months-ago:
+    one: "il y a 1 mois"
+    many: "il y a %{count} mois"
+  years-ago:
+    one: "il y a 1 an"
+    many: "il y a %{count} ans"

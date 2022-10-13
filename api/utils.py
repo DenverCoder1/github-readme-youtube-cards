@@ -18,39 +18,37 @@ def format_relative_time(date: datetime, lang: str = "en-us") -> str:
     seconds_diff = int((datetime.now() - date).total_seconds())
     # number of days in difference
     days_diff = seconds_diff // 86400
-    # less than 5 seconds ago
-    if seconds_diff < 5:
-        return i18n.t("just-now", locale=lang)
+
     # less than 50 seconds ago
     if seconds_diff < 50:
-        return i18n.t("seconds-ago", seconds=seconds_diff, locale=lang)
+        return i18n.t("seconds-ago", count=seconds_diff, locale=lang)
     # less than 2 minutes ago
     if seconds_diff < 120:
-        return i18n.t("minute-ago", locale=lang)
+        return i18n.t("minutes-ago", count=1, locale=lang)
     # less than an hour ago
     if seconds_diff < 3600:
-        return i18n.t("minutes-ago", minutes=seconds_diff // 60, locale=lang)
+        return i18n.t("minutes-ago", count=seconds_diff // 60, locale=lang)
     # less than 2 hours ago
     if seconds_diff < 7200:
-        return i18n.t("hour-ago", locale=lang)
+        return i18n.t("hours-ago", count=1, locale=lang)
     # less than 24 hours ago
     if seconds_diff < 86400:
-        return i18n.t("hours-ago", hours=seconds_diff // 3600, locale=lang)
+        return i18n.t("hours-ago", count=seconds_diff // 3600, locale=lang)
     # 1 day ago
     if days_diff == 1:
-        return i18n.t("day-ago", locale=lang)
+        return i18n.t("days-ago", count=1, locale=lang)
     # less than a month ago
     if days_diff < 30:
-        return i18n.t("days-ago", days=days_diff, locale=lang)
+        return i18n.t("days-ago", count=days_diff, locale=lang)
     # less than 12 months ago
     if days_diff < 336:
         if round(days_diff / 30.5) == 1:
-            return i18n.t("month-ago", locale=lang)
-        return i18n.t("months-ago", months=round(days_diff / 30.5), locale=lang)
+            return i18n.t("months-ago", count=1, locale=lang)
+        return i18n.t("months-ago", count=round(days_diff / 30.5), locale=lang)
     # more than a year ago
     if round(days_diff / 365) == 1:
-        return i18n.t("year-ago", locale=lang)
-    return i18n.t("years-ago", years=round(days_diff / 365), locale=lang)
+        return i18n.t("years-ago", count=1, locale=lang)
+    return i18n.t("years-ago", count=round(days_diff / 365), locale=lang)
 
 
 def data_uri_from_bytes(*, data: bytes, mime_type: str) -> str:
