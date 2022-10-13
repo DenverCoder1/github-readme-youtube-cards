@@ -39,7 +39,7 @@ def test_format_relative_time():
 
 
 def test_jpeg_data_uri():
-    assert jpeg_data_uri("https://i.imgur.com/Dh1cOVG.jpg") == (
+    expected = (
         "data:image/jpeg;base64,/9j/2wBDAAQDAwQDAwQEBAQFBQQFBwsHBwYGBw4KCggLEA4RERAOEA8SFBoWEhMYEw8QFh8XGBsb"
         "HR0dERYgIh8cIhocHRz/2wBDAQUFBQcGBw0HBw0cEhASHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwc"
         "HBwcHBwcHBwcHBwcHBwcHBwcHBwcHBwcHBz/wgARCAC0AUADAREAAhEBAxEB/8QAHAABAAIDAQEB"
@@ -139,6 +139,8 @@ def test_jpeg_data_uri():
         "WyTsE8OMp7jDNHiNb2C5cWMmxmQmcRqO6GS+4deW8d1g7WsXm4GwLNwS1Ed0hmc812qCa5LT+4Kr"
         "ko/3B2oPu5UDUoz3Plf5giIv/B//2Q=="
     )
+    assert jpeg_data_uri(url="https://i.imgur.com/Dh1cOVG.jpg") == expected
+    assert jpeg_data_uri(path="./api/templates/resources/error.jpg") == expected
 
 
 def test_trim_text():

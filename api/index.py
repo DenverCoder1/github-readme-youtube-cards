@@ -31,7 +31,7 @@ def render():
         publish_timestamp = validate_int(request, "timestamp", default=0)
         duration_seconds = validate_int(request, "duration", default=0)
         video_id = validate_video_id(request, "id", required=True)
-        thumbnail = jpeg_data_uri(f"https://i.ytimg.com/vi/{video_id}/mqdefault.jpg")
+        thumbnail = jpeg_data_uri(url=f"https://i.ytimg.com/vi/{video_id}/mqdefault.jpg")
         views = fetch_views(video_id)
         diff = (
             format_relative_time(datetime.fromtimestamp(int(publish_timestamp)))
@@ -61,8 +61,9 @@ def render():
         return response
     except Exception as e:
         status = getattr(e, "status", getattr(e, "code", None)) or 400
+        thumbnail = jpeg_data_uri(path="./api/templates/resources/error.jpg")
         return Response(
-            response=render_template("error.svg", message=str(e), code=status),
+            response=render_template("error.svg", message=str(e), code=status, thumbnail=thumbnail),
             status=status,
             mimetype="image/svg+xml",
         )

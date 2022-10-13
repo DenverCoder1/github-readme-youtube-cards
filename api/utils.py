@@ -1,5 +1,6 @@
 import codecs
 from datetime import datetime
+from typing import Optional
 from urllib.request import Request, urlopen
 
 import orjson
@@ -46,11 +47,18 @@ def format_relative_time(date: datetime) -> str:
     return f"{round(days_diff / 365)} years ago"
 
 
-def jpeg_data_uri(url: str) -> str:
-    """Return base-64 data URI for jpeg image at a given URL"""
-    with urlopen(url) as response:
-        data = codecs.encode(response.read(), "base64").decode("utf-8").replace("\n", "")
-        return f"data:image/jpeg;base64,{data}"
+def jpeg_data_uri(*, url: Optional[str] = None, path: Optional[str] = None) -> str:
+    """Return base-64 data URI for jpeg image at a given URL or file path"""
+    if path is not None:
+        assert url is None, "Only one of url or path can be specified"
+        with open(path, "rb") as file:
+            data = file.read()
+    else:
+        assert url is not None, "One of url or path must be specified"
+        with urlopen(url) as response:
+            data = response.read()
+    base64 = codecs.encode(data, "base64").decode("utf-8").replace("\n", "")
+    return f"data:image/jpeg;base64,{base64}"
 
 
 def trim_text(text: str, max_length: int) -> str:
