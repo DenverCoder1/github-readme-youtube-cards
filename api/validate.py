@@ -1,3 +1,4 @@
+import os
 import re
 from flask.wrappers import Request
 
@@ -37,18 +38,14 @@ def validate_string(req: Request, field: str, default: str = "") -> str:
     return req.args.get(field, default)
 
 
-def validate_lang(
-    req: Request, field: str, *, default: str = "en-us", required: bool = False
-) -> str:
-    """Validate a string with a locale lang, returns the string if valid, otherwise the default.
-
-    Raises ValueError if the field is required and the valid is not valid.
+def validate_lang(req: Request, field: str, *, default: str = "en-us") -> str:
+    """Validate a string with a locale lang,
+    returns the string if transaltions present in the locale directory,
+    otherwise the default.
     """
     value = req.args.get(field, "")
-    locales = ["en-us", "fr"]
-    if value == "" and required:
-        raise ValueError(f"Required parameter '{field}' is missing")
-    elif value == "" or value not in locales:
+    # if there is no yaml file for the language, use the default
+    if not os.path.isfile(f"./api/locale/{value}.yml"):
         return default
 
     return value
