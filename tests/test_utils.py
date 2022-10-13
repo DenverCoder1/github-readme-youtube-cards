@@ -18,12 +18,19 @@ def test_fetch_views():
 
 
 def test_format_relative_time():
-    assert format_relative_time(datetime.now()) == "just now"
-    assert format_relative_time(datetime.now() - timedelta(seconds=5)) == "5 seconds ago"
-    assert format_relative_time(datetime.now() - timedelta(seconds=50)) == "1 minute ago"
-    assert format_relative_time(datetime.now() - timedelta(seconds=110)) == "1 minute ago"
+    assert (
+        format_relative_time(datetime.now() - timedelta(seconds=5)) == "5 seconds ago"
+    )
+    assert (
+        format_relative_time(datetime.now() - timedelta(seconds=50)) == "1 minute ago"
+    )
+    assert (
+        format_relative_time(datetime.now() - timedelta(seconds=110)) == "1 minute ago"
+    )
     assert format_relative_time(datetime.now() - timedelta(minutes=1)) == "1 minute ago"
-    assert format_relative_time(datetime.now() - timedelta(minutes=2)) == "2 minutes ago"
+    assert (
+        format_relative_time(datetime.now() - timedelta(minutes=2)) == "2 minutes ago"
+    )
     assert format_relative_time(datetime.now() - timedelta(minutes=60)) == "1 hour ago"
     assert format_relative_time(datetime.now() - timedelta(hours=1)) == "1 hour ago"
     assert format_relative_time(datetime.now() - timedelta(hours=2)) == "2 hours ago"
