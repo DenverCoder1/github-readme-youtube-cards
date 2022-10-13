@@ -53,7 +53,7 @@ def data_uri_from_bytes(*, data: bytes, mime_type: str) -> str:
     return f"data:{mime_type};base64,{base64}"
 
 
-def data_uri_from_url(url: str, mime_type: Optional[str] = None) -> str:
+def data_uri_from_url(url: str, *, mime_type: Optional[str] = None) -> str:
     """Return base-64 data URI for an image at a given URL.
     If not passed, the content type is determined from the response header
     if present, otherwise, jpeg is assumed.
@@ -65,7 +65,7 @@ def data_uri_from_url(url: str, mime_type: Optional[str] = None) -> str:
     return data_uri_from_bytes(data=data, mime_type=mime_type)
 
 
-def data_uri_from_file(path: str, mime_type: Optional[str] = None) -> str:
+def data_uri_from_file(path: str, *, mime_type: Optional[str] = None) -> str:
     """Return base-64 data URI for an image at a given file path.
     If not passed, the content type is determined from the file extension
     if present, otherwise, jpeg is assumed.
