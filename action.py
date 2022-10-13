@@ -14,6 +14,7 @@ class VideoParser:
         self,
         base_url: str,
         channel_id: str,
+        lang: str,
         max_videos: int,
         card_width: int,
         background_color: str,
@@ -26,6 +27,7 @@ class VideoParser:
     ):
         self._base_url = base_url
         self._channel_id = channel_id
+        self.lang = lang
         self._max_videos = max_videos
         self._card_width = card_width
         self._background_color = background_color
@@ -104,6 +106,7 @@ class VideoParser:
         params = {
             "id": video_id,
             "title": video["title"],
+            "lang": self.lang,
             "timestamp": int(time.mktime(video["published_parsed"])),
             "background_color": self._background_color,
             "title_color": self._title_color,
@@ -113,7 +116,9 @@ class VideoParser:
         if video_id in self._youtube_data:
             content_details = self._youtube_data[video_id]["contentDetails"]
             if self._show_duration:
-                params["duration"] = self.parse_iso8601_duration(content_details["duration"])
+                params["duration"] = self.parse_iso8601_duration(
+                    content_details["duration"]
+                )
         # translate video to standard markdown
         backslash_escaped_title = params["title"].replace('"', '\\"')
         # if theme context is set, create two versions with theme context specified
@@ -148,7 +153,9 @@ class FileUpdater:
         begin_index = readme.find(begin_tag)
         end_index = readme.find(end_tag)
         if begin_index == -1 or end_index == -1:
-            raise RuntimeError(f"Could not find tags {begin_tag} and {end_tag} in {readme_path}")
+            raise RuntimeError(
+                f"Could not find tags {begin_tag} and {end_tag} in {readme_path}"
+            )
         readme = f"{readme[:begin_index + len(begin_tag)]}\n{replace_content}\n{readme[end_index:]}"
         with open(readme_path, "w") as readme_file:
             readme_file.write(readme)
@@ -161,6 +168,12 @@ if __name__ == "__main__":
         dest="channel_id",
         help="YouTube channel ID",
         required=True,
+    )
+    parser.add_argument(
+        "--lang",
+        dest="lang",
+        help="Language to be used for card description",
+        default="en-us",
     )
     parser.add_argument(
         "--comment-tag-name",
@@ -252,6 +265,7 @@ if __name__ == "__main__":
     video_parser = VideoParser(
         base_url=args.base_url,
         channel_id=args.channel_id,
+        lang=args.lang,
         max_videos=args.max_videos,
         card_width=args.card_width,
         background_color=args.background_color,

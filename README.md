@@ -18,6 +18,12 @@
 
 ```html
 <!-- BEGIN YOUTUBE-CARDS -->
+[![Automatically Deploy to Fly.io with GitHub Actions](https://ytcards.demolab.com/?id=6u9BrDaSHJc&title=Automatically+Deploy+to+Fly.io+with+GitHub+Actions&lang=fr&timestamp=1661844604&background_color=%230d1117&title_color=%23ffffff&stats_color=%23dedede&width=250 "Automatically Deploy to Fly.io with GitHub Actions")](https://www.youtube.com/watch?v=6u9BrDaSHJc)
+[![Hosting a Python Discord Bot for Free with Fly.io](https://ytcards.demolab.com/?id=J7Fm7MdZn_E&title=Hosting+a+Python+Discord+Bot+for+Free+with+Fly.io&lang=fr&timestamp=1661688947&background_color=%230d1117&title_color=%23ffffff&stats_color=%23dedede&width=250 "Hosting a Python Discord Bot for Free with Fly.io")](https://www.youtube.com/watch?v=J7Fm7MdZn_E)
+[![Making a Wordle Clone Discord Bot with Python (Nextcord)](https://ytcards.demolab.com/?id=0p_eQGKFY3I&title=Making+a+Wordle+Clone+Discord+Bot+with+Python+%28Nextcord%29&lang=fr&timestamp=1643880417&background_color=%230d1117&title_color=%23ffffff&stats_color=%23dedede&width=250 "Making a Wordle Clone Discord Bot with Python (Nextcord)")](https://www.youtube.com/watch?v=0p_eQGKFY3I)
+[![Run Open Source Code in Seconds with GitPod](https://ytcards.demolab.com/?id=Mt_Bsj6K9Lw&title=Run+Open+Source+Code+in+Seconds+with+GitPod&lang=fr&timestamp=1642088613&background_color=%230d1117&title_color=%23ffffff&stats_color=%23dedede&width=250 "Run Open Source Code in Seconds with GitPod")](https://www.youtube.com/watch?v=Mt_Bsj6K9Lw)
+[![Custom Help Commands [#2] Select Menus - Python Discord Bot](https://ytcards.demolab.com/?id=xsA5QAkr-04&title=Custom+Help+Commands+%5B%232%5D+Select+Menus+-+Python+Discord+Bot&lang=fr&timestamp=1633032008&background_color=%230d1117&title_color=%23ffffff&stats_color=%23dedede&width=250 "Custom Help Commands [#2] Select Menus - Python Discord Bot")](https://www.youtube.com/watch?v=xsA5QAkr-04)
+[![Custom Help Commands [#1] Embeds - Python Discord Bot](https://ytcards.demolab.com/?id=TzR8At0SFQI&title=Custom+Help+Commands+%5B%231%5D+Embeds+-+Python+Discord+Bot&lang=fr&timestamp=1632927782&background_color=%230d1117&title_color=%23ffffff&stats_color=%23dedede&width=250 "Custom Help Commands [#1] Embeds - Python Discord Bot")](https://www.youtube.com/watch?v=TzR8At0SFQI)
 <!-- END YOUTUBE-CARDS -->
 ```
 
@@ -74,6 +80,7 @@ Check out the [Wiki](https://github.com/DenverCoder1/github-readme-youtube-cards
 | Option                | Description                                       | Default                                                 |
 | --------------------- | ------------------------------------------------- | ------------------------------------------------------- |
 | `channel_id`          | The channel ID to use for the feed                | Required                                                |
+| `lang`                | The language for cards description text           | "en-us"                                                 |
 | `comment_tag_name`    | The name in the comment tag for replacing content | "YOUTUBE-CARDS"                                         |
 | `youtube_api_key`     | The API key to use for features marked with 🔑    | ""                                                      |
 | `max_videos`          | The maximum number of videos to display           | 6                                                       |

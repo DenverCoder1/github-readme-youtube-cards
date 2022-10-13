@@ -9,6 +9,10 @@ inputs:
   channel_id:
     description: "The channel ID to use for the feed"
     required: true
+  lang:
+    description: "The language you want your cards description to use"
+    required: false
+    default: "en-us"
   comment_tag_name:
     description: "The name of the comment tag to use for the cards"
     required: false
@@ -100,6 +104,7 @@ runs:
       run: |
         UPDATE=$(python ${{ github.action_path }}/action.py \
                 --channel "${{ inputs.channel_id }}" \
+                --lang "${{ inputs.lang }}" \
                 --comment-tag-name "${{ inputs.comment_tag_name }}" \
                 --max-videos ${{ inputs.max_videos }} \
                 --base-url "${{ inputs.base_url }}" \
