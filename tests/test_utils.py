@@ -38,20 +38,21 @@ def test_format_relative_time():
     assert format_relative_time(datetime.now() - timedelta(days=366)) == "1 year ago"
     assert format_relative_time(datetime.now() - timedelta(days=730)) == "2 years ago"
 
+
 def test_format_relative_time_i18n():
     lang = "fr"
-    assert format_relative_time(datetime.now() - timedelta(seconds=1), lang=lang) == "il y a 1 seconde"
-    assert format_relative_time(datetime.now() - timedelta(seconds=5), lang=lang) == "il y a 5 secondes"
-    assert format_relative_time(datetime.now() - timedelta(minutes=1), lang=lang) == "il y a 1 minute"
-    assert format_relative_time(datetime.now() - timedelta(minutes=2), lang=lang) == "il y a 2 minutes"
-    assert format_relative_time(datetime.now() - timedelta(hours=1), lang=lang) == "il y a 1 heure"
-    assert format_relative_time(datetime.now() - timedelta(hours=2), lang=lang) == "il y a 2 heures"
-    assert format_relative_time(datetime.now() - timedelta(days=1), lang=lang) == "il y a 1 jour"
-    assert format_relative_time(datetime.now() - timedelta(days=2), lang=lang) == "il y a 2 jours"
-    assert format_relative_time(datetime.now() - timedelta(days=30), lang=lang) == "il y a 1 mois"
-    assert format_relative_time(datetime.now() - timedelta(days=60), lang=lang) == "il y a 2 mois"
-    assert format_relative_time(datetime.now() - timedelta(days=365), lang=lang) == "il y a 1 an"
-    assert format_relative_time(datetime.now() - timedelta(days=730), lang=lang) == "il y a 2 ans"
+    assert format_relative_time(datetime.now() - timedelta(seconds=1), lang) == "il y a 1 seconde"
+    assert format_relative_time(datetime.now() - timedelta(seconds=5), lang) == "il y a 5 secondes"
+    assert format_relative_time(datetime.now() - timedelta(minutes=1), lang) == "il y a 1 minute"
+    assert format_relative_time(datetime.now() - timedelta(minutes=2), lang) == "il y a 2 minutes"
+    assert format_relative_time(datetime.now() - timedelta(hours=1), lang) == "il y a 1 heure"
+    assert format_relative_time(datetime.now() - timedelta(hours=2), lang) == "il y a 2 heures"
+    assert format_relative_time(datetime.now() - timedelta(days=1), lang) == "il y a 1 jour"
+    assert format_relative_time(datetime.now() - timedelta(days=2), lang) == "il y a 2 jours"
+    assert format_relative_time(datetime.now() - timedelta(days=30), lang) == "il y a 1 mois"
+    assert format_relative_time(datetime.now() - timedelta(days=60), lang) == "il y a 2 mois"
+    assert format_relative_time(datetime.now() - timedelta(days=365), lang) == "il y a 1 an"
+    assert format_relative_time(datetime.now() - timedelta(days=730), lang) == "il y a 2 ans"
 
 
 def test_data_uri_from_url_and_file():

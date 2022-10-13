@@ -39,9 +39,8 @@ def validate_string(req: Request, field: str, default: str = "") -> str:
 
 
 def validate_lang(req: Request, field: str, *, default: str = "en") -> str:
-    """Validate a string with a locale lang,
-    returns the string if transaltions present in the locale directory,
-    otherwise the default.
+    """Validate a string with a locale lang, returns the string if translations
+    are present in the locale directory, otherwise the default.
     """
     value = req.args.get(field, "")
     # if there is no yaml file for the language, use the default

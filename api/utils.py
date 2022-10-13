@@ -17,7 +17,6 @@ def format_relative_time(date: datetime, lang: str = "en") -> str:
     seconds_diff = int((datetime.now() - date).total_seconds())
     # number of days in difference
     days_diff = seconds_diff // 86400
-
     # less than 50 seconds ago
     if seconds_diff < 50:
         return i18n.t("seconds-ago", count=seconds_diff, locale=lang)
