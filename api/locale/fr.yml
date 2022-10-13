@@ -1,7 +1,7 @@
 fr:
   views: "%{number} vues"
   seconds-ago:
-    one: "il y a %{count} seconde"
+    one: "il y a 1 seconde"
     many: "il y a %{count} secondes"
   minutes-ago:
     one: "il y a 1 minute"

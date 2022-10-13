@@ -1,7 +1,7 @@
 en-us:
   views: "%{number} views"
   seconds-ago:
-    one: "%{count} second ago"
+    one: "%1 second ago"
     many: "%{count} seconds ago"
   minutes-ago:
     one: "1 minute ago"

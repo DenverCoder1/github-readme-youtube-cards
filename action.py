@@ -27,7 +27,7 @@ class VideoParser:
     ):
         self._base_url = base_url
         self._channel_id = channel_id
-        self.lang = lang
+        self._lang = lang
         self._max_videos = max_videos
         self._card_width = card_width
         self._background_color = background_color
@@ -106,7 +106,7 @@ class VideoParser:
         params = {
             "id": video_id,
             "title": video["title"],
-            "lang": self.lang,
+            "lang": self._lang,
             "timestamp": int(time.mktime(video["published_parsed"])),
             "background_color": self._background_color,
             "title_color": self._title_color,
@@ -116,9 +116,7 @@ class VideoParser:
         if video_id in self._youtube_data:
             content_details = self._youtube_data[video_id]["contentDetails"]
             if self._show_duration:
-                params["duration"] = self.parse_iso8601_duration(
-                    content_details["duration"]
-                )
+                params["duration"] = self.parse_iso8601_duration(content_details["duration"])
         # translate video to standard markdown
         backslash_escaped_title = params["title"].replace('"', '\\"')
         # if theme context is set, create two versions with theme context specified
@@ -153,9 +151,7 @@ class FileUpdater:
         begin_index = readme.find(begin_tag)
         end_index = readme.find(end_tag)
         if begin_index == -1 or end_index == -1:
-            raise RuntimeError(
-                f"Could not find tags {begin_tag} and {end_tag} in {readme_path}"
-            )
+            raise RuntimeError(f"Could not find tags {begin_tag} and {end_tag} in {readme_path}")
         readme = f"{readme[:begin_index + len(begin_tag)]}\n{replace_content}\n{readme[end_index:]}"
         with open(readme_path, "w") as readme_file:
             readme_file.write(readme)
