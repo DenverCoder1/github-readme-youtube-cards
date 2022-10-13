@@ -169,7 +169,7 @@ if __name__ == "__main__":
         "--lang",
         dest="lang",
         help="Language to be used for card description",
-        default="en-us",
+        default="en",
     )
     parser.add_argument(
         "--comment-tag-name",

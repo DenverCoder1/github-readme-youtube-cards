@@ -1,4 +1,4 @@
-en-us:
+en:
   views: "%{number} views"
   seconds-ago:
     one: "%1 second ago"

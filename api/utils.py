@@ -6,13 +6,12 @@ from urllib.request import Request, urlopen
 import orjson
 import i18n
 
-i18n.set("file-format", "yaml")
 i18n.set("filename_format", "{locale}.{format}")
 i18n.set("enable_memoization", True)
 i18n.load_path.append("./api/locale")
 
 
-def format_relative_time(date: datetime, lang: str = "en-us") -> str:
+def format_relative_time(date: datetime, lang: str = "en") -> str:
     """Get relative time from datetime (ex. "3 hours ago")"""
     # find time difference in seconds
     seconds_diff = int((datetime.now() - date).total_seconds())
@@ -95,7 +94,7 @@ def trim_text(text: str, max_length: int) -> str:
     return text[: max_length - 1].strip() + "…"
 
 
-def fetch_views(video_id: str, lang: str = "en-us") -> str:
+def fetch_views(video_id: str, lang: str = "en") -> str:
     """Get number of views for a YouTube video as a formatted metric"""
     try:
         req = Request(f"https://img.shields.io/youtube/views/{video_id}.json")
