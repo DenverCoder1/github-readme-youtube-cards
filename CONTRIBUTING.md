@@ -24,8 +24,10 @@ gunicorn api.index:app
 ### Running the action Python part of the workflow locally
 
 ```bash
-python action.py --channel_id=UCipSxT7a3rn81vGLw9lqRkg
+python action.py --channel=UCipSxT7a3rn81vGLw9lqRkg --comment-tag-name="EXAMPLE-YOUTUBE-CARDS"
 ```
+
+Any additional arguments can be passed to the script. Run `python action.py -h` to see the full list of arguments.
 
 ### Running tests
 
