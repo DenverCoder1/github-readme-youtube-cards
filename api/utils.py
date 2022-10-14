@@ -3,8 +3,8 @@ from datetime import datetime
 from typing import Optional
 from urllib.request import Request, urlopen
 
-import orjson
 import i18n
+import orjson
 
 i18n.set("filename_format", "{locale}.{format}")
 i18n.set("enable_memoization", True)

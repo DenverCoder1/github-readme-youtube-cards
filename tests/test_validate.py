@@ -1,4 +1,5 @@
 import pytest
+
 from api.validate import validate_color, validate_int, validate_string, validate_video_id
 
 

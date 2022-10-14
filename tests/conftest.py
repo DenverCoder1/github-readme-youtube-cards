@@ -1,6 +1,7 @@
 import pytest
-from api.index import app
 from flask.wrappers import Request
+
+from api.index import app
 
 
 @pytest.fixture()
