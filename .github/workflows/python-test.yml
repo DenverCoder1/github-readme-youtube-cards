@@ -23,7 +23,7 @@ on:
       - "requirements*.txt"
 
 jobs:
-  build:
+  tox:
     runs-on: ubuntu-latest
 
     steps:
