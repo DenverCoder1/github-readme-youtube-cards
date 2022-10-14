@@ -5,20 +5,21 @@ from flask import Flask, render_template, request
 from flask.wrappers import Response
 
 from .utils import (
+    data_uri_from_file,
+    data_uri_from_url,
     estimate_duration_width,
     fetch_views,
     format_relative_time,
-    data_uri_from_url,
-    data_uri_from_file,
+    is_rtl,
     seconds_to_duration,
     trim_text,
 )
 from .validate import (
     validate_color,
     validate_int,
+    validate_lang,
     validate_string,
     validate_video_id,
-    validate_lang,
 )
 
 app = Flask(__name__)
@@ -38,7 +39,6 @@ def render():
         publish_timestamp = validate_int(request, "timestamp", default=0)
         duration_seconds = validate_int(request, "duration", default=0)
         lang = validate_lang(request, "lang", default="en")
-        rtl = lang in ["ar", "he"]
         video_id = validate_video_id(request, "id")
         thumbnail = data_uri_from_url(f"https://i.ytimg.com/vi/{video_id}/mqdefault.jpg")
         views = fetch_views(video_id)
@@ -63,7 +63,7 @@ def render():
                 thumbnail=thumbnail,
                 duration=duration,
                 duration_width=duration_width,
-                rtl=rtl,
+                rtl=is_rtl(lang),
             ),
             status=200,
             mimetype="image/svg+xml",
