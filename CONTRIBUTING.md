@@ -36,9 +36,12 @@ tox
 ```
 
 ## Contributing translations
-You could contribute to github-readme-youtube-cards by adding translations in the `api/locale` folder.
-To add translations for an new language:
-- Copy the contents of `api/locale/en.yml` file to `api/locale/api/<IDENTIFIER>.yml`, where IDENTIFIER is shorthand for the language you are adding translations for.
+
+You can contribute to GitHub Readme YouTube Cards by adding translations in the `api/locale` folder.
+
+To add translations for a new language:
+
+- Copy the contents of `api/locale/en.yml` file to `api/locale/<IDENTIFIER>.yml`, where IDENTIFIER is shorthand for the language you are adding translations for.
 - Change the top most yaml key `en:` to `<IDENTIFIER>:`.
 - Add translations for the strings provided below in the file. Only alter the text enclosed in quotes.
-- To test, run the project locally and add `&lang=IDENTIFIER` to a card URL to test if transaltion works as expected.
+- To test, run the project locally and add `&lang=IDENTIFIER` to a card URL to test if translation works as expected.
