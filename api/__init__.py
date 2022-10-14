@@ -1,1 +1,0 @@
-from .index import app
