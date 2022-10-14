@@ -32,3 +32,10 @@ repos:
         name: Check YAML files for valid syntax.
       - id: debug-statements
         name: Check for debug statements.
+
+  - repo: https://github.com/pre-commit/mirrors-prettier
+    rev: v2.7.1
+    hooks:
+      - id: prettier
+        name: Running prettier in non-code files.
+        types_or: [markdown, yaml, css, json]
