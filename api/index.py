@@ -38,6 +38,7 @@ def render():
         publish_timestamp = validate_int(request, "timestamp", default=0)
         duration_seconds = validate_int(request, "duration", default=0)
         lang = validate_lang(request, "lang", default="en")
+        rtl = lang in ["ar", "he"]
         video_id = validate_video_id(request, "id")
         thumbnail = data_uri_from_url(f"https://i.ytimg.com/vi/{video_id}/mqdefault.jpg")
         views = fetch_views(video_id)
@@ -62,6 +63,7 @@ def render():
                 thumbnail=thumbnail,
                 duration=duration,
                 duration_width=duration_width,
+                rtl=rtl,
             ),
             status=200,
             mimetype="image/svg+xml",
