@@ -258,9 +258,9 @@ if __name__ == "__main__":
         title_color=args.title_color,
         stats_color=args.stats_color,
         youtube_api_key=args.youtube_api_key,
-        show_duration=args.show_duration == "true",
         theme_context_light=json.loads(args.theme_context_light),
         theme_context_dark=json.loads(args.theme_context_dark),
+        show_duration=args.show_duration == "true",
     )
 
     video_content = video_parser.parse_videos()
