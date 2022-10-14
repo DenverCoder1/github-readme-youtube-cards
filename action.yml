@@ -96,7 +96,7 @@ runs:
 
     - name: Install Python dependencies
       shell: bash
-      run: python -m pip install feedparser
+      run: python -m pip install -r ${{ github.action_path }}/requirements-action.txt
 
     - name: Generate Readme Update
       id: "generate-readme-update"
