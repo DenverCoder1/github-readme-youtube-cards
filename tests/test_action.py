@@ -76,20 +76,22 @@ def test_update_file():
             "\n"
             "Test After\n"
         )
-    # update the file
-    FileUpdater.update(path, "YOUTUBE-CARDS", "A\nB\nC")
-    # read the file and assert the contents
-    with open(path, "r") as f:
-        assert f.read() == (
-            "Test Before\n"
-            "\n"
-            "<!-- BEGIN YOUTUBE-CARDS -->\n"
-            "A\n"
-            "B\n"
-            "C\n"
-            "<!-- END YOUTUBE-CARDS -->\n"
-            "\n"
-            "Test After\n"
-        )
-    # delete the file
-    os.remove(path)
+    try:
+        # update the file
+        FileUpdater.update(path, "YOUTUBE-CARDS", "A\nB\nC")
+        # read the file and assert the contents
+        with open(path, "r") as f:
+            assert f.read() == (
+                "Test Before\n"
+                "\n"
+                "<!-- BEGIN YOUTUBE-CARDS -->\n"
+                "A\n"
+                "B\n"
+                "C\n"
+                "<!-- END YOUTUBE-CARDS -->\n"
+                "\n"
+                "Test After\n"
+            )
+    finally:
+        # remove the file
+        os.remove(path)
