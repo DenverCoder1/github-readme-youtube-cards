@@ -1,8 +1,11 @@
-name: 📄 Documentation
-description: Found an issue in the documentation? You can use this one!
-title: "[DOCS] <description>"
+name: 📚 Documentation
+description: Report an issue related to the documentation
+title: "📚 Docs: "
 labels: ["documentation"]
 body:
+  - type: markdown
+    attributes:
+      value: Thanks for taking the time to make our documentation better 🙏
   - type: textarea
     id: description
     attributes:
@@ -10,10 +13,3 @@ body:
       description: Description of the documentation issue
     validations:
       required: true
-  - type: textarea
-    id: screenshots
-    attributes:
-      label: Screenshots
-      description: Screenshots if applicable
-    validations:
-      required: false
