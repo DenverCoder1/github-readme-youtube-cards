@@ -1,24 +1,52 @@
-[tool.poetry]
-name = "github-readme-youtube-cards"
-version = "1.2.2"
-description = "Workflow for displaying recent YouTube videos as SVG cards in your readme"
-authors = ["Jonah Lawrence <jonah@freshidea.com>"]
-readme = "README.md"
-
-[tool.poetry.dependencies]
-python = "^3.8"
-Flask = "^2.2.2"
-gunicorn = "^20.1.0"
-orjson = "^3.8.0"
-python-i18n = {extras = ["yaml"], version = "^0.3.9"}
-
-[tool.poetry.group.dev.dependencies]
-black = "^22.8.0"
-tox = "^3.26.0"
-
 [build-system]
 requires = [
     "setuptools >= 35.0.2",
     "setuptools_scm >= 2.0.0, <3"
 ]
 build-backend = "setuptools.build_meta"
+
+[project]
+name = "github-readme-youtube-cards"
+authors = [{name = "Jonah Lawrence", email = "jonah@freshidea.com"}]
+
+[tool.black]
+line-length = 100
+target-version = ["py310"]
+
+[tool.isort]
+profile = "black"
+py_version = 310
+line_length = 100
+combine_as_imports = true
+filter_files = true
+
+[tool.taskipy.tasks]
+black = { cmd = "task lint black", help = "Run black" }
+isort = { cmd = "task lint isort", help = "Run isort" }
+lint = { cmd = "pre-commit run --all-files", help = "Check all files for linting errors" }
+precommit = { cmd = "pre-commit install --install-hooks", help = "Install the precommit hook" }
+pyright = { cmd = "pyright", help = "Run pyright" }
+
+[tool.pyright]
+typeCheckingMode = "basic"
+include = [
+    "api",
+    "tests",
+    "*.py",
+]
+pythonVersion = "3.10"
+# https://github.com/microsoft/pyright/blob/main/docs/configuration.md
+reportPropertyTypeMismatch = true
+reportDuplicateImport = true
+reportUntypedFunctionDecorator = true
+reportUntypedClassDecorator = true
+reportUntypedBaseClass = true
+reportUntypedNamedTuple = true
+reportUnknownLambdaType = true
+reportInvalidTypeVarUse = true
+reportUnnecessaryCast = true
+reportSelfClsParameterName = true
+reportUnsupportedDunderAll = true
+reportUnusedVariable = true
+reportUnnecessaryComparison = true
+reportUnnecessaryTypeIgnoreComment = true
