@@ -17,6 +17,11 @@ def test_fetch_views():
     assert metric_regex.match(fetch_views("dQw4w9WgXcQ"))
 
 
+def test_fetch_views_i18n():
+    metric_regex = re.compile(r"^\d+(?:\.\d)?[KMBT]? vues$")
+    assert metric_regex.match(fetch_views("dQw4w9WgXcQ", "fr"))
+
+
 def test_format_relative_time():
     assert format_relative_time(datetime.now() - timedelta(seconds=1)) == "1 second ago"
     assert format_relative_time(datetime.now() - timedelta(seconds=5)) == "5 seconds ago"
