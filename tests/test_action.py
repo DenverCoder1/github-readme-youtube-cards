@@ -6,6 +6,7 @@ from action import FileUpdater, VideoParser
 video_parser = VideoParser(
     base_url="https://ytcards.demolab.com/",
     channel_id="UCipSxT7a3rn81vGLw9lqRkg",
+    lang="en",
     max_videos=6,
     card_width=250,
     background_color="#0d1117",
