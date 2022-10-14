@@ -1,0 +1,41 @@
+name: Pre-commit Checks
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "api/**"
+      - "tests/**"
+      - "**.py"
+      - "**.yml"
+      - "**.yaml"
+      - "**.json"
+      - "**.css"
+      - "**.svg"
+      - "**.md"
+      - "**.toml"
+      - "requirements*.txt"
+
+jobs:
+  pre-commit:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up python 3.10
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+          cache: pip
+
+      - name: Install dependencies
+        run: python -m pip install -r requirements.txt -r requirements-dev.txt -r requirements-action.txt
+
+      - name: Run pre-commit
+        uses: pre-commit/action@v3.0.0
