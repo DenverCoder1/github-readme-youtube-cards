@@ -71,3 +71,27 @@ def test_request_valid_params(client):
     # test timestamp
     timestamp_regex = re.compile(r"\d+ years ago")
     assert timestamp_regex.search(data) is not None
+
+    # test direction
+    assert 'style="direction: ltr"' in data
+
+
+def test_request_right_to_left(client):
+    params = {
+        "id": "dQw4w9WgXcQ",
+        "title": "Rick Astley - Never Gonna Give You Up (Official Music Video)",
+        "timestamp": "1256450400",
+        "lang": "he",
+    }
+    response = client.get(f"/?{urlencode(params)}")
+    data = response.data.decode("utf-8")
+
+    # stats group should be 10 pixels from the right
+    assert "translate(240, 195.0)" in data
+
+    # test direction
+    assert 'style="direction: rtl"' in data
+
+    # test views
+    views_regex = re.compile(r"\d+(?:\.\d)?[KMBT]? צפיות")
+    assert views_regex.search(data) is not None

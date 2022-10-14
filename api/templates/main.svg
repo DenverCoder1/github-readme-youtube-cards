@@ -29,8 +29,8 @@
         </text>
     </g>
     <!-- views and date -->
-    <g transform="translate(10, {{ width * 0.56 + 55 }})">
-        <text fill="{{ stats_color }}" font-family="Roboto, Segoe UI, Ubuntu, Arial, sans-serif" font-weight="400" font-size="13px">
+    <g transform="translate({{ width - 10 if rtl else 10 }}, {{ width * 0.56 + 55 }})">
+        <text fill="{{ stats_color }}" font-family="Roboto, Segoe UI, Ubuntu, Arial, sans-serif" font-weight="400" font-size="13px" style="direction: {{ 'rtl' if rtl else 'ltr' }}">
             {{ stats }}
         </text>
     </g>
