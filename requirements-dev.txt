@@ -1,0 +1,6 @@
+tox
+pytest
+black
+pre-commit
+taskipy
+pyright

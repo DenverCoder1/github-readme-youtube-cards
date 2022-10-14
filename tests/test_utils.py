@@ -2,11 +2,11 @@ import re
 from datetime import datetime, timedelta
 
 from api.utils import (
+    data_uri_from_file,
+    data_uri_from_url,
     estimate_duration_width,
     fetch_views,
     format_relative_time,
-    data_uri_from_url,
-    data_uri_from_file,
     seconds_to_duration,
     trim_text,
 )

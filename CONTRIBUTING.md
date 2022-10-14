@@ -8,11 +8,11 @@ Make sure your request is meaningful and you have tested the app locally before 
 
 ```bash
 # Dependencies for running the Flask server
-poetry install
+pip install -r requirements.txt
 # Dependencies for testing and development
-poetry install --with dev
+pip install -r requirements-dev.txt
 # Dependencies for running the action script
-pip install feedparser
+pip install -r requirements-action.txt
 ```
 
 ### Running the Flask server
