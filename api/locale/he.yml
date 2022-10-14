@@ -1,4 +1,5 @@
 he:
+  direction: rtl
   views: "%{number} צפיות"
   seconds-ago:
     one: "לפני שניה"

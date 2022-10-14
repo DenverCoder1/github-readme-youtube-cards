@@ -125,3 +125,8 @@ def estimate_duration_width(duration: str) -> int:
     num_digits = len([c for c in duration if c.isdigit()])
     num_colons = len([c for c in duration if c == ":"])
     return num_digits * 7 + num_colons * 5 + 8
+
+
+def is_rtl(lang: str) -> bool:
+    """Check if language is to be displayed right-to-left"""
+    return i18n.t("direction", locale=lang, default="ltr") == "rtl"
