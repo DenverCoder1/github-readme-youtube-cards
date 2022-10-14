@@ -106,7 +106,7 @@ def fetch_views(video_id: str, lang: str = "en") -> str:
                 if value
                 else ""
             )
-    except Exception as e:
+    except Exception:
         return ""
 
 

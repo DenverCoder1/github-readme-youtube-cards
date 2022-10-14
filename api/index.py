@@ -25,7 +25,7 @@ from .validate import (
 app = Flask(__name__)
 
 # enable jinja2 autoescape for all files including SVG files
-app.jinja_options["autoescape"] = lambda _: True
+app.jinja_options["autoescape"] = True
 
 
 @app.route("/")
