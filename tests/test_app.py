@@ -72,6 +72,9 @@ def test_request_valid_params(client):
     timestamp_regex = re.compile(r"\d+ years ago")
     assert timestamp_regex.search(data) is not None
 
+    # test direction
+    assert 'style="direction: ltr"' in data
+
 
 def test_request_right_to_left(client):
     params = {
@@ -86,6 +89,7 @@ def test_request_right_to_left(client):
     # stats group should be 10 pixels from the right
     assert "translate(240, 195.0)" in data
 
+    # test direction
     assert 'style="direction: rtl"' in data
 
     # test views
