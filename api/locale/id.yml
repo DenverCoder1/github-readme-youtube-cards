@@ -1,0 +1,20 @@
+id:
+  views: '%{number} ditonton'
+  seconds-ago:
+    one: '1 detik yang lalu'
+    many: '%{count} detik yang lalu'
+  minutes-ago:
+    one: '1 menit yang lalu'
+    many: '%{count} menit yang lalu'
+  hours-ago:
+    one: '1 jam yang lalu'
+    many: '%{count} jam yang lalu'
+  days-ago:
+    one: '1 hari yang lalu'
+    many: '%{count} hari yang lalu'
+  months-ago:
+    one: '1 bulan yang lalu'
+    many: '%{count} bulan yang lalu'
+  years-ago:
+    one: '1 tahun yang lalu'
+    many: '%{count} tahun yang lalu'
