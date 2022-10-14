@@ -1,0 +1,20 @@
+fr:
+  views: "%{number} vues"
+  seconds-ago:
+    one: "il y a 1 seconde"
+    many: "il y a %{count} secondes"
+  minutes-ago:
+    one: "il y a 1 minute"
+    many: "il y a %{count} minutes"
+  hours-ago:
+    one: "il y a 1 heure"
+    many: "il y a %{count} heures"
+  days-ago:
+    one: "il y a 1 jour"
+    many: "il y a %{count} jours"
+  months-ago:
+    one: "il y a 1 mois"
+    many: "il y a %{count} mois"
+  years-ago:
+    one: "il y a 1 an"
+    many: "il y a %{count} ans"

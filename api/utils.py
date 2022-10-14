@@ -4,47 +4,49 @@ from typing import Optional
 from urllib.request import Request, urlopen
 
 import orjson
+import i18n
+
+i18n.set("filename_format", "{locale}.{format}")
+i18n.set("enable_memoization", True)
+i18n.load_path.append("./api/locale")
 
 
-def format_relative_time(date: datetime) -> str:
+def format_relative_time(date: datetime, lang: str = "en") -> str:
     """Get relative time from datetime (ex. "3 hours ago")"""
     # find time difference in seconds
     seconds_diff = int((datetime.now() - date).total_seconds())
     # number of days in difference
     days_diff = seconds_diff // 86400
-    # less than 5 seconds ago
-    if seconds_diff < 5:
-        return "just now"
     # less than 50 seconds ago
     if seconds_diff < 50:
-        return f"{seconds_diff} seconds ago"
+        return i18n.t("seconds-ago", count=seconds_diff, locale=lang)
     # less than 2 minutes ago
     if seconds_diff < 120:
-        return "1 minute ago"
+        return i18n.t("minutes-ago", count=1, locale=lang)
     # less than an hour ago
     if seconds_diff < 3600:
-        return f"{seconds_diff // 60} minutes ago"
+        return i18n.t("minutes-ago", count=seconds_diff // 60, locale=lang)
     # less than 2 hours ago
     if seconds_diff < 7200:
-        return "1 hour ago"
+        return i18n.t("hours-ago", count=1, locale=lang)
     # less than 24 hours ago
     if seconds_diff < 86400:
-        return f"{seconds_diff // 3600} hours ago"
+        return i18n.t("hours-ago", count=seconds_diff // 3600, locale=lang)
     # 1 day ago
     if days_diff == 1:
-        return "1 day ago"
+        return i18n.t("days-ago", count=1, locale=lang)
     # less than a month ago
     if days_diff < 30:
-        return f"{days_diff} days ago"
+        return i18n.t("days-ago", count=days_diff, locale=lang)
     # less than 12 months ago
     if days_diff < 336:
         if round(days_diff / 30.5) == 1:
-            return "1 month ago"
-        return f"{round(days_diff / 30.5)} months ago"
+            return i18n.t("months-ago", count=1, locale=lang)
+        return i18n.t("months-ago", count=round(days_diff / 30.5), locale=lang)
     # more than a year ago
     if round(days_diff / 365) == 1:
-        return "1 year ago"
-    return f"{round(days_diff / 365)} years ago"
+        return i18n.t("years-ago", count=1, locale=lang)
+    return i18n.t("years-ago", count=round(days_diff / 365), locale=lang)
 
 
 def data_uri_from_bytes(*, data: bytes, mime_type: str) -> str:
@@ -91,7 +93,7 @@ def trim_text(text: str, max_length: int) -> str:
     return text[: max_length - 1].strip() + "…"
 
 
-def fetch_views(video_id: str) -> str:
+def fetch_views(video_id: str, lang: str = "en") -> str:
     """Get number of views for a YouTube video as a formatted metric"""
     try:
         req = Request(f"https://img.shields.io/youtube/views/{video_id}.json")
@@ -99,8 +101,12 @@ def fetch_views(video_id: str) -> str:
         with urlopen(req) as response:
             value = orjson.loads(response.read()).get("value", "")
             # replace G with B for billion and convert to uppercase
-            return f"{value.replace('G', 'B').upper()} views" if value else ""
-    except Exception:
+            return (
+                i18n.t("views", number=value.replace("G", "B").upper(), locale=lang)
+                if value
+                else ""
+            )
+    except Exception as e:
         return ""
 
 

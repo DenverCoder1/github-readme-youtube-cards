@@ -13,7 +13,13 @@ from .utils import (
     seconds_to_duration,
     trim_text,
 )
-from .validate import validate_color, validate_int, validate_string, validate_video_id
+from .validate import (
+    validate_color,
+    validate_int,
+    validate_string,
+    validate_video_id,
+    validate_lang,
+)
 
 app = Flask(__name__)
 
@@ -31,11 +37,13 @@ def render():
         title = trim_text(validate_string(request, "title", default=""), (width - 20) // 8)
         publish_timestamp = validate_int(request, "timestamp", default=0)
         duration_seconds = validate_int(request, "duration", default=0)
+        lang = validate_lang(request, "lang", default="en")
         video_id = validate_video_id(request, "id")
         thumbnail = data_uri_from_url(f"https://i.ytimg.com/vi/{video_id}/mqdefault.jpg")
         views = fetch_views(video_id)
+        views = fetch_views(video_id, lang)
         diff = (
-            format_relative_time(datetime.fromtimestamp(int(publish_timestamp)))
+            format_relative_time(datetime.fromtimestamp(int(publish_timestamp)), lang)
             if publish_timestamp
             else ""
         )

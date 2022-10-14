@@ -74,6 +74,7 @@ Check out the [Wiki](https://github.com/DenverCoder1/github-readme-youtube-cards
 | Option                | Description                                       | Default                                                 |
 | --------------------- | ------------------------------------------------- | ------------------------------------------------------- |
 | `channel_id`          | The channel ID to use for the feed                | Required                                                |
+| `lang`                | The language for cards description text           | "en"                                                    |
 | `comment_tag_name`    | The name in the comment tag for replacing content | "YOUTUBE-CARDS"                                         |
 | `youtube_api_key`     | The API key to use for features marked with 🔑    | ""                                                      |
 | `max_videos`          | The maximum number of videos to display           | 6                                                       |
