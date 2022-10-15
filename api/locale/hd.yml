@@ -1,0 +1,20 @@
+en:
+  views: "%{number} बार देखा गया"
+  seconds-ago:
+    one: "1 सेकंड पहले"
+    many: "%{count} सेकंड पहले"
+  minutes-ago:
+    one: "1 मिनट पहले"
+    many: "%{count} मिनट पहले"
+  hours-ago:
+    one: "1 घंटे पहले"
+    many: "%{count} घंटे पहले"
+  days-ago:
+    one: "1 दिन पहले"
+    many: "%{count} दिन पहले"
+  months-ago:
+    one: "1 महीने पहले"
+    many: "%{count} महीने पहले"
+  years-ago:
+    one: "1 साल पहले"
+    many: "%{count} साल पहले"
