@@ -1,0 +1,21 @@
+ur:
+  direction: rtl
+  views: "%{number} ویوز"
+  seconds-ago:
+    one: "1 سیکنڈ پہلے" 
+    many: "%{count} سیکنڈ پہلے"
+  minutes-ago:
+    one: "1 منٹ پہلے"
+    many: "%{count} منٹ پہلے"
+  hours-ago:
+    one: "1 گھنٹہ پہلے"
+    many: "%{count} گھنٹے پہلے"
+  days-ago:
+    one: "1 دن پہلے"
+    many: "%{count} دن پہلے"
+  months-ago:
+    one: "1 مہینہ پہلے"
+    many: "%{count} مہینے پہلے"
+  years-ago:
+    one: "1 سال پہلے"
+    many: "%{count} سال پہلے"
