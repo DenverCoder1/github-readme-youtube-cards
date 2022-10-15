@@ -1,21 +1,21 @@
 fa:
   direction: rtl
-  views: "بازدید %{number}"
+  views: "%{number} بازدید"
   seconds-ago:
     one: "یک ثانیه پیش"
-    many: "ثانیه پیش %{count}"
+    many: "%{count} ثانیه پیش"
   minutes-ago:
     one: "یک دقیقه پیش"
-    many: "دقیقه پیش %{count}"
+    many: "%{count} دقیقه پیش"
   hours-ago:
     one: "یک ساعت پیش"
-    many: "ساعت پیش %{count}"
+    many: "%{count} ساعت پیش"
   days-ago:
     one: "یک روز پیش"
-    many: "روز پیش %{count}"
+    many: "%{count} روز پیش"
   months-ago:
     one: "یک ماه پیش"
-    many: "ماه پیش %{count}"
+    many: "%{count} ماه پیش"
   years-ago:
     one: "یک سال پیش"
-    many: "سال پیش %{count}"
+    many: "%{count} سال پیش"
