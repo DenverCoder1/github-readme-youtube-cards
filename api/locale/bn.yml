@@ -1,4 +1,4 @@
-ba:
+bn:
   views: "%{number} বার দেখা হয়েছে"
   seconds-ago:
     one: "1 সেকেন্ড আগে"
