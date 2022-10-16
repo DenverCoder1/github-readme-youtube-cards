@@ -143,7 +143,7 @@ class FileUpdater:
         """Replace the text between the begin and end tags with the replace content"""
         begin_tag = f"<!-- BEGIN {comment_tag} -->"
         end_tag = f"<!-- END {comment_tag} -->"
-        with open(readme_path, "r") as readme_file:
+        with open(readme_path, "rb") as readme_file:
             readme = readme_file.read()
         begin_index = readme.find(begin_tag)
         end_index = readme.find(end_tag)
