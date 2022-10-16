@@ -1,6 +1,8 @@
 fa:
   direction: rtl
-  views: "%{number} بازدید"
+  views:
+    one: "1 بازدید"
+    many: "%{count} بازدید"
   seconds-ago:
     one: "یک ثانیه پیش"
     many: "%{count} ثانیه پیش"

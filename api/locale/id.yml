@@ -1,5 +1,7 @@
 id:
-  views: "%{number} ditonton"
+  views:
+    one: "1 ditonton"
+    many: "%{count} ditonton"
   seconds-ago:
     one: "1 detik yang lalu"
     many: "%{count} detik yang lalu"

@@ -1,5 +1,7 @@
 hi:
-  views: "%{number} बार देखा गया"
+  views:
+    one: "1 बार देखा गया"
+    many: "%{count} बार देखा गया"
   seconds-ago:
     one: "1 सेकंड पहले"
     many: "%{count} सेकंड पहले"

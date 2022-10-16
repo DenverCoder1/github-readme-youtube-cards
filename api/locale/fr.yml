@@ -1,5 +1,10 @@
 fr:
-  views: "%{number} vues"
+  thousand: "%{count} k"
+  million: "%{count} M de"
+  billion: "%{count} Md de"
+  views:
+    one: "1 vue"
+    many: "%{count} vues"
   seconds-ago:
     one: "il y a 1 seconde"
     many: "il y a %{count} secondes"

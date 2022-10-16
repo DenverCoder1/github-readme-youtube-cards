@@ -1,5 +1,11 @@
 en:
-  views: "%{number} views"
+  # thousand, million, and billion can be left out to use the default
+  thousand: "%{count}K"
+  million: "%{count}M"
+  billion: "%{count}B"
+  views:
+    one: "1 view"
+    many: "%{count} views"
   seconds-ago:
     one: "1 second ago"
     many: "%{count} seconds ago"

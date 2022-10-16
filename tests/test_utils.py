@@ -7,6 +7,7 @@ from api.utils import (
     estimate_duration_width,
     fetch_views,
     format_relative_time,
+    format_views_value,
     seconds_to_duration,
     trim_text,
 )
@@ -17,9 +18,22 @@ def test_fetch_views():
     assert metric_regex.match(fetch_views("dQw4w9WgXcQ"))
 
 
-def test_fetch_views_i18n():
-    metric_regex = re.compile(r"^\d+(?:\.\d)?[KMBT]? vues$")
-    assert metric_regex.match(fetch_views("dQw4w9WgXcQ", "fr"))
+def test_format_views_value():
+    assert format_views_value("1") == "1 view"
+    assert format_views_value("100") == "100 views"
+    assert format_views_value("1k") == "1K views"
+    assert format_views_value("1.5k") == "1.5K views"
+    assert format_views_value("2M") == "2M views"
+    assert format_views_value("1.5G") == "1.5B views"
+
+
+def test_format_views_value_i18n():
+    assert format_views_value("1", "fr") == "1 vue"
+    assert format_views_value("100", "fr") == "100 vues"
+    assert format_views_value("1k", "fr") == "1 k vues"
+    assert format_views_value("1.5k", "fr") == "1,5 k vues"
+    assert format_views_value("2M", "fr") == "2 M de vues"
+    assert format_views_value("1.5G", "fr") == "1,5 Md de vues"
 
 
 def test_format_relative_time():

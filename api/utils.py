@@ -1,10 +1,12 @@
 import codecs
+import re
 from datetime import datetime
 from typing import Optional
 from urllib.request import Request, urlopen
 
 import i18n
 import orjson
+from babel.numbers import format_decimal
 
 i18n.set("filename_format", "{locale}.{format}")
 i18n.set("enable_memoization", True)
@@ -93,6 +95,31 @@ def trim_text(text: str, max_length: int) -> str:
     return text[: max_length - 1].strip() + "…"
 
 
+def format_views_value(value: str, lang: str = "en") -> str:
+    """Format view count, for example "1.2M" => "1.2M views", translations included"""
+    match = re.match(r"(?P<number>\d+(?:\.\d+)?)(?P<letter>[kMG]?)", value)
+    if match:
+        # get the letter (k, M, or G)
+        letter = match.group("letter")
+        # if less than 1k, format as an integer
+        if letter == "":
+            return i18n.t("views", count=int(match.group("number")), locale=lang)
+        # format the number using the locale's number format
+        number = format_decimal(float(match.group("number")), locale=lang)
+        # translate the letter (k, M, or G) and add it to the number
+        translated_value = value
+        if letter == "k":
+            translated_value = i18n.t("thousand", count=number, locale=lang)
+        elif letter == "M":
+            translated_value = i18n.t("million", count=number, locale=lang)
+        elif letter == "G":
+            translated_value = i18n.t("billion", count=number, locale=lang)
+        # use the "many" views translation and insert the translated value
+        return i18n.t("views", count=0, locale=lang).replace("0", translated_value, 1)
+    # fallback to inserting the raw value if it doesn't match the expected format
+    return i18n.t("views", count=0, locale=lang).replace("0", value, 1)
+
+
 def fetch_views(video_id: str, lang: str = "en") -> str:
     """Get number of views for a YouTube video as a formatted metric"""
     try:
@@ -100,12 +127,7 @@ def fetch_views(video_id: str, lang: str = "en") -> str:
         req.add_header("User-Agent", "GitHub Readme YouTube Cards")
         with urlopen(req) as response:
             value = orjson.loads(response.read()).get("value", "")
-            # replace G with B for billion and convert to uppercase
-            return (
-                i18n.t("views", number=value.replace("G", "B").upper(), locale=lang)
-                if value
-                else ""
-            )
+            return format_views_value(value, lang)
     except Exception:
         return ""
 
