@@ -1,8 +1,10 @@
 he:
   direction: rtl
+
   views:
     one: "1 צפייה"
     many: "%{count} צפיות"
+
   seconds-ago:
     one: "לפני שניה"
     many: "לפני %{count} שניות"

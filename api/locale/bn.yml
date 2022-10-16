@@ -2,6 +2,7 @@ bn:
   views:
     one: "1 বার দেখা হয়েছে"
     many: "%{count} বার দেখা হয়েছে"
+  
   seconds-ago:
     one: "1 সেকেন্ড আগে"
     many: "%{count} সেকেন্ড আগে"

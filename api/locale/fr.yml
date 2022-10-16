@@ -2,6 +2,7 @@ fr:
   thousand: "%{count} k"
   million: "%{count} M de"
   billion: "%{count} Md de"
+
   views:
     one: "1 vue"
     many: "%{count} vues"
