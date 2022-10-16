@@ -16,5 +16,5 @@ ba:
     one: "1 মাস আগে"
     many: "%{count} মাস আগে"
   years-ago:
-    one: "1 বছর আগে"
-    many: "%{count} বছর আগে"
+    one: "1 বছর পূর্বে"
+    many: "%{count} বছর পূর্বে"
