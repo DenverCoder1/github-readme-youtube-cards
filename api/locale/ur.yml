@@ -1,6 +1,6 @@
 ur:
   direction: rtl
-  views: "%{number} ویوز"
+  views: "%{number} ملاحظات"
   seconds-ago:
     one: "1 سیکنڈ پہلے"
     many: "%{count} سیکنڈ پہلے"
