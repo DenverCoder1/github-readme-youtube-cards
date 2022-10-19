@@ -1,21 +1,4 @@
 he:
   direction: rtl
+  view: "1 צפייה"
   views: "%{number} צפיות"
-  seconds-ago:
-    one: "לפני שניה"
-    many: "לפני %{count} שניות"
-  minutes-ago:
-    one: "לפני דקה"
-    many: "לפני %{count} דקות"
-  hours-ago:
-    one: "לפני שעה"
-    many: "לפני %{count} שעות"
-  days-ago:
-    one: "אתמול"
-    many: "לפני %{count} ימים"
-  months-ago:
-    one: "לפני חודש"
-    many: "לפני %{count} חודשים"
-  years-ago:
-    one: "לפני שנה"
-    many: "לפני %{count} שנים"

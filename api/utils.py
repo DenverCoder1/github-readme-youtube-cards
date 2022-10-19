@@ -1,52 +1,21 @@
 import codecs
-from datetime import datetime
+from datetime import datetime, timedelta
 from typing import Optional
 from urllib.request import Request, urlopen
 
 import i18n
 import orjson
+from babel import Locale, dates, numbers
 
 i18n.set("filename_format", "{locale}.{format}")
 i18n.set("enable_memoization", True)
 i18n.load_path.append("./api/locale")
 
 
-def format_relative_time(date: datetime, lang: str = "en") -> str:
-    """Get relative time from datetime (ex. "3 hours ago")"""
-    # find time difference in seconds
-    seconds_diff = int((datetime.now() - date).total_seconds())
-    # number of days in difference
-    days_diff = seconds_diff // 86400
-    # less than 50 seconds ago
-    if seconds_diff < 50:
-        return i18n.t("seconds-ago", count=seconds_diff, locale=lang)
-    # less than 2 minutes ago
-    if seconds_diff < 120:
-        return i18n.t("minutes-ago", count=1, locale=lang)
-    # less than an hour ago
-    if seconds_diff < 3600:
-        return i18n.t("minutes-ago", count=seconds_diff // 60, locale=lang)
-    # less than 2 hours ago
-    if seconds_diff < 7200:
-        return i18n.t("hours-ago", count=1, locale=lang)
-    # less than 24 hours ago
-    if seconds_diff < 86400:
-        return i18n.t("hours-ago", count=seconds_diff // 3600, locale=lang)
-    # 1 day ago
-    if days_diff == 1:
-        return i18n.t("days-ago", count=1, locale=lang)
-    # less than a month ago
-    if days_diff < 30:
-        return i18n.t("days-ago", count=days_diff, locale=lang)
-    # less than 12 months ago
-    if days_diff < 336:
-        if round(days_diff / 30.5) == 1:
-            return i18n.t("months-ago", count=1, locale=lang)
-        return i18n.t("months-ago", count=round(days_diff / 30.5), locale=lang)
-    # more than a year ago
-    if round(days_diff / 365) == 1:
-        return i18n.t("years-ago", count=1, locale=lang)
-    return i18n.t("years-ago", count=round(days_diff / 365), locale=lang)
+def format_relative_time(timestamp: float, lang: str = "en") -> str:
+    """Get relative time from unix timestamp (ex. "3 hours ago")"""
+    delta = timedelta(seconds=timestamp - datetime.now().timestamp())
+    return dates.format_timedelta(delta=delta, add_direction=True, locale=lang)
 
 
 def data_uri_from_bytes(*, data: bytes, mime_type: str) -> str:
@@ -93,6 +62,59 @@ def trim_text(text: str, max_length: int) -> str:
     return text[: max_length - 1].strip() + "…"
 
 
+def format_decimal_compact(number: float, lang: str = "en") -> str:
+    """Format number with compact notation (ex. "1.2K")
+
+    TODO: This can be refactored once it is supported by Babel
+    Sees https://github.com/python-babel/babel/pull/909
+    """
+    locale = Locale.parse(lang)
+    compact_format = locale._data["compact_decimal_formats"]["short"]
+    number_format = None
+    for magnitude in sorted([int(m) for m in compact_format["other"]], reverse=True):
+        if abs(number) >= magnitude:
+            # check the pattern using "other" as the amount
+            number_format = compact_format["other"][str(magnitude)]
+            pattern = numbers.parse_pattern(number_format).pattern
+            # if the pattern is "0", we do not divide the number
+            if pattern == "0":
+                break
+            # otherwise, we need to divide the number by the magnitude but remove zeros
+            # equal to the number of 0's in the pattern minus 1
+            number = number / (magnitude / (10 ** (pattern.count("0") - 1)))
+            # round to the number of fraction digits requested
+            number = round(number, 1)
+            # if the remaining number is like "one", use the singular format
+            plural_form = locale.plural_form(abs(number))
+            plural_form = plural_form if plural_form in compact_format else "other"
+            number_format = compact_format[plural_form][str(magnitude)]
+            break
+    return numbers.format_decimal(
+        number=number, format=number_format, locale=lang, decimal_quantization=False
+    )
+
+
+def parse_metric_value(value: str) -> int:
+    """Parse a metric value (ex. "1.2K" => 1200)
+
+    See https://github.com/badges/shields/blob/master/services/text-formatters.js#L56
+    for the reverse of this function.
+    """
+    suffixes = ["k", "M", "G", "T", "P", "E", "Z", "Y"]
+    if value[-1] in suffixes:
+        return int(float(value[:-1]) * 1000 ** (suffixes.index(value[-1]) + 1))
+    return int(value)
+
+
+def format_views_value(value: str, lang: str = "en") -> str:
+    """Format view count, for example "1.2M" => "1.2M views", translations included"""
+    int_value = parse_metric_value(value)
+    if int_value == 1:
+        return i18n.t("view", locale=lang)
+    formatted_value = format_decimal_compact(int_value, lang=lang)
+    return i18n.t("views", number=formatted_value, locale=lang)
+
+
 def fetch_views(video_id: str, lang: str = "en") -> str:
     """Get number of views for a YouTube video as a formatted metric"""
     try:
@@ -100,12 +122,7 @@ def fetch_views(video_id: str, lang: str = "en") -> str:
         req.add_header("User-Agent", "GitHub Readme YouTube Cards")
         with urlopen(req) as response:
             value = orjson.loads(response.read()).get("value", "")
-            # replace G with B for billion and convert to uppercase
-            return (
-                i18n.t("views", number=value.replace("G", "B").upper(), locale=lang)
-                if value
-                else ""
-            )
+            return format_views_value(value, lang)
     except Exception:
         return ""
 

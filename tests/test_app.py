@@ -93,5 +93,5 @@ def test_request_right_to_left(client):
     assert 'style="direction: rtl"' in data
 
     # test views
-    views_regex = re.compile(r"\d+(?:\.\d)?[KMBT]? צפיות")
+    views_regex = re.compile(r"\d+(?:\.\d)?[KMBT]?\u200f צפיות")
     assert views_regex.search(data) is not None

@@ -1,20 +1,3 @@
 bn:
+  view: "1 বার দেখা হয়েছে"
   views: "%{number} বার দেখা হয়েছে"
-  seconds-ago:
-    one: "1 সেকেন্ড আগে"
-    many: "%{count} সেকেন্ড আগে"
-  minutes-ago:
-    one: "1 মিনিট আগে"
-    many: "%{count} মিনিট আগে"
-  hours-ago:
-    one: "1 ঘন্টা আগে"
-    many: "%{count} ঘন্টা আগে"
-  days-ago:
-    one: "1 দিন আগে"
-    many: "%{count} দিন আগে"
-  months-ago:
-    one: "1 মাস আগে"
-    many: "%{count} মাস আগে"
-  years-ago:
-    one: "1 বছর পূর্বে"
-    many: "%{count} বছর পূর্বে"
