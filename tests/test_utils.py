@@ -42,12 +42,12 @@ def test_format_views_value_i18n():
 
 def test_format_relative_time():
     # values are handled by Babel, so we just test that the function is called successfully
-    assert format_relative_time(datetime.now() - timedelta(hours=1)) == "1 hour ago"
+    assert format_relative_time(datetime.now().timestamp() - 3600) == "1 hour ago"
 
 
 def test_format_relative_time_i18n():
     # values are handled by Babel, so we just test that the function is called successfully
-    assert format_relative_time(datetime.now() - timedelta(hours=1), "fr") == "il y a 1 heure"
+    assert format_relative_time(datetime.now().timestamp() - 3600, "fr") == "il y a 1 heure"
 
 
 def test_format_decimal_compact():

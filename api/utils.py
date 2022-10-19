@@ -1,5 +1,5 @@
 import codecs
-from datetime import datetime
+from datetime import datetime, timedelta
 from typing import Optional
 from urllib.request import Request, urlopen
 
@@ -12,9 +12,10 @@ i18n.set("enable_memoization", True)
 i18n.load_path.append("./api/locale")
 
 
-def format_relative_time(date: datetime, lang: str = "en") -> str:
-    """Get relative time from datetime (ex. "3 hours ago")"""
-    return dates.format_timedelta(delta=date - datetime.now(), add_direction=True, locale=lang)
+def format_relative_time(timestamp: float, lang: str = "en") -> str:
+    """Get relative time from unix timestamp (ex. "3 hours ago")"""
+    delta = timedelta(seconds=timestamp - datetime.now().timestamp())
+    return dates.format_timedelta(delta=delta, add_direction=True, locale=lang)
 
 
 def data_uri_from_bytes(*, data: bytes, mime_type: str) -> str:

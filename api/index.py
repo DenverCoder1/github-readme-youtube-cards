@@ -43,11 +43,7 @@ def render():
         thumbnail = data_uri_from_url(f"https://i.ytimg.com/vi/{video_id}/mqdefault.jpg")
         views = fetch_views(video_id)
         views = fetch_views(video_id, lang)
-        diff = (
-            format_relative_time(datetime.fromtimestamp(int(publish_timestamp)), lang)
-            if publish_timestamp
-            else ""
-        )
+        diff = format_relative_time(publish_timestamp, lang) if publish_timestamp else ""
         stats = f"{views} • {diff}" if views and diff else (views or diff)
         duration = seconds_to_duration(duration_seconds)
         duration_width = estimate_duration_width(duration)
