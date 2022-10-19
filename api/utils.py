@@ -67,18 +67,20 @@ def format_decimal_compact(number: float, lang: str = "en") -> str:
     TODO: This can be refactored once it is supported by Babel
     Sees https://github.com/python-babel/babel/pull/909
     """
+    locale = Locale.parse(lang)
     compact = "short"
-    compact_format = Locale.parse(lang)._data["compact_decimal_formats"][compact]
+    compact_format = locale._data["compact_decimal_formats"][compact]
     number_format = None
     for magnitude in sorted([int(m) for m in compact_format["other"]], reverse=True):
         if abs(number) >= magnitude:
-            compact_other_format = compact_format["other"][str(magnitude)]
-            pattern = numbers.parse_pattern(compact_other_format).pattern
-            if pattern != "0" and abs(number) >= 1000:
-                number_format = compact_other_format
-                number = number / (magnitude / (10 ** (pattern.count("0") - 1)))
-                if float(number) == 1.0 and "one" in compact_format:
-                    number_format = compact_format["one"][str(magnitude)]
+            number_format = compact_format["other"][str(magnitude)]
+            pattern = numbers.parse_pattern(number_format).pattern
+            if pattern == "0":
+                break
+            number = number / (magnitude / (10 ** (pattern.count("0") - 1)))
+            plural_form = locale.plural_form(abs(number))
+            plural_form = plural_form if plural_form in compact_format else "other"
+            number_format = compact_format[plural_form][str(magnitude)]
             break
     decimal_quantization = True
     if number_format:
