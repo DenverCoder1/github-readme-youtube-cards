@@ -1,4 +1,3 @@
-import os
 import re
 
 from babel import Locale, UnknownLocaleError
@@ -44,7 +43,7 @@ def validate_lang(req: Request, field: str, *, default: str = "en") -> str:
     """Validate a string with a locale lang, returns the string if the locale
     is known by Babel, otherwise the default.
     """
-    value = req.args.get(field, "")
+    value = req.args.get(field, default)
     try:
         Locale.parse(value)
     except UnknownLocaleError:
