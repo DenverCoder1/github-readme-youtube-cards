@@ -69,29 +69,28 @@ def format_decimal_compact(number: float, lang: str = "en") -> str:
     Sees https://github.com/python-babel/babel/pull/909
     """
     locale = Locale.parse(lang)
-    compact = "short"
-    compact_format = locale._data["compact_decimal_formats"][compact]
+    compact_format = locale._data["compact_decimal_formats"]["short"]
     number_format = None
     for magnitude in sorted([int(m) for m in compact_format["other"]], reverse=True):
         if abs(number) >= magnitude:
+            # check the pattern using "other" as the amount
             number_format = compact_format["other"][str(magnitude)]
             pattern = numbers.parse_pattern(number_format).pattern
+            # if the pattern is "0", we do not divide the number
             if pattern == "0":
                 break
+            # otherwise, we need to divide the number by the magnitude but remove zeros
+            # equal to the number of 0's in the pattern minus 1
             number = number / (magnitude / (10 ** (pattern.count("0") - 1)))
+            # round to the number of fraction digits requested
+            number = round(number, 1)
+            # if the remaining number is like "one", use the singular format
             plural_form = locale.plural_form(abs(number))
             plural_form = plural_form if plural_form in compact_format else "other"
             number_format = compact_format[plural_form][str(magnitude)]
             break
-    decimal_quantization = True
-    if number_format:
-        decimal_quantization = False
-        number = round(number, 1)
     return numbers.format_decimal(
-        number=number,
-        format=number_format,
-        locale=lang,
-        decimal_quantization=decimal_quantization,
+        number=number, format=number_format, locale=lang, decimal_quantization=False
     )
 
 
