@@ -1,12 +1,11 @@
 import codecs
-import re
 from datetime import datetime
 from typing import Optional
 from urllib.request import Request, urlopen
 
 import i18n
 import orjson
-from babel.numbers import format_decimal
+from babel import Locale, dates, numbers
 
 i18n.set("filename_format", "{locale}.{format}")
 i18n.set("enable_memoization", True)
@@ -15,40 +14,7 @@ i18n.load_path.append("./api/locale")
 
 def format_relative_time(date: datetime, lang: str = "en") -> str:
     """Get relative time from datetime (ex. "3 hours ago")"""
-    # find time difference in seconds
-    seconds_diff = int((datetime.now() - date).total_seconds())
-    # number of days in difference
-    days_diff = seconds_diff // 86400
-    # less than 50 seconds ago
-    if seconds_diff < 50:
-        return i18n.t("seconds-ago", count=seconds_diff, locale=lang)
-    # less than 2 minutes ago
-    if seconds_diff < 120:
-        return i18n.t("minutes-ago", count=1, locale=lang)
-    # less than an hour ago
-    if seconds_diff < 3600:
-        return i18n.t("minutes-ago", count=seconds_diff // 60, locale=lang)
-    # less than 2 hours ago
-    if seconds_diff < 7200:
-        return i18n.t("hours-ago", count=1, locale=lang)
-    # less than 24 hours ago
-    if seconds_diff < 86400:
-        return i18n.t("hours-ago", count=seconds_diff // 3600, locale=lang)
-    # 1 day ago
-    if days_diff == 1:
-        return i18n.t("days-ago", count=1, locale=lang)
-    # less than a month ago
-    if days_diff < 30:
-        return i18n.t("days-ago", count=days_diff, locale=lang)
-    # less than 12 months ago
-    if days_diff < 336:
-        if round(days_diff / 30.5) == 1:
-            return i18n.t("months-ago", count=1, locale=lang)
-        return i18n.t("months-ago", count=round(days_diff / 30.5), locale=lang)
-    # more than a year ago
-    if round(days_diff / 365) == 1:
-        return i18n.t("years-ago", count=1, locale=lang)
-    return i18n.t("years-ago", count=round(days_diff / 365), locale=lang)
+    return dates.format_timedelta(delta=date - datetime.now(), add_direction=True, locale=lang)
 
 
 def data_uri_from_bytes(*, data: bytes, mime_type: str) -> str:
@@ -95,29 +61,56 @@ def trim_text(text: str, max_length: int) -> str:
     return text[: max_length - 1].strip() + "…"
 
 
+def format_decimal_compact(number: float, lang: str = "en") -> str:
+    """Format number with compact notation (ex. "1.2K")
+
+    TODO: This can be refactored once it is supported by Babel
+    Sees https://github.com/python-babel/babel/pull/909
+    """
+    compact = "short"
+    compact_format = Locale.parse(lang)._data["compact_decimal_formats"][compact]
+    number_format = None
+    for magnitude in sorted([int(m) for m in compact_format["other"]], reverse=True):
+        if abs(number) >= magnitude:
+            compact_other_format = compact_format["other"][str(magnitude)]
+            pattern = numbers.parse_pattern(compact_other_format).pattern
+            if pattern != "0" and abs(number) >= 1000:
+                number_format = compact_other_format
+                number = number / (magnitude / (10 ** (pattern.count("0") - 1)))
+                if float(number) == 1.0 and "one" in compact_format:
+                    number_format = compact_format["one"][str(magnitude)]
+            break
+    decimal_quantization = True
+    if number_format:
+        decimal_quantization = False
+        number = round(number, 1)
+    return numbers.format_decimal(
+        number=number,
+        format=number_format,
+        locale=lang,
+        decimal_quantization=decimal_quantization,
+    )
+
+
+def parse_metric_value(value: str) -> int:
+    """Parse a metric value (ex. "1.2K" => 1200)
+
+    See https://github.com/badges/shields/blob/master/services/text-formatters.js#L56
+    for the reverse of this function.
+    """
+    suffixes = ["k", "M", "G", "T", "P", "E", "Z", "Y"]
+    if value[-1] in suffixes:
+        return int(float(value[:-1]) * 1000 ** (suffixes.index(value[-1]) + 1))
+    return int(value)
+
+
 def format_views_value(value: str, lang: str = "en") -> str:
     """Format view count, for example "1.2M" => "1.2M views", translations included"""
-    match = re.match(r"(?P<number>\d+(?:\.\d+)?)(?P<letter>[kMG]?)", value)
-    if match:
-        # get the letter (k, M, or G)
-        letter = match.group("letter")
-        # if less than 1k, format as an integer
-        if letter == "":
-            return i18n.t("views", count=int(match.group("number")), locale=lang)
-        # format the number using the locale's number format
-        number = format_decimal(float(match.group("number")), locale=lang)
-        # translate the letter (k, M, or G) and add it to the number
-        translated_value = value
-        if letter == "k":
-            translated_value = i18n.t("thousand", count=number, locale=lang)
-        elif letter == "M":
-            translated_value = i18n.t("million", count=number, locale=lang)
-        elif letter == "G":
-            translated_value = i18n.t("billion", count=number, locale=lang)
-        # use the "many" views translation and insert the translated value
-        return i18n.t("views", count=0, locale=lang).replace("0", translated_value, 1)
-    # fallback to inserting the raw value if it doesn't match the expected format
-    return i18n.t("views", count=0, locale=lang).replace("0", value, 1)
+    int_value = parse_metric_value(value)
+    if int_value == 1:
+        return i18n.t("view", locale=lang)
+    formatted_value = format_decimal_compact(int_value, lang=lang)
+    return i18n.t("views", number=formatted_value, locale=lang)
 
 
 def fetch_views(video_id: str, lang: str = "en") -> str:

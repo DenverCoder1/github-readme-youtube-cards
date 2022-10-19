@@ -1,6 +1,7 @@
 import os
 import re
 
+from babel import Locale, UnknownLocaleError
 from flask.wrappers import Request
 
 
@@ -40,12 +41,12 @@ def validate_string(req: Request, field: str, default: str = "") -> str:
 
 
 def validate_lang(req: Request, field: str, *, default: str = "en") -> str:
-    """Validate a string with a locale lang, returns the string if translations
-    are present in the locale directory, otherwise the default.
+    """Validate a string with a locale lang, returns the string if the locale
+    is known by Babel, otherwise the default.
     """
     value = req.args.get(field, "")
-    # if there is no yaml file for the language, use the default
-    if not os.path.isfile(f"./api/locale/{value}.yml"):
-        return default
-
+    try:
+        Locale.parse(value)
+    except UnknownLocaleError:
+        value = default
     return value

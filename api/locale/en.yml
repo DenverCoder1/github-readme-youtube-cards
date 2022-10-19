@@ -1,28 +1,3 @@
 en:
-  # leave these out to use the default
-  thousand: "%{count}K"
-  million: "%{count}M"
-  billion: "%{count}B"
-
-  views:
-    one: "1 view"
-    many: "%{count} views"
-
-  seconds-ago:
-    one: "1 second ago"
-    many: "%{count} seconds ago"
-  minutes-ago:
-    one: "1 minute ago"
-    many: "%{count} minutes ago"
-  hours-ago:
-    one: "1 hour ago"
-    many: "%{count} hours ago"
-  days-ago:
-    one: "1 day ago"
-    many: "%{count} days ago"
-  months-ago:
-    one: "1 month ago"
-    many: "%{count} months ago"
-  years-ago:
-    one: "1 year ago"
-    many: "%{count} years ago"
+  view: "1 view"
+  views: "%{number} views"

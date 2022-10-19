@@ -6,8 +6,10 @@ from api.utils import (
     data_uri_from_url,
     estimate_duration_width,
     fetch_views,
+    format_decimal_compact,
     format_relative_time,
     format_views_value,
+    parse_metric_value,
     seconds_to_duration,
     trim_text,
 )
@@ -19,59 +21,64 @@ def test_fetch_views():
 
 
 def test_format_views_value():
+    views_regex = re.compile(r"^\d+(?:\.\d)?[KMBT]? views$")
     assert format_views_value("1") == "1 view"
-    assert format_views_value("100") == "100 views"
-    assert format_views_value("1k") == "1K views"
-    assert format_views_value("1.5k") == "1.5K views"
-    assert format_views_value("2M") == "2M views"
-    assert format_views_value("1.5G") == "1.5B views"
+    assert views_regex.match(format_views_value("100"))
+    assert views_regex.match(format_views_value("1k"))
+    assert views_regex.match(format_views_value("1.5k"))
+    assert views_regex.match(format_views_value("2M"))
+    assert views_regex.match(format_views_value("1.5G"))
 
 
 def test_format_views_value_i18n():
+    views_regex = re.compile(r"^\d+(?:\,\d)?(?:\u00a0(?:k|M|Md|B))? vues$")
     assert format_views_value("1", "fr") == "1 vue"
-    assert format_views_value("100", "fr") == "100 vues"
-    assert format_views_value("1k", "fr") == "1 k vues"
-    assert format_views_value("1.5k", "fr") == "1,5 k vues"
-    assert format_views_value("2M", "fr") == "2 M de vues"
-    assert format_views_value("1.5G", "fr") == "1,5 Md de vues"
+    assert views_regex.match(format_views_value("100", "fr"))
+    assert views_regex.match(format_views_value("1k", "fr"))
+    assert views_regex.match(format_views_value("1.5k", "fr"))
+    assert views_regex.match(format_views_value("2M", "fr"))
+    assert views_regex.match(format_views_value("1.5G", "fr"))
 
 
 def test_format_relative_time():
-    assert format_relative_time(datetime.now() - timedelta(seconds=1)) == "1 second ago"
-    assert format_relative_time(datetime.now() - timedelta(seconds=5)) == "5 seconds ago"
-    assert format_relative_time(datetime.now() - timedelta(seconds=50)) == "1 minute ago"
-    assert format_relative_time(datetime.now() - timedelta(seconds=110)) == "1 minute ago"
-    assert format_relative_time(datetime.now() - timedelta(minutes=1)) == "1 minute ago"
-    assert format_relative_time(datetime.now() - timedelta(minutes=2)) == "2 minutes ago"
-    assert format_relative_time(datetime.now() - timedelta(minutes=60)) == "1 hour ago"
+    # values are handled by Babel, so we just test that the function is called successfully
     assert format_relative_time(datetime.now() - timedelta(hours=1)) == "1 hour ago"
-    assert format_relative_time(datetime.now() - timedelta(hours=2)) == "2 hours ago"
-    assert format_relative_time(datetime.now() - timedelta(hours=24)) == "1 day ago"
-    assert format_relative_time(datetime.now() - timedelta(days=1)) == "1 day ago"
-    assert format_relative_time(datetime.now() - timedelta(days=2)) == "2 days ago"
-    assert format_relative_time(datetime.now() - timedelta(days=30)) == "1 month ago"
-    assert format_relative_time(datetime.now() - timedelta(days=31)) == "1 month ago"
-    assert format_relative_time(datetime.now() - timedelta(days=60)) == "2 months ago"
-    assert format_relative_time(datetime.now() - timedelta(days=335)) == "11 months ago"
-    assert format_relative_time(datetime.now() - timedelta(days=365)) == "1 year ago"
-    assert format_relative_time(datetime.now() - timedelta(days=366)) == "1 year ago"
-    assert format_relative_time(datetime.now() - timedelta(days=730)) == "2 years ago"
 
 
 def test_format_relative_time_i18n():
-    lang = "fr"
-    assert format_relative_time(datetime.now() - timedelta(seconds=1), lang) == "il y a 1 seconde"
-    assert format_relative_time(datetime.now() - timedelta(seconds=5), lang) == "il y a 5 secondes"
-    assert format_relative_time(datetime.now() - timedelta(minutes=1), lang) == "il y a 1 minute"
-    assert format_relative_time(datetime.now() - timedelta(minutes=2), lang) == "il y a 2 minutes"
-    assert format_relative_time(datetime.now() - timedelta(hours=1), lang) == "il y a 1 heure"
-    assert format_relative_time(datetime.now() - timedelta(hours=2), lang) == "il y a 2 heures"
-    assert format_relative_time(datetime.now() - timedelta(days=1), lang) == "il y a 1 jour"
-    assert format_relative_time(datetime.now() - timedelta(days=2), lang) == "il y a 2 jours"
-    assert format_relative_time(datetime.now() - timedelta(days=30), lang) == "il y a 1 mois"
-    assert format_relative_time(datetime.now() - timedelta(days=60), lang) == "il y a 2 mois"
-    assert format_relative_time(datetime.now() - timedelta(days=365), lang) == "il y a 1 an"
-    assert format_relative_time(datetime.now() - timedelta(days=730), lang) == "il y a 2 ans"
+    # values are handled by Babel, so we just test that the function is called successfully
+    assert format_relative_time(datetime.now() - timedelta(hours=1), "fr") == "il y a 1 heure"
+
+
+def test_format_decimal_compact():
+    assert format_decimal_compact(1) == "1"
+    assert format_decimal_compact(500) == "500"
+    assert format_decimal_compact(1000) == "1K"
+    assert format_decimal_compact(1500) == "1.5K"
+    assert format_decimal_compact(1000000) == "1M"
+    assert format_decimal_compact(1500000) == "1.5M"
+    assert format_decimal_compact(1000000000) == "1B"
+    assert format_decimal_compact(1500000000) == "1.5B"
+
+
+def test_format_decimal_compact_i18n():
+    assert format_decimal_compact(1, "fr") == "1"
+    assert format_decimal_compact(500, "fr") == "500"
+    assert format_decimal_compact(1000, "fr") == "1\xa0k"
+    assert format_decimal_compact(1500, "fr") == "1,5\xa0k"
+    assert format_decimal_compact(1000000, "fr") == "1\xa0M"
+    assert format_decimal_compact(1500000, "fr") == "1,5\xa0M"
+    assert format_decimal_compact(1000000000, "fr") == "1\xa0Md"
+    assert format_decimal_compact(1500000000, "fr") == "1,5\xa0Md"
+
+
+def test_parse_metric_value():
+    assert parse_metric_value("1") == 1
+    assert parse_metric_value("100") == 100
+    assert parse_metric_value("1k") == 1000
+    assert parse_metric_value("1.5k") == 1500
+    assert parse_metric_value("1.5M") == 1500000
+    assert parse_metric_value("1.5G") == 1500000000
 
 
 def test_data_uri_from_url_and_file():
