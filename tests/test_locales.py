@@ -1,7 +1,7 @@
 import os
 
-from babel import Locale, UnknownLocaleError
 import yaml
+from babel import Locale, UnknownLocaleError
 
 
 def test_locales_valid():
