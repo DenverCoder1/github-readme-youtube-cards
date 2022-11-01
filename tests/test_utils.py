@@ -6,7 +6,6 @@ from api.utils import (
     data_uri_from_url,
     estimate_duration_width,
     fetch_views,
-    format_decimal_compact,
     format_relative_time,
     format_views_value,
     parse_metric_value,
@@ -48,28 +47,6 @@ def test_format_relative_time():
 def test_format_relative_time_i18n():
     # values are handled by Babel, so we just test that the function is called successfully
     assert format_relative_time(datetime.now().timestamp() - 3600, "fr") == "il y a 1 heure"
-
-
-def test_format_decimal_compact():
-    assert format_decimal_compact(1) == "1"
-    assert format_decimal_compact(500) == "500"
-    assert format_decimal_compact(1000) == "1K"
-    assert format_decimal_compact(1500) == "1.5K"
-    assert format_decimal_compact(1000000) == "1M"
-    assert format_decimal_compact(1500000) == "1.5M"
-    assert format_decimal_compact(1000000000) == "1B"
-    assert format_decimal_compact(1500000000) == "1.5B"
-
-
-def test_format_decimal_compact_i18n():
-    assert format_decimal_compact(1, "fr") == "1"
-    assert format_decimal_compact(500, "fr") == "500"
-    assert format_decimal_compact(1000, "fr") == "1\xa0k"
-    assert format_decimal_compact(1500, "fr") == "1,5\xa0k"
-    assert format_decimal_compact(1000000, "fr") == "1\xa0M"
-    assert format_decimal_compact(1500000, "fr") == "1,5\xa0M"
-    assert format_decimal_compact(1000000000, "fr") == "1\xa0Md"
-    assert format_decimal_compact(1500000000, "fr") == "1,5\xa0Md"
 
 
 def test_parse_metric_value():
