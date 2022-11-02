@@ -5,7 +5,8 @@ from urllib.request import Request, urlopen
 
 import i18n
 import orjson
-from babel import dates, numbers
+from babel.dates import format_timedelta
+from babel.numbers import format_compact_decimal
 
 i18n.set("filename_format", "{locale}.{format}")
 i18n.set("enable_memoization", True)
@@ -15,7 +16,7 @@ i18n.load_path.append("./api/locale")
 def format_relative_time(timestamp: float, lang: str = "en") -> str:
     """Get relative time from unix timestamp (ex. "3 hours ago")"""
     delta = timedelta(seconds=timestamp - datetime.now().timestamp())
-    return dates.format_timedelta(delta=delta, add_direction=True, locale=lang)
+    return format_timedelta(delta=delta, add_direction=True, locale=lang)
 
 
 def data_uri_from_bytes(*, data: bytes, mime_type: str) -> str:
@@ -79,7 +80,7 @@ def format_views_value(value: str, lang: str = "en") -> str:
     int_value = parse_metric_value(value)
     if int_value == 1:
         return i18n.t("view", locale=lang)
-    formatted_value = numbers.format_compact_decimal(int_value, locale=lang, fraction_digits=1)
+    formatted_value = format_compact_decimal(int_value, locale=lang, fraction_digits=1)
     return i18n.t("views", number=formatted_value, locale=lang)
 
 
