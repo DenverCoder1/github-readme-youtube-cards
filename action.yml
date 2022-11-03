@@ -122,6 +122,7 @@ runs:
                 --theme-context-dark '${{ inputs.theme_context_dark }}' \
                 --readme-path "${{ inputs.readme_path }}" \
                 --output-only "${{ inputs.output_only }}" \
+                --output-type "${{ inputs.output_type }}" \
         ) || exit 1
         echo "::set-output name=markdown::$(echo $UPDATE)"
 
