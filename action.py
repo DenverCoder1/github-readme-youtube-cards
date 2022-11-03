@@ -24,7 +24,7 @@ class VideoParser:
         theme_context_light: Dict[str, str],
         theme_context_dark: Dict[str, str],
         show_duration: bool,
-        output_type: str,
+        output_type: Optional[str] = "markdown",
     ):
         self._base_url = base_url
         self._channel_id = channel_id
