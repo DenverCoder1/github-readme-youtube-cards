@@ -24,6 +24,7 @@ class VideoParser:
         theme_context_light: Dict[str, str],
         theme_context_dark: Dict[str, str],
         show_duration: bool,
+        output_type: str,
     ):
         self._base_url = base_url
         self._channel_id = channel_id
@@ -37,6 +38,7 @@ class VideoParser:
         self._theme_context_light = theme_context_light
         self._theme_context_dark = theme_context_dark
         self._show_duration = show_duration
+        self._output_type = output_type
         self._youtube_data = {}
 
     @staticmethod
@@ -117,17 +119,33 @@ class VideoParser:
             content_details = self._youtube_data[video_id]["contentDetails"]
             if self._show_duration:
                 params["duration"] = self.parse_iso8601_duration(content_details["duration"])
-        # translate video to standard markdown
-        backslash_escaped_title = params["title"].replace('"', '\\"')
-        # if theme context is set, create two versions with theme context specified
-        if self._theme_context_dark or self._theme_context_light:
-            dark_params = params | self._theme_context_dark
-            light_params = params | self._theme_context_light
-            return (
-                f'[![{params["title"]}]({self._base_url}?{urllib.parse.urlencode(dark_params)} "{backslash_escaped_title}")]({video["link"]}#gh-dark-mode-only)'
-                f'[![{params["title"]}]({self._base_url}?{urllib.parse.urlencode(light_params)} "{backslash_escaped_title}")]({video["link"]}#gh-light-mode-only)'
-            )
-        return f'[![{params["title"]}]({self._base_url}?{urllib.parse.urlencode(params)} "{backslash_escaped_title}")]({video["link"]})'
+
+        dark_params = params | self._theme_context_dark
+        light_params = params | self._theme_context_light
+
+        if self._output_type == "html":
+            # translate video to html
+            html_escaped_title = params["title"].replace('"', "&quot;")
+            if self._theme_context_dark or self._theme_context_light:
+                return (
+                    f'<a href="{video["link"]}">\n'
+                    f"  <picture>\n"
+                    f'    <source media="(prefers-color-scheme: dark)" srcset="{self._base_url}?{urllib.parse.urlencode(dark_params)}">\n'
+                    f'    <img src="{self._base_url}?{urllib.parse.urlencode(light_params)}" alt="{html_escaped_title}" title="{html_escaped_title}">\n'
+                    "  </picture>\n"
+                    "</a>"
+                )
+            return f'<a href="{video["link"]}"><img src="{self._base_url}?{urllib.parse.urlencode(params)}" alt="{html_escaped_title}" title="{html_escaped_title}"></a>'
+        else:
+            # translate video to standard markdown
+            backslash_escaped_title = params["title"].replace('"', '\\"')
+            # if theme context is set, create two versions with theme context specified
+            if self._theme_context_dark or self._theme_context_light:
+                return (
+                    f'[![{params["title"]}]({self._base_url}?{urllib.parse.urlencode(dark_params)} "{backslash_escaped_title}")]({video["link"]}#gh-dark-mode-only)'
+                    f'[![{params["title"]}]({self._base_url}?{urllib.parse.urlencode(light_params)} "{backslash_escaped_title}")]({video["link"]}#gh-light-mode-only)'
+                )
+            return f'[![{params["title"]}]({self._base_url}?{urllib.parse.urlencode(params)} "{backslash_escaped_title}")]({video["link"]})'
 
     def parse_videos(self) -> str:
         """Parse video feed and return the contents for the readme"""
@@ -253,6 +271,13 @@ if __name__ == "__main__":
         default="false",
         choices=("true", "false"),
     )
+    parser.add_argument(
+        "--output-type",
+        dest="output_type",
+        help="The type of output to be rendered by the action",
+        default="markdown",
+        choices=("html", "markdown"),
+    )
     args = parser.parse_args()
 
     if args.show_duration == "true" and not args.youtube_api_key:
@@ -271,6 +296,7 @@ if __name__ == "__main__":
         theme_context_light=json.loads(args.theme_context_light),
         theme_context_dark=json.loads(args.theme_context_dark),
         show_duration=args.show_duration == "true",
+        output_type=args.output_type,
     )
 
     video_content = video_parser.parse_videos()

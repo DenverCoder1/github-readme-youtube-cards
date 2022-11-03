@@ -77,6 +77,10 @@ inputs:
     description: "Whether to return the section markdown as output instead of writing to the file"
     required: false
     default: "false"
+  output_type:
+    description: "The type of output to be rendered by the action"
+    required: false
+    default: "markdown"
 
 outputs:
   markdown:
