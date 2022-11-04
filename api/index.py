@@ -31,7 +31,7 @@ app.jinja_options["autoescape"] = True
 @app.route("/")
 def render():
     try:
-        if request.args.get("id", None) is None:
+        if "id" not in request.args:
             return Response(response=render_template("index.html", now=datetime.utcnow()))
         video_id = validate_video_id(request, "id")
         width = validate_int(request, "width", default=250)
