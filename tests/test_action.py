@@ -16,6 +16,7 @@ video_parser = VideoParser(
     theme_context_light={},
     theme_context_dark={},
     show_duration=False,
+    output_type="markdown",
 )
 
 
@@ -63,6 +64,28 @@ def test_parse_videos_with_theme_context():
         r"\[!\[.*\]\(.* \"(.*)\"\)\]\(.*\#gh-light-mode-only\)$"
     )
     assert all(re.match(line_regex, line) for line in videos.splitlines())
+
+
+def test_parse_videos_html():
+    video_parser._output_type = "html"
+    videos = video_parser.parse_videos()
+
+    assert len(videos.splitlines()) == 36
+
+    anchor_tag_regex = r"<a href=\".*\">"
+    picture_tag_regex = r"</?picture>"
+    img_tag_regex = f'<img src="{video_parser._base_url}.*" alt=".*">'
+    assert all(re.match(anchor_tag_regex, line) for line in videos.splitlines()[::6])
+    assert all(re.match(picture_tag_regex, line.strip()) for line in videos.splitlines()[1::3])
+    assert all(re.match(img_tag_regex, line.strip()) for line in videos.splitlines()[3::6])
+
+    assert "https://ytcards.demolab.com/?id=" in videos
+    assert "title=" in videos
+    assert "timestamp=" in videos
+    assert "background_color=" in videos
+    assert "title_color=" in videos
+    assert "stats_color=" in videos
+    assert "width=" in videos
 
 
 def test_update_file():
