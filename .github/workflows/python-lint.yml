@@ -45,7 +45,8 @@ jobs:
           python-platform: Linux
           warnings: true
 
-      - name: Show dependencies (temp)
+      - name: Show dependencies (run even if previous steps fail)
+        if: always()
         run: |
           python -m pip freeze
           python -m pip list
