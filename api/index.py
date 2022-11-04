@@ -31,6 +31,9 @@ app.jinja_options["autoescape"] = True
 @app.route("/")
 def render():
     try:
+        if "id" not in request.args:
+            return Response(response=render_template("index.html", now=datetime.utcnow()))
+        video_id = validate_video_id(request, "id")
         width = validate_int(request, "width", default=250)
         background_color = validate_color(request, "background_color", default="#0d1117")
         title_color = validate_color(request, "title_color", default="#ffffff")
@@ -39,7 +42,6 @@ def render():
         publish_timestamp = validate_int(request, "timestamp", default=0)
         duration_seconds = validate_int(request, "duration", default=0)
         lang = validate_lang(request, "lang", default="en")
-        video_id = validate_video_id(request, "id")
         thumbnail = data_uri_from_url(f"https://i.ytimg.com/vi/{video_id}/mqdefault.jpg")
         views = fetch_views(video_id)
         views = fetch_views(video_id, lang)

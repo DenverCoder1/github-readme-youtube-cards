@@ -6,8 +6,8 @@ def test_request_no_id(client):
     response = client.get("/")
     data = response.data.decode("utf-8")
 
-    assert response.status_code == 400
-    assert "Required parameter &#39;id&#39; is missing" in data
+    assert response.status_code == 200
+    assert "</html>" in data
 
 
 def test_request_invalid_id(client):

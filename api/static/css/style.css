@@ -1,0 +1,141 @@
+html {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  -webkit-box-sizing: inherit;
+  -moz-box-sizing: inherit;
+  box-sizing: inherit;
+}
+
+:root {
+  --background: #eee;
+  --card-background: white;
+  --text: #1a1a1a;
+  --border: #ccc;
+  --stroke: #a9a9a9;
+  --blue-light: #2196f3;
+  --blue-transparent: #2196f3aa;
+  --blue-dark: #1e88e5;
+  --link: #1e88e5;
+  --link-visited: #b344e2;
+  --button-outline: black;
+  --red: #ff6464;
+  --yellow: #ffee58;
+  --yellow-light: #fffde7;
+}
+
+[data-theme="dark"] {
+  --background: #090d13;
+  --card-background: #0d1117;
+  --text: #efefef;
+  --border: #2a2e34;
+  --stroke: #737373;
+  --blue-light: #1976d2;
+  --blue-transparent: #2196f320;
+  --blue-dark: #1565c0;
+  --link: #5caff1;
+  --link-visited: #d57afc;
+  --button-outline: black;
+  --red: #ff6464;
+  --yellow: #a59809;
+  --yellow-light: #716800;
+}
+
+body {
+  background: var(--background);
+  font-family: "Open Sans", sans-serif;
+  padding-top: 10px;
+  color: var(--text);
+}
+
+.header-flex {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.github {
+  text-align: center;
+}
+
+.github span {
+  margin: 0 2px;
+}
+
+.center {
+  text-align: center;
+}
+
+a {
+  color: var(--link);
+  text-decoration: none;
+}
+
+a:visited {
+  color: var(--link-visited);
+}
+
+a:hover {
+  filter: brightness(1.2);
+}
+
+.example a:hover {
+  filter: unset;
+}
+
+.container {
+  width: 96%;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.footer {
+  margin: 50px 0;
+}
+
+.details {
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  padding: 5px 20px;
+  margin-bottom: 10px;
+  background: var(--card-background);
+}
+
+.details > h2 {
+  margin: 0;
+  margin-top: 10px;
+}
+
+/* link underline effect */
+
+a.underline-hover {
+  position: relative;
+  text-decoration: none;
+  color: var(--text);
+  margin-top: 2em;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25em;
+}
+.underline-hover::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 0;
+  height: 1px;
+  background-color: var(--blue-light);
+  transition: width 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+}
+@media (hover: hover) and (pointer: fine) {
+  .underline-hover:hover::before {
+    left: 0;
+    right: auto;
+    width: 100%;
+  }
+}

@@ -44,5 +44,5 @@ repos:
     rev: v2.7.1
     hooks:
       - id: prettier
-        name: Running prettier in non-code files.
-        types_or: [markdown, yaml, css, json]
+        name: Running prettier in non-python files.
+        types_or: [markdown, yaml, css, json, javascript]
