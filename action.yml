@@ -77,6 +77,10 @@ inputs:
     description: "Whether to return the section markdown as output instead of writing to the file"
     required: false
     default: "false"
+  output_type:
+    description: "The type of output to be rendered by the action ('markdown' or 'html')"
+    required: false
+    default: "markdown"
 
 outputs:
   markdown:
@@ -118,6 +122,7 @@ runs:
                 --theme-context-dark '${{ inputs.theme_context_dark }}' \
                 --readme-path "${{ inputs.readme_path }}" \
                 --output-only "${{ inputs.output_only }}" \
+                --output-type "${{ inputs.output_type }}" \
         ) || exit 1
         echo "::set-output name=markdown::$(echo $UPDATE)"
 
