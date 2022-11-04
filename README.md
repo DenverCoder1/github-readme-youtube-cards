@@ -91,6 +91,7 @@ Check out the [Wiki](https://github.com/DenverCoder1/github-readme-youtube-cards
 | `commit_message`      | The commit message to use for the commit          | "docs(readme): Update YouTube cards"                    |
 | `readme_path`         | The path to the README file                       | "README.md"                                             |
 | `output_only`         | Whether to skip writing to the readme file        | "false"                                                 |
+| `output_type`         | The output syntax to be used by the action        | "markdown"                                              |
 
 🔑 YouTube API Key required. See [Setting Up the Action with a YouTube API Key](https://github.com/DenverCoder1/github-readme-youtube-cards/wiki/Setting-Up-the-Action-with-a-YouTube-API-Key) in the wiki for more information.
 
