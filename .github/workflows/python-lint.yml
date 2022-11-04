@@ -38,9 +38,14 @@ jobs:
         run: echo "PYRIGHT_VERSION=$(python -c 'import pyright; print(pyright.__pyright_version__)')" >> $GITHUB_ENV
 
       - name: Run pyright
-        uses: jakebailey/pyright-action@v1.3.0
+        uses: jakebailey/pyright-action@v1
         with:
           version: ${{ env.PYRIGHT_VERSION }}
           python-version: ${{ matrix.python-version }}
           python-platform: Linux
           warnings: true
+
+      - name: Show dependencies (temp)
+        run: |
+          python -m pip freeze
+          python -m pip list
