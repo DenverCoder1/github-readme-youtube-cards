@@ -78,7 +78,7 @@ inputs:
     required: false
     default: "false"
   output_type:
-    description: "The type of output to be rendered by the action"
+    description: "The type of output to be rendered by the action ('markdown' or 'html')"
     required: false
     default: "markdown"
 
