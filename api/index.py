@@ -31,10 +31,9 @@ app.jinja_options["autoescape"] = True
 @app.route("/")
 def render():
     try:
-        try:
-            video_id = validate_video_id(request, "id")
-        except ValueError:
+        if request.args.get("id", None) is None:
             return Response(response=render_template("index.html", now=datetime.utcnow()))
+        video_id = validate_video_id(request, "id")
         width = validate_int(request, "width", default=250)
         background_color = validate_color(request, "background_color", default="#0d1117")
         title_color = validate_color(request, "title_color", default="#ffffff")
