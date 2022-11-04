@@ -84,6 +84,10 @@ a:hover {
   filter: brightness(1.2);
 }
 
+.example a:hover {
+  filter: unset;
+}
+
 .container {
   width: 96%;
   max-width: 1000px;
