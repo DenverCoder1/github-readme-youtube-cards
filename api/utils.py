@@ -5,7 +5,8 @@ from urllib.request import Request, urlopen
 
 import i18n
 import orjson
-from babel import Locale, dates, numbers
+from babel.dates import format_timedelta
+from babel.numbers import format_compact_decimal
 
 i18n.set("filename_format", "{locale}.{format}")
 i18n.set("enable_memoization", True)
@@ -15,7 +16,7 @@ i18n.load_path.append("./api/locale")
 def format_relative_time(timestamp: float, lang: str = "en") -> str:
     """Get relative time from unix timestamp (ex. "3 hours ago")"""
     delta = timedelta(seconds=timestamp - datetime.now().timestamp())
-    return dates.format_timedelta(delta=delta, add_direction=True, locale=lang)
+    return format_timedelta(delta=delta, add_direction=True, locale=lang)
 
 
 def data_uri_from_bytes(*, data: bytes, mime_type: str) -> str:
@@ -62,38 +63,6 @@ def trim_text(text: str, max_length: int) -> str:
     return text[: max_length - 1].strip() + "…"
 
 
-def format_decimal_compact(number: float, lang: str = "en") -> str:
-    """Format number with compact notation (ex. "1.2K")
-
-    TODO: This can be refactored once it is supported by Babel
-    Sees https://github.com/python-babel/babel/pull/909
-    """
-    locale = Locale.parse(lang)
-    compact_format = locale._data["compact_decimal_formats"]["short"]
-    number_format = None
-    for magnitude in sorted([int(m) for m in compact_format["other"]], reverse=True):
-        if abs(number) >= magnitude:
-            # check the pattern using "other" as the amount
-            number_format = compact_format["other"][str(magnitude)]
-            pattern = numbers.parse_pattern(number_format).pattern
-            # if the pattern is "0", we do not divide the number
-            if pattern == "0":
-                break
-            # otherwise, we need to divide the number by the magnitude but remove zeros
-            # equal to the number of 0's in the pattern minus 1
-            number = number / (magnitude / (10 ** (pattern.count("0") - 1)))
-            # round to the number of fraction digits requested
-            number = round(number, 1)
-            # if the remaining number is like "one", use the singular format
-            plural_form = locale.plural_form(abs(number))
-            plural_form = plural_form if plural_form in compact_format else "other"
-            number_format = compact_format[plural_form][str(magnitude)]
-            break
-    return numbers.format_decimal(
-        number=number, format=number_format, locale=lang, decimal_quantization=False
-    )
-
-
 def parse_metric_value(value: str) -> int:
     """Parse a metric value (ex. "1.2K" => 1200)
 
@@ -111,7 +80,7 @@ def format_views_value(value: str, lang: str = "en") -> str:
     int_value = parse_metric_value(value)
     if int_value == 1:
         return i18n.t("view", locale=lang)
-    formatted_value = format_decimal_compact(int_value, lang=lang)
+    formatted_value = format_compact_decimal(int_value, locale=lang, fraction_digits=1)
     return i18n.t("views", number=formatted_value, locale=lang)
 
 
