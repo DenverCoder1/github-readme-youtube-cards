@@ -15,7 +15,7 @@ def test_request_invalid_id(client):
     data = response.data.decode("utf-8")
 
     assert response.status_code == 400
-    assert "id expects a video ID but got &#39;**********&#39;" in data
+    assert "&#39;id&#39; expects a video ID but got &#39;**********&#39;" in data
 
 
 def test_request_unknown_id(client):

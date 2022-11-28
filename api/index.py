@@ -32,7 +32,8 @@ app.jinja_options["autoescape"] = True
 def render():
     try:
         if "id" not in request.args:
-            return Response(response=render_template("index.html", now=datetime.utcnow()))
+            now = datetime.utcnow()
+            return Response(response=render_template("index.html", now=now))
         video_id = validate_video_id(request, "id")
         width = validate_int(request, "width", default=250)
         background_color = validate_color(request, "background_color", default="#0d1117")
@@ -43,10 +44,9 @@ def render():
         duration_seconds = validate_int(request, "duration", default=0)
         lang = validate_lang(request, "lang", default="en")
         thumbnail = data_uri_from_url(f"https://i.ytimg.com/vi/{video_id}/mqdefault.jpg")
-        views = fetch_views(video_id)
         views = fetch_views(video_id, lang)
         diff = format_relative_time(publish_timestamp, lang) if publish_timestamp else ""
-        stats = f"{views} • {diff}" if views and diff else (views or diff)
+        stats = f"{views}\u2002•\u2002{diff}" if views and diff else (views or diff)
         duration = seconds_to_duration(duration_seconds)
         duration_width = estimate_duration_width(duration)
         response = Response(
@@ -69,7 +69,7 @@ def render():
         response.headers["Content-Type"] = "image/svg+xml; charset=utf-8"
         return response
     except Exception as e:
-        status = getattr(e, "status", getattr(e, "code", None)) or 400
+        status = getattr(e, "status", 500)
         thumbnail = data_uri_from_file("./api/templates/resources/error.jpg")
         return Response(
             response=render_template("error.svg", message=str(e), code=status, thumbnail=thumbnail),

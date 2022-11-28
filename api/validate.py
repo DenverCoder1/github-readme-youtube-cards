@@ -3,6 +3,8 @@ import re
 from babel import Locale, UnknownLocaleError
 from flask.wrappers import Request
 
+from .exceptions import ValidationError
+
 
 def validate_int(req: Request, field: str, default: int = 0) -> int:
     """Validate an integer, returns the integer if valid, otherwise the default."""
@@ -25,12 +27,14 @@ def validate_color(req: Request, field: str, default: str = "#ffffff") -> str:
 def validate_video_id(req: Request, field: str) -> str:
     """Validate a video ID, returns the video ID if valid.
 
-    Raises ValueError if the field is not provided or fails the validation regex."""
+    Raises:
+        ValidationError: if the field is not provided or fails the validation regex.
+    """
     value = req.args.get(field, "")
     if value == "":
-        raise ValueError(f"Required parameter '{field}' is missing")
+        raise ValidationError(f"Required parameter '{field}' is missing")
     if not re.match(r"^[a-zA-Z0-9_-]+$", value):
-        raise ValueError(f"{field} expects a video ID but got '{value}'")
+        raise ValidationError(f"'{field}' expects a video ID but got '{value}'")
     return value
 
 

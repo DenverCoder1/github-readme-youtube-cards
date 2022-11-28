@@ -1,6 +1,12 @@
 import pytest
 
-from api.validate import validate_color, validate_int, validate_string, validate_video_id
+from api.validate import (
+    ValidationError,
+    validate_color,
+    validate_int,
+    validate_string,
+    validate_video_id,
+)
 
 
 def test_validate_int(req):
@@ -39,11 +45,11 @@ def test_validate_color(req):
 
 def test_validate_video_id(req):
     # missing field
-    with pytest.raises(ValueError):
+    with pytest.raises(ValidationError):
         validate_video_id(req, "id")
     # invalid field
     req.set_args(id="*********")
-    with pytest.raises(ValueError):
+    with pytest.raises(ValidationError):
         validate_video_id(req, "id")
     # valid field
     req.set_args(id="abc_123-456")
