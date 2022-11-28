@@ -73,7 +73,7 @@ def test_request_valid_params(client):
     assert timestamp_regex.search(data) is not None
 
     # test direction
-    assert 'style="direction: ltr"' in data
+    assert 'direction="ltr"' in data
 
 
 def test_request_right_to_left(client):
@@ -87,10 +87,10 @@ def test_request_right_to_left(client):
     data = response.data.decode("utf-8")
 
     # stats group should be 10 pixels from the right
-    assert "translate(240, 195.0)" in data
+    assert "translate(240, 195)" in data
 
     # test direction
-    assert 'style="direction: rtl"' in data
+    assert 'direction="rtl"' in data
 
     # test views
     views_regex = re.compile(r"\d+(?:\.\d)?[KMBT]?\u200f צפיות")
