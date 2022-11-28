@@ -53,6 +53,7 @@ def render():
             response=render_template(
                 "main.svg",
                 width=width,
+                height=round(width * 0.56) + 80,
                 background_color=background_color,
                 title_color=title_color,
                 stats_color=stats_color,
