@@ -29,6 +29,9 @@ def data_uri_from_url(url: str, *, mime_type: Optional[str] = None) -> str:
     """Return base-64 data URI for an image at a given URL.
     If not passed, the content type is determined from the response header
     if present, otherwise, jpeg is assumed.
+
+    Raises:
+        HTTPError: If the request fails
     """
     with urlopen(url) as response:
         data = response.read()
