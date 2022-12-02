@@ -20,7 +20,7 @@ inputs:
   max_videos:
     description: "The maximum number of videos to display"
     required: false
-    default: "6"
+    default: "20"
   base_url:
     description: "The base URL to use for the cards"
     required: false
