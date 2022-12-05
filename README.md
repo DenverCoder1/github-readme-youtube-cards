@@ -42,7 +42,7 @@ jobs:
 ```
 <!-- prettier-ignore-end -->
 
-3. Make sure to change the `channel_id` to your YouTube channel ID.
+3. Make sure to change the `channel_id` to [your YouTube channel ID](https://github.com/DenverCoder1/github-readme-youtube-cards/wiki/How-to-Locate-Your-Channel-ID).
 
 4. The [cron expression](https://crontab.cronhub.io/) in the example above is set to run at the top of every hour. The first time, you may want to [trigger the workflow manually](https://github.com/DenverCoder1/github-readme-youtube-cards/wiki/Running-the-GitHub-Action-Manually).
 
@@ -101,29 +101,31 @@ Check out the [Wiki](https://github.com/DenverCoder1/github-readme-youtube-cards
 
 ### Inputs
 
-| Option                | Description                                       | Default                                                 |
-| --------------------- | ------------------------------------------------- | ------------------------------------------------------- |
-| `channel_id`          | The channel ID to use for the feed                | Required                                                |
-| `lang`                | The language for cards description text           | "en"                                                    |
-| `comment_tag_name`    | The name in the comment tag for replacing content | "YOUTUBE-CARDS"                                         |
-| `youtube_api_key`     | The API key to use for features marked with 🔑    | ""                                                      |
-| `max_videos`          | The maximum number of videos to display           | 6                                                       |
-| `base_url`            | The base URL to use for the cards                 | "https://ytcards.demolab.com/"                          |
-| `card_width`          | The width of the SVG cards                        | 250                                                     |
-| `background_color`    | The background color of the SVG cards             | "#0d1117"                                               |
-| `title_color`         | The color of the title text                       | "#ffffff"                                               |
-| `stats_color`         | The color of the stats text                       | "#dedede"                                               |
-| `theme_context_light` | JSON object with light mode colors <sup>🎨</sup>  | "{}"                                                    |
-| `theme_context_dark`  | JSON object with dark mode colors <sup>🎨</sup>   | "{}"                                                    |
-| `show_duration` 🔑    | Whether to show the duration of the videos        | "false"                                                 |
-| `author_name`         | The name of the commit author                     | "GitHub Actions"                                        |
-| `author_email`        | The email address of the commit author            | "41898282+github-actions[bot]@users.noreply.github.com" |
-| `commit_message`      | The commit message to use for the commit          | "docs(readme): Update YouTube cards"                    |
-| `readme_path`         | The path to the README file                       | "README.md"                                             |
-| `output_only`         | Whether to skip writing to the readme file        | "false"                                                 |
-| `output_type`         | The output syntax to use ("markdown" or "html")   | "markdown"                                              |
+| Option                        | Description                                       | Default                                                 |
+| ----------------------------- | ------------------------------------------------- | ------------------------------------------------------- |
+| `channel_id`                  | The channel ID to use for the feed <sup>📺</sup>  | Required                                                |
+| `lang`                        | The locale for views and relative time text       | "en"                                                    |
+| `comment_tag_name`            | The text in the comment tag for replacing content | "YOUTUBE-CARDS"                                         |
+| `youtube_api_key`             | The API key to use for features marked with 🔑    | ""                                                      |
+| `max_videos`                  | The maximum number of videos to display           | 6                                                       |
+| `base_url`                    | The base URL to use for the cards                 | "https://ytcards.demolab.com/"                          |
+| `card_width`                  | The width of the SVG cards in pixels              | 250                                                     |
+| `background_color`            | The background color of the SVG cards             | "#0d1117"                                               |
+| `title_color`                 | The color of the title text                       | "#ffffff"                                               |
+| `stats_color`                 | The color of the stats text                       | "#dedede"                                               |
+| `theme_context_light`         | JSON object with light mode colors <sup>🎨</sup>  | "{}"                                                    |
+| `theme_context_dark`          | JSON object with dark mode colors <sup>🎨</sup>   | "{}"                                                    |
+| `show_duration` <sup>🔑</sup> | Whether to show the duration of the videos        | "false"                                                 |
+| `author_name`                 | The name of the commit author                     | "GitHub Actions"                                        |
+| `author_email`                | The email address of the commit author            | "41898282+github-actions[bot]@users.noreply.github.com" |
+| `commit_message`              | The commit message to use for the commit          | "docs(readme): Update YouTube cards"                    |
+| `readme_path`                 | The path to the Markdown or HTML file to update   | "README.md"                                             |
+| `output_only`                 | Whether to skip writing to the readme file        | "false"                                                 |
+| `output_type`                 | The output syntax to use ("markdown" or "html")   | "markdown"                                              |
 
-🔑 YouTube API Key required. See [Setting Up the Action with a YouTube API Key](https://github.com/DenverCoder1/github-readme-youtube-cards/wiki/Setting-Up-the-Action-with-a-YouTube-API-Key) in the wiki for more information.
+<sup>📺</sup> A Channel ID is required. See [How to Locate Your Channel ID](https://github.com/DenverCoder1/github-readme-youtube-cards/wiki/How-to-Locate-Your-Channel-ID) in the wiki for more information.
+
+<sup>🔑</sup> Some features require a YouTube API key. See [Setting Up the Action with a YouTube API Key](https://github.com/DenverCoder1/github-readme-youtube-cards/wiki/Setting-Up-the-Action-with-a-YouTube-API-Key) in the wiki for more information.
 
 <sup>🎨</sup> See [Setting Theme Contexts for Light and Dark Mode](https://github.com/DenverCoder1/github-readme-youtube-cards/wiki/Setting-Theme-Contexts-for-Light-and-Dark-Mode) in the wiki for more information.
 
@@ -133,9 +135,48 @@ Check out the [Wiki](https://github.com/DenverCoder1/github-readme-youtube-cards
 
 | Output     | Description                                                      |
 | ---------- | ---------------------------------------------------------------- |
-| `markdown` | The generated markdown section used for updating the README file |
+| `markdown` | The generated Markdown or HTML used for updating the README file |
 
 See [Using the Markdown as an Action Output](https://github.com/DenverCoder1/github-readme-youtube-cards/wiki/Using-the-Markdown-as-an-Action-Output) for more information.
+
+### Example Workflow
+
+This is an advanced example showing the available options. All options are optional except `channel_id`.
+
+```yaml
+name: GitHub Readme YouTube Cards
+on:
+    schedule:
+        # Runs every hour, on the hour
+        - cron: "0 * * * *"
+    workflow_dispatch:
+
+jobs:
+    deploy:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: DenverCoder1/github-readme-youtube-cards@main
+              with:
+                  channel_id: UCipSxT7a3rn81vGLw9lqRkg
+                  lang: en
+                  comment_tag_name: YOUTUBE-CARDS
+                  youtube_api_key: ${{ secrets.YOUTUBE_API_KEY }} # Configured in Actions Secrets (see Wiki)
+                  max_videos: 6
+                  base_url: https://ytcards.demolab.com/
+                  card_width: 250
+                  background_color: "#0d1117"
+                  title_color: "#ffffff"
+                  stats_color: "#dedede"
+                  theme_context_light: '{ "background_color": "#ffffff", "title_color": "#24292f", "stats_color": "#57606a" }'
+                  theme_context_dark: '{ "background_color": "#0d1117", "title_color": "#ffffff", "stats_color": "#dedede" }'
+                  show_duration: true # Requires YouTube API Key (see Wiki)
+                  author_name: GitHub Actions
+                  author_email: 41898282+github-actions[bot]@users.noreply.github.com
+                  commit_message: "docs(readme): Update YouTube cards"
+                  readme_path: README.md
+                  output_only: false
+                  output_type: markdown
+```
 
 ## Contributing
 
