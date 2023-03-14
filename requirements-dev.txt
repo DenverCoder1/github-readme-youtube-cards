@@ -4,4 +4,3 @@ black
 pre-commit
 taskipy
 pyright
-types-babel
