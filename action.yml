@@ -124,7 +124,7 @@ runs:
                 --output-only "${{ inputs.output_only }}" \
                 --output-type "${{ inputs.output_type }}" \
         ) || exit 1
-        echo "::set-output name=markdown::$(echo $UPDATE)"
+        echo "markdown=$(echo $UPDATE)" >> $GITHUB_OUTPUT
 
     - name: Commit changes
       uses: EndBug/add-and-commit@v9
