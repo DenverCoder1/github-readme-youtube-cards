@@ -137,9 +137,13 @@ Check out the [Wiki](https://github.com/DenverCoder1/github-readme-youtube-cards
 
 ### Outputs
 
-| Output     | Description                                                      |
-| ---------- | ---------------------------------------------------------------- |
-| `markdown` | The generated Markdown or HTML used for updating the README file |
+| Output            | Description                                                        |
+| ----------------- | ------------------------------------------------------------------ |
+| `markdown`        | The generated Markdown or HTML used for updating the README file   |
+| `committed`       | Whether the action has created a commit (`true` or `false`)        |
+| `commit_long_sha` | The full SHA of the commit that has just been created              |
+| `commit_sha`      | The short 7-character SHA of the commit that has just been created |
+| `pushed`          | Whether the action has pushed to the remote (`true` or `false`)    |
 
 See [Using the Markdown as an Action Output](https://github.com/DenverCoder1/github-readme-youtube-cards/wiki/Using-the-Markdown-as-an-Action-Output) for more information.
 

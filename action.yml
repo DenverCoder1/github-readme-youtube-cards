@@ -86,6 +86,18 @@ outputs:
   markdown:
     description: "The section markdown as output"
     value: ${{ steps.generate-readme-update.outputs.markdown }}
+  committed:
+    description: "Whether the action has created a commit ('true' or 'false')"
+    value: ${{ steps.add-and-commit.outputs.committed }}
+  commit_long_sha:
+    description: "The full SHA of the commit that has just been created"
+    value: ${{ steps.add-and-commit.outputs.commit_long_sha }}
+  commit_sha:
+    description: "The short 7-character SHA of the commit that has just been created"
+    value: ${{ steps.add-and-commit.outputs.commit_sha }}
+  pushed:
+    description: "Whether the action has pushed to the remote ('true' or 'false')"
+    value: ${{ steps.add-and-commit.outputs.pushed }}
 
 runs:
   using: "composite"
@@ -127,6 +139,7 @@ runs:
         echo "markdown=$(echo $UPDATE)" >> $GITHUB_OUTPUT
 
     - name: Commit changes
+      id: "add-and-commit"
       uses: EndBug/add-and-commit@v9
       with:
         message: "${{ inputs.commit_message }}"
