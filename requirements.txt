@@ -1,5 +1,5 @@
 Flask==2.3.1
 gunicorn>=20.1.0
-orjson==3.8.10
+orjson==3.8.11
 python-i18n[yaml]==0.3.9
 Babel==2.12.1
