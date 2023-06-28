@@ -177,6 +177,7 @@ jobs:
           max_videos: 6
           base_url: https://ytcards.demolab.com/
           card_width: 250
+          border_radius: 5
           background_color: "#0d1117"
           title_color: "#ffffff"
           stats_color: "#dedede"
