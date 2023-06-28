@@ -36,6 +36,7 @@ def render():
             return Response(response=render_template("index.html", now=now))
         video_id = validate_video_id(request, "id")
         width = validate_int(request, "width", default=250)
+        border_radius = validate_int(request, "border_radius", default=5)
         background_color = validate_color(request, "background_color", default="#0d1117")
         title_color = validate_color(request, "title_color", default="#ffffff")
         stats_color = validate_color(request, "stats_color", default="#dedede")
@@ -62,6 +63,7 @@ def render():
                 thumbnail=thumbnail,
                 duration=duration,
                 duration_width=duration_width,
+                border_radius=border_radius,
                 rtl=is_rtl(lang),
             ),
             status=200,

@@ -114,6 +114,7 @@ Check out the [Wiki](https://github.com/DenverCoder1/github-readme-youtube-cards
 | `max_videos`                  | The maximum number of videos to display           | 6                                                       |
 | `base_url`                    | The base URL to use for the cards                 | "https://ytcards.demolab.com/"                          |
 | `card_width`                  | The width of the SVG cards in pixels              | 250                                                     |
+| `border_radius`               | The border radius of the SVG cards                | 5                                                       |
 | `background_color`            | The background color of the SVG cards             | "#0d1117"                                               |
 | `title_color`                 | The color of the title text                       | "#ffffff"                                               |
 | `stats_color`                 | The color of the stats text                       | "#dedede"                                               |
