@@ -9,6 +9,7 @@ video_parser = VideoParser(
     lang="en",
     max_videos=6,
     card_width=250,
+    border_radius=5,
     background_color="#0d1117",
     title_color="#ffffff",
     stats_color="#dedede",
@@ -42,6 +43,7 @@ def test_parse_videos():
     assert "title_color=" in videos
     assert "stats_color=" in videos
     assert "width=" in videos
+    assert "border_radius=" in videos
 
 
 def test_parse_videos_with_theme_context():
@@ -86,6 +88,7 @@ def test_parse_videos_html():
     assert "title_color=" in videos
     assert "stats_color=" in videos
     assert "width=" in videos
+    assert "border_radius=" in videos
 
 
 def test_update_file():

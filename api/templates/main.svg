@@ -8,7 +8,7 @@
         </clipPath>
     </defs>
     <!-- outer rectangle -->
-    <rect id="rect" rx="5" width="{{ width }}" height="{{ height }}"
+    <rect id="rect" rx="{{ border_radius }}" width="{{ width }}" height="{{ height }}"
         fill="{{ background_color }}" />
     <!-- thumbnail image -->
     <image width="{{ width }}" clip-path="url(#image-clip)" href="{{ thumbnail }}" />

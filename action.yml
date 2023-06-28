@@ -33,6 +33,10 @@ inputs:
     description: "The width of the SVG cards"
     required: false
     default: "250"
+  border_radius:
+    description: "The border radius of the SVG cards"
+    required: false
+    default: "5"
   background_color:
     description: "The background color of the SVG cards"
     required: false
@@ -125,6 +129,7 @@ runs:
                 --max-videos ${{ inputs.max_videos }} \
                 --base-url "${{ inputs.base_url }}" \
                 --card-width ${{ inputs.card_width }} \
+                --border-radius ${{ inputs.border_radius }} \
                 --background-color "${{ inputs.background_color }}" \
                 --title-color "${{ inputs.title_color }}" \
                 --stats-color "${{ inputs.stats_color }}" \

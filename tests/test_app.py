@@ -35,6 +35,7 @@ def test_request_valid_params(client):
         "title_color": "#111111",
         "stats_color": "#222222",
         "width": "500",
+        "border_radius": "10",
         "duration": "211",
     }
     response = client.get(f"/?{urlencode(params)}")
@@ -48,6 +49,9 @@ def test_request_valid_params(client):
 
     # test width
     assert 'width="500"' in data
+
+    # test border radius
+    assert 'rx="10"' in data
 
     # test background color
     assert 'fill="#000000"' in data

@@ -17,6 +17,7 @@ class VideoParser:
         lang: str,
         max_videos: int,
         card_width: int,
+        border_radius: int,
         background_color: str,
         title_color: str,
         stats_color: str,
@@ -31,6 +32,7 @@ class VideoParser:
         self._lang = lang
         self._max_videos = max_videos
         self._card_width = card_width
+        self._border_radius = border_radius
         self._background_color = background_color
         self._title_color = title_color
         self._stats_color = stats_color
@@ -114,6 +116,7 @@ class VideoParser:
             "title_color": self._title_color,
             "stats_color": self._stats_color,
             "width": self._card_width,
+            "border_radius": self._border_radius,
         }
         if video_id in self._youtube_data:
             content_details = self._youtube_data[video_id]["contentDetails"]
@@ -216,6 +219,13 @@ if __name__ == "__main__":
         type=int,
     )
     parser.add_argument(
+        "--border-radius",
+        dest="border_radius",
+        help="Card border radius for the SVG images",
+        default=5,
+        type=int,
+    )
+    parser.add_argument(
         "--background-color",
         dest="background_color",
         help="Background color for the SVG images",
@@ -289,6 +299,7 @@ if __name__ == "__main__":
         lang=args.lang,
         max_videos=args.max_videos,
         card_width=args.card_width,
+        border_radius=args.border_radius,
         background_color=args.background_color,
         title_color=args.title_color,
         stats_color=args.stats_color,
