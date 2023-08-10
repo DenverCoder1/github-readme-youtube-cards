@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "github-readme-youtube-cards"
-version = "1.6.0"
+version = "1.7.0"
 description = "Workflow for displaying recent YouTube videos as SVG cards in your readme"
 authors = [{name = "Jonah Lawrence", email = "jonah@freshidea.com"}]
 readme = "README.md"
