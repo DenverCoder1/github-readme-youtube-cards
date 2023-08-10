@@ -14,7 +14,7 @@
     <image width="{{ width }}" clip-path="url(#image-clip)" href="{{ thumbnail }}" />
     {% if duration != "0:00" %}
     <!-- video duration -->
-    <g transform="translate({{ width - 8 - duration_width }}, {{ height - 102 }})">
+    <g transform="translate({{ width - 8 - duration_width }}, {{ height - title_height - 82 }})">
         <rect x="0" y="0" rx="2" width="{{ duration_width }}" height="16" fill="#000000bb"/>
         <text x="{{ duration_width / 2 }}" y="9" dominant-baseline="middle" text-anchor="middle"
             fill="#ffffff" font-family="Roboto, Segoe UI, Ubuntu, Arial, sans-serif"
@@ -24,10 +24,12 @@
     </g>
     {% endif %}
     <!-- title -->
-    <g transform="translate(10, {{ height - 50 }})">
+    <g transform="translate(10, {{ height - title_height - 50 }})">
         <text fill="{{ title_color }}" font-family="Roboto, Segoe UI, Ubuntu, Arial, sans-serif"
             font-weight="600" font-size="15px">
-            {{ title }}
+            {% for line in title_lines %}
+            <tspan x="0" dy="{{ title_line_height }}px">{{ line }}</tspan>
+            {% endfor %}
         </text>
     </g>
     <!-- views and date -->

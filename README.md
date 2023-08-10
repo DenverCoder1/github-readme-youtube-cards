@@ -120,6 +120,7 @@ Check out the [Wiki](https://github.com/DenverCoder1/github-readme-youtube-cards
 | `stats_color`                 | The color of the stats text                       | "#dedede"                                               |
 | `theme_context_light`         | JSON object with light mode colors <sup>🎨</sup>  | "{}"                                                    |
 | `theme_context_dark`          | JSON object with dark mode colors <sup>🎨</sup>   | "{}"                                                    |
+| `max_title_lines`             | The maximum number of lines to use for the title  | 1                                                       |
 | `show_duration` <sup>🔑</sup> | Whether to show the duration of the videos        | "false"                                                 |
 | `author_name`                 | The name of the commit author                     | "GitHub Actions"                                        |
 | `author_email`                | The email address of the commit author            | "41898282+github-actions[bot]@users.noreply.github.com" |
@@ -183,6 +184,7 @@ jobs:
           stats_color: "#dedede"
           theme_context_light: '{ "background_color": "#ffffff", "title_color": "#24292f", "stats_color": "#57606a" }'
           theme_context_dark: '{ "background_color": "#0d1117", "title_color": "#ffffff", "stats_color": "#dedede" }'
+          max_title_lines: 2
           show_duration: true # Requires YouTube API Key (see Wiki)
           author_name: GitHub Actions
           author_email: 41898282+github-actions[bot]@users.noreply.github.com

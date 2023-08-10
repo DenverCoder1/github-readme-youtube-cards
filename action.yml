@@ -57,6 +57,10 @@ inputs:
     description: "JSON theme for dark mode (keys: background_color, title_color, stats_color)"
     required: false
     default: "{}"
+  max_title_lines:
+    description: "The maximum number of lines to use for the title"
+    required: false
+    default: "1"
   show_duration:
     description: "Whether to show the video duration. Requires `youtube_api_key` to be set."
     required: false
@@ -133,6 +137,7 @@ runs:
                 --background-color "${{ inputs.background_color }}" \
                 --title-color "${{ inputs.title_color }}" \
                 --stats-color "${{ inputs.stats_color }}" \
+                --max-title-lines ${{ inputs.max_title_lines }} \
                 --youtube-api-key "${{ inputs.youtube_api_key }}" \
                 --show-duration "${{ inputs.show_duration }}" \
                 --theme-context-light '${{ inputs.theme_context_light }}' \

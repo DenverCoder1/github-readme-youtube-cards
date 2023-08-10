@@ -1,4 +1,5 @@
 import codecs
+import textwrap
 from datetime import datetime, timedelta
 from typing import Optional
 from urllib.request import Request, urlopen
@@ -59,11 +60,14 @@ def data_uri_from_file(path: str, *, mime_type: Optional[str] = None) -> str:
     return data_uri_from_bytes(data=data, mime_type=mime_type)
 
 
-def trim_text(text: str, max_length: int) -> str:
-    """Trim text to max_length characters, adding ellipsis if necessary"""
-    if len(text) <= max_length:
-        return text
-    return text[: max_length - 1].strip() + "…"
+def trim_lines(text: str, max_length: int, max_lines: int) -> list[str]:
+    """Trim text to max_length characters per line, adding ellipsis if necessary"""
+    # use textwrap to split into lines
+    lines = textwrap.wrap(text, width=max_length)
+    # if there are more lines than max_lines, trim the last line and add ellipsis
+    if len(lines) > max_lines:
+        lines[max_lines - 1] = lines[max_lines - 1][: max_length - 1].strip() + "…"
+    return lines[:max_lines]
 
 
 def parse_metric_value(value: str) -> int:
