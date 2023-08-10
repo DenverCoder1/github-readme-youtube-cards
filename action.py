@@ -24,6 +24,7 @@ class VideoParser:
         youtube_api_key: Optional[str],
         theme_context_light: Dict[str, str],
         theme_context_dark: Dict[str, str],
+        max_title_lines: int,
         show_duration: bool,
         output_type: str,
     ):
@@ -36,9 +37,10 @@ class VideoParser:
         self._background_color = background_color
         self._title_color = title_color
         self._stats_color = stats_color
-        self._youtube_api_key = youtube_api_key
         self._theme_context_light = theme_context_light
         self._theme_context_dark = theme_context_dark
+        self._max_title_lines = max_title_lines
+        self._youtube_api_key = youtube_api_key
         self._show_duration = show_duration
         self._output_type = output_type
         self._youtube_data = {}
@@ -115,6 +117,7 @@ class VideoParser:
             "background_color": self._background_color,
             "title_color": self._title_color,
             "stats_color": self._stats_color,
+            "max_title_lines": self._max_title_lines,
             "width": self._card_width,
             "border_radius": self._border_radius,
         }
@@ -256,6 +259,13 @@ if __name__ == "__main__":
         default="{}",
     )
     parser.add_argument(
+        "--max-title-lines",
+        dest="max_title_lines",
+        help="Maximum number of lines for the title",
+        default=1,
+        type=int,
+    )
+    parser.add_argument(
         "--youtube-api-key",
         dest="youtube_api_key",
         help="YouTube API key",
@@ -303,9 +313,10 @@ if __name__ == "__main__":
         background_color=args.background_color,
         title_color=args.title_color,
         stats_color=args.stats_color,
-        youtube_api_key=args.youtube_api_key,
         theme_context_light=json.loads(args.theme_context_light),
         theme_context_dark=json.loads(args.theme_context_dark),
+        max_title_lines=args.max_title_lines,
+        youtube_api_key=args.youtube_api_key,
         show_duration=args.show_duration == "true",
         output_type=args.output_type,
     )

@@ -10,7 +10,7 @@ from api.utils import (
     format_views_value,
     parse_metric_value,
     seconds_to_duration,
-    trim_text,
+    trim_lines,
 )
 
 
@@ -66,10 +66,12 @@ def test_data_uri_from_url_and_file():
     assert thumbnail_png.startswith("data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/")
 
 
-def test_trim_text():
-    assert trim_text("abcdefghijklmnopqrstuvwxyz", 100) == "abcdefghijklmnopqrstuvwxyz"
-    assert trim_text("abcdefghijklmnopqrstuvwxyz", 10) == "abcdefghi…"
-    assert trim_text("abcdefghij", 10) == "abcdefghij"
+def test_trim_lines():
+    assert trim_lines("abcdefghijklmnopqrstuvwxyz", 100, 1) == ["abcdefghijklmnopqrstuvwxyz"]
+    assert trim_lines("abcdefghijklmnopqrstuvwxyz", 10, 1) == ["abcdefghi…"]
+    assert trim_lines("abcdefghij", 10, 1) == ["abcdefghij"]
+    assert trim_lines("abcdefghijklmnopqrstuvwxyz", 10, 2) == ["abcdefghij", "klmnopqrs…"]
+    assert trim_lines("abcdefghij", 10, 2) == ["abcdefghij"]
 
 
 def test_seconds_to_duration():

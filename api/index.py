@@ -12,7 +12,7 @@ from .utils import (
     format_relative_time,
     is_rtl,
     seconds_to_duration,
-    trim_text,
+    trim_lines,
 )
 from .validate import (
     validate_color,
@@ -40,7 +40,9 @@ def render():
         background_color = validate_color(request, "background_color", default="#0d1117")
         title_color = validate_color(request, "title_color", default="#ffffff")
         stats_color = validate_color(request, "stats_color", default="#dedede")
-        title = trim_text(validate_string(request, "title", default=""), (width - 20) // 8)
+        title = validate_string(request, "title", default="")
+        max_title_lines = validate_int(request, "max_title_lines", default=1)
+        title_lines = trim_lines(title, (width - 20) // 8, max_title_lines)
         publish_timestamp = validate_int(request, "timestamp", default=0)
         duration_seconds = validate_int(request, "duration", default=0)
         lang = validate_lang(request, "lang", default="en")
@@ -50,15 +52,21 @@ def render():
         stats = f"{views}\u2002•\u2002{diff}" if views and diff else (views or diff)
         duration = seconds_to_duration(duration_seconds)
         duration_width = estimate_duration_width(duration)
+        thumbnail_height = round(width * 0.56)
+        title_line_height = 20
+        title_height = len(title_lines) * title_line_height
+        height = thumbnail_height + title_height + 60
         response = Response(
             response=render_template(
                 "main.svg",
                 width=width,
-                height=round(width * 0.56) + 80,
+                height=height,
+                title_line_height=title_line_height,
+                title_height=title_height,
                 background_color=background_color,
                 title_color=title_color,
                 stats_color=stats_color,
-                title=title,
+                title_lines=title_lines,
                 stats=stats,
                 thumbnail=thumbnail,
                 duration=duration,

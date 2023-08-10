@@ -16,6 +16,7 @@ video_parser = VideoParser(
     youtube_api_key="",
     theme_context_light={},
     theme_context_dark={},
+    max_title_lines=1,
     show_duration=False,
     output_type="markdown",
 )
@@ -89,6 +90,7 @@ def test_parse_videos_html():
     assert "stats_color=" in videos
     assert "width=" in videos
     assert "border_radius=" in videos
+    assert "max_title_lines=" in videos
 
 
 def test_update_file():

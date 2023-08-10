@@ -37,6 +37,7 @@ def test_request_valid_params(client):
         "width": "500",
         "border_radius": "10",
         "duration": "211",
+        "max_title_lines": "1",
     }
     response = client.get(f"/?{urlencode(params)}")
     data = response.data.decode("utf-8")
@@ -99,3 +100,18 @@ def test_request_right_to_left(client):
     # test views
     views_regex = re.compile(r"\d+(?:\.\d)?[KMBT]?\u200f צפיות")
     assert views_regex.search(data) is not None
+
+
+def test_max_title_lines(client):
+    params = {
+        "id": "dQw4w9WgXcQ",
+        "title": "Rick Astley - Never Gonna Give You Up (Official Music Video)",
+        "timestamp": "1256450400",
+        "max_title_lines": "2",
+    }
+    response = client.get(f"/?{urlencode(params)}")
+    data = response.data.decode("utf-8")
+
+    assert response.status_code == 200
+
+    assert data.count('<tspan x="0" dy="20px">') == 2
