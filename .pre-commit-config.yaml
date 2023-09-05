@@ -34,14 +34,14 @@ repos:
         name: Check for debug statements.
 
   - repo: https://github.com/PyCQA/autoflake
-    rev: v2.2.0
+    rev: v2.2.1
     hooks:
       - id: autoflake
         name: Remove unused imports with autoflake.
         args: ["--in-place", "--remove-all-unused-imports"]
 
   - repo: https://github.com/pre-commit/mirrors-prettier
-    rev: v3.0.2
+    rev: v3.0.3
     hooks:
       - id: prettier
         name: Running prettier in non-python files.
