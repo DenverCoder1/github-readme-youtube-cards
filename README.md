@@ -108,7 +108,7 @@ Check out the [Wiki](https://github.com/DenverCoder1/github-readme-youtube-cards
 | Option                        | Description                                       | Default                                                 |
 | ----------------------------- | ------------------------------------------------- | ------------------------------------------------------- |
 | `channel_id`                  | The channel ID to use for the feed <sup>📺</sup>  | Required                                                |
-| `lang`                        | The locale for views and relative time text       | "en"                                                    |
+| `lang`                        | The locale for views and timestamps <sup>💬</sup> | "en"                                                    |
 | `comment_tag_name`            | The text in the comment tag for replacing content | "YOUTUBE-CARDS"                                         |
 | `youtube_api_key`             | The API key to use for features marked with 🔑    | ""                                                      |
 | `max_videos`                  | The maximum number of videos to display           | 6                                                       |
@@ -134,6 +134,8 @@ Check out the [Wiki](https://github.com/DenverCoder1/github-readme-youtube-cards
 <sup>🔑</sup> Some features require a YouTube API key. See [Setting Up the Action with a YouTube API Key](https://github.com/DenverCoder1/github-readme-youtube-cards/wiki/Setting-Up-the-Action-with-a-YouTube-API-Key) in the wiki for more information.
 
 <sup>🎨</sup> See [Setting Theme Contexts for Light and Dark Mode](https://github.com/DenverCoder1/github-readme-youtube-cards/wiki/Setting-Theme-Contexts-for-Light-and-Dark-Mode) in the wiki for more information.
+
+<sup>💬</sup> See [this directory](https://github.com/DenverCoder1/github-readme-youtube-cards/tree/main/api/locale) for a list of locales with the word "views" translated. The timestamps will still be translated using [Babel](https://github.com/python-babel/babel) even if a translation file is not present. See [issue #48](https://github.com/DenverCoder1/github-readme-youtube-cards/issues/48) for info on contributing translations.
 
 [key]: https://user-images.githubusercontent.com/20955511/189419733-84384135-c5c4-4a20-a439-f832d5ad5f5d.png
 
