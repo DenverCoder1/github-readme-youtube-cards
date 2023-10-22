@@ -1,5 +1,6 @@
 import codecs
 import textwrap
+import unicodedata as ud
 from datetime import datetime, timedelta
 from typing import Optional
 from urllib.request import Request, urlopen
@@ -7,7 +8,6 @@ from urllib.request import Request, urlopen
 import i18n
 import orjson
 
-import unicodedata as ud
 
 from babel.dates import format_timedelta
 from babel.numbers import format_compact_decimal
