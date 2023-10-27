@@ -24,11 +24,11 @@
     </g>
     {% endif %}
     <!-- title -->
-    <g transform="translate(10, {{ height - title_height - 50 }})">
+    <g transform="translate({{ width - 12 if rtl_title else 10 }}, {{ height - title_height - 50 }})">
         <text fill="{{ title_color }}" font-family="Roboto, Segoe UI, Ubuntu, Arial, sans-serif"
             font-weight="600" font-size="15px" direction="{{ 'rtl' if rtl_title else 'ltr' }}">
             {% for line in title_lines %}
-            <tspan x="{{ width - 12 if rtl_title else 0 }}" dy="{{ title_line_height }}px">{{ line }}</tspan>
+            <tspan x="0" dy="{{ title_line_height }}px">{{ line }}</tspan>
             {% endfor %}
         </text>
     </g>
