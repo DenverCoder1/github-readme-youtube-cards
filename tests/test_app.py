@@ -102,6 +102,28 @@ def test_request_right_to_left(client):
     assert views_regex.search(data) is not None
 
 
+def test_title_right_to_left(client):
+    params = {
+        "id": "dQw4w9WgXcQ",
+        "title": "לורם איפסום דולור סיט אמט קונסקטורר אדיפיסינג אלית,",
+        "timestamp": "1693000000",
+        "lang": "he",
+        "max_title_lines": "2",
+        "width": "250",
+        "border_radius": "5",
+    }
+    response = client.get(f"/?{urlencode(params)}")
+    data = response.data.decode("utf-8")
+
+    print(data)
+
+    # stats group should be 12 pixels from the right
+    assert "translate(240, 195)" in data
+
+    # test direction
+    assert 'direction="rtl"' in data
+
+
 def test_max_title_lines(client):
     params = {
         "id": "dQw4w9WgXcQ",
