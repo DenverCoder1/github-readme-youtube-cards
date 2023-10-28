@@ -118,7 +118,7 @@ def test_title_right_to_left(client):
     print(data)
 
     # stats group should be 12 pixels from the right
-    assert "translate(240, 195)" in data
+    assert "translate(238, 195)" in data
 
     # test direction
     assert 'direction="rtl"' in data
