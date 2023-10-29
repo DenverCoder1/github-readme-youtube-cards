@@ -74,7 +74,7 @@ def render():
                 duration_width=duration_width,
                 border_radius=border_radius,
                 rtl=is_rtl(lang),
-                rtl_title=is_rtl_title(title_lines[0]),
+                rtl_title=is_rtl_title("".join(title_lines)),
             ),
             status=200,
             mimetype="image/svg+xml",
