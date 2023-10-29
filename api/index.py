@@ -11,6 +11,7 @@ from .utils import (
     fetch_views,
     format_relative_time,
     is_rtl,
+    is_rtl_title,
     seconds_to_duration,
     trim_lines,
 )
@@ -73,6 +74,7 @@ def render():
                 duration_width=duration_width,
                 border_radius=border_radius,
                 rtl=is_rtl(lang),
+                rtl_title=is_rtl_title("".join(title_lines)),
             ),
             status=200,
             mimetype="image/svg+xml",

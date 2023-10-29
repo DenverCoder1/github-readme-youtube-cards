@@ -1,5 +1,6 @@
 import codecs
 import textwrap
+import unicodedata as ud
 from datetime import datetime, timedelta
 from typing import Optional
 from urllib.request import Request, urlopen
@@ -123,3 +124,22 @@ def estimate_duration_width(duration: str) -> int:
 def is_rtl(lang: str) -> bool:
     """Check if language is to be displayed right-to-left"""
     return i18n.t("direction", locale=lang, default="ltr") == "rtl"
+
+
+def is_rtl_title(title: str) -> bool:
+    """Check if a title is to be displayed right-to-left"""
+    title_bidi_properties = [ud.bidirectional(c) for c in title]
+    ltr_count = (
+        title_bidi_properties.count("L")
+        + title_bidi_properties.count("LRE")
+        + title_bidi_properties.count("LRO")
+        + title_bidi_properties.count("LRI")
+    )
+    rtl_count = (
+        title_bidi_properties.count("R")
+        + title_bidi_properties.count("AL")
+        + title_bidi_properties.count("RLO")
+        + title_bidi_properties.count("RLE")
+        + title_bidi_properties.count("RLI")
+    )
+    return rtl_count > ltr_count
