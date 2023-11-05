@@ -1,0 +1,3 @@
+ko:
+  view: "1 조회수"
+  views: "%{number} 조회수"
