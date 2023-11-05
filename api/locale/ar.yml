@@ -1,0 +1,4 @@
+ar:
+  direction: rtl
+  view: "1 مشاهدة"
+  views: "%{number} مشاهدة"
