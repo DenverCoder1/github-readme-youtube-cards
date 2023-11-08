@@ -135,7 +135,7 @@ class VideoParser:
             if self._theme_context_dark or self._theme_context_light:
                 return (
                     f'<a href="{video["link"]}">\n'
-                    f"  <picture>\n"
+                    "  <picture>\n"
                     f'    <source media="(prefers-color-scheme: dark)" srcset="{self._base_url}?{urllib.parse.urlencode(dark_params)}">\n'
                     f'    <img src="{self._base_url}?{urllib.parse.urlencode(light_params)}" alt="{html_escaped_title}" title="{html_escaped_title}">\n'
                     "  </picture>\n"
