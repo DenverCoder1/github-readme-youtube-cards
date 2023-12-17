@@ -1,0 +1,3 @@
+ko:
+  view: "조회수 1회"
+  views: "조회수 %{number}회"
