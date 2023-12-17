@@ -1,7 +1,9 @@
 <!-- https://github.com/DenverCoder1/github-readme-youtube-cards -->
 <svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'
     width="{{ width }}" height="{{ height }}" viewBox="0 0 {{ width }} {{ height }}">
-    <style>{% include "resources/roboto.css" %}</style>
+    {% if reduced_bandwidth == false %}
+        <style>{% include "resources/roboto.css" %}</style>
+    {% endif %}
     <defs>
         <clipPath id="image-clip">
             <use xlink:href="#rect" />
