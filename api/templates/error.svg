@@ -1,7 +1,7 @@
 <!-- https://github.com/DenverCoder1/github-readme-youtube-cards -->
 <svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'
     width="250" height="220" viewBox="0 0 250 220">
-    {% if !reduced_bandwidth %}
+    {% if reduced_bandwidth == false %}
         <style>{% include "resources/roboto.css" %}</style>
     {% endif %}
     <defs>
