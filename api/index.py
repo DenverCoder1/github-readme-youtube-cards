@@ -75,6 +75,7 @@ def render():
                 border_radius=border_radius,
                 rtl=is_rtl(lang),
                 rtl_title=is_rtl_title("".join(title_lines)),
+                reduced_bandwidth=True,
             ),
             status=200,
             mimetype="image/svg+xml",
@@ -85,7 +86,13 @@ def render():
         status = getattr(e, "status", 500)
         thumbnail = data_uri_from_file("./api/templates/resources/error.jpg")
         return Response(
-            response=render_template("error.svg", message=str(e), code=status, thumbnail=thumbnail),
+            response=render_template(
+                "error.svg",
+                message=str(e),
+                code=status,
+                thumbnail=thumbnail,
+                reduced_bandwidth=True,
+            ),
             status=status,
             mimetype="image/svg+xml",
         )

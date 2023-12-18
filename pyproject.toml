@@ -2,6 +2,9 @@
 requires = ["hatchling"]
 build-backend = "hatchling.build"
 
+[tool.hatch.build.targets.wheel]
+packages = ["api"]
+
 [project]
 name = "github-readme-youtube-cards"
 version = "1.7.0"
@@ -34,7 +37,7 @@ include = [
     "tests",
     "*.py",
 ]
-pythonVersion = "3.10"
+pythonVersion = "3.11"
 # https://github.com/microsoft/pyright/blob/main/docs/configuration.md
 reportPropertyTypeMismatch = true
 reportDuplicateImport = true
