@@ -30,8 +30,7 @@ def validate_video_id(req: Request, field: str) -> str:
     Raises:
         ValidationError: if the field is not provided or fails the validation regex.
     """
-    value = req.args.get(field, "")
-    if value == "":
+    if (value := req.args.get(field, "")) == "":
         raise ValidationError(f"Required parameter '{field}' is missing")
     if not re.match(r"^[a-zA-Z0-9_-]+$", value):
         raise ValidationError(f"'{field}' expects a video ID but got '{value}'")
