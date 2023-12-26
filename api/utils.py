@@ -85,8 +85,7 @@ def parse_metric_value(value: str) -> int:
 
 def format_views_value(value: str, lang: str = "en") -> str:
     """Format view count, for example "1.2M" => "1.2M views", translations included"""
-    int_value = parse_metric_value(value)
-    if int_value == 1:
+    if (int_value := parse_metric_value(value)) == 1:
         return i18n.t("view", locale=lang)
     formatted_value = format_compact_decimal(int_value, locale=lang, fraction_digits=1)
     return i18n.t("views", number=formatted_value, locale=lang)
