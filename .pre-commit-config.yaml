@@ -5,14 +5,14 @@ ci:
 
 repos:
   - repo: https://github.com/pycqa/isort
-    rev: 5.13.1
+    rev: 5.13.2
     hooks:
       - id: isort
         args: ["--profile", "black"]
         name: Running isort in all files.
 
   - repo: https://github.com/psf/black
-    rev: 23.11.0
+    rev: 24.2.0
     hooks:
       - id: black
         name: Running black in all files.
@@ -34,14 +34,14 @@ repos:
         name: Check for debug statements.
 
   - repo: https://github.com/PyCQA/autoflake
-    rev: v2.2.1
+    rev: v2.3.0
     hooks:
       - id: autoflake
         name: Remove unused imports with autoflake.
         args: ["--in-place", "--remove-all-unused-imports"]
 
   - repo: https://github.com/pre-commit/mirrors-prettier
-    rev: v3.1.0
+    rev: v4.0.0-alpha.8
     hooks:
       - id: prettier
         name: Running prettier in non-python files.
