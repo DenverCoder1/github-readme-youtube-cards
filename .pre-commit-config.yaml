@@ -12,7 +12,7 @@ repos:
         name: Running isort in all files.
 
   - repo: https://github.com/psf/black
-    rev: 24.2.0
+    rev: 24.3.0
     hooks:
       - id: black
         name: Running black in all files.
@@ -34,7 +34,7 @@ repos:
         name: Check for debug statements.
 
   - repo: https://github.com/PyCQA/autoflake
-    rev: v2.3.0
+    rev: v2.3.1
     hooks:
       - id: autoflake
         name: Remove unused imports with autoflake.
