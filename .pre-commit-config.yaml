@@ -12,13 +12,13 @@ repos:
         name: Running isort in all files.
 
   - repo: https://github.com/psf/black
-    rev: 24.2.0
+    rev: 24.3.0
     hooks:
       - id: black
         name: Running black in all files.
 
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.5.0
+    rev: v4.6.0
     hooks:
       - id: check-ast
         name: Check if python files are valid syntax for the ast parser
@@ -34,7 +34,7 @@ repos:
         name: Check for debug statements.
 
   - repo: https://github.com/PyCQA/autoflake
-    rev: v2.3.0
+    rev: v2.3.1
     hooks:
       - id: autoflake
         name: Remove unused imports with autoflake.
