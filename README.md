@@ -130,7 +130,7 @@ Check out the [Wiki](https://github.com/DenverCoder1/github-readme-youtube-cards
 | `output_only`                 | Whether to skip writing to the readme file        | "false"                                                 |
 | `output_type`                 | The output syntax to use ("markdown" or "html")   | "markdown"                                              |
 
-<sup>📺</sup> A Channel ID or Playlist ID is required. See [How to Locate Your Channel ID](https://github.com/DenverCoder1/github-readme-youtube-cards/wiki/How-to-Locate-Your-Channel-ID) in the wiki for more information. To only show Shorts, see [How to Show Only Short Videos on Your Channel](https://github.com/DenverCoder1/github-readme-youtube-cards/wiki/How-to-Show-Only-Short-Videos-on-Your-Channel).
+<sup>📺</sup> A Channel ID or Playlist ID is required. See [How to Locate Your Channel ID](https://github.com/DenverCoder1/github-readme-youtube-cards/wiki/How-to-Locate-Your-Channel-ID) in the wiki for more information. To filter videos by type such as removing shorts or showing only popular videos, see [How to Filter Videos by Type](https://github.com/DenverCoder1/github-readme-youtube-cards/wiki/How-to-Filter-Videos-by-Type).
 
 <sup>🔑</sup> Some features require a YouTube API key. See [Setting Up the Action with a YouTube API Key](https://github.com/DenverCoder1/github-readme-youtube-cards/wiki/Setting-Up-the-Action-with-a-YouTube-API-Key) in the wiki for more information.
 
