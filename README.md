@@ -107,7 +107,8 @@ Check out the [Wiki](https://github.com/DenverCoder1/github-readme-youtube-cards
 
 | Option                        | Description                                       | Default                                                 |
 | ----------------------------- | ------------------------------------------------- | ------------------------------------------------------- |
-| `channel_id`                  | The channel ID to use for the feed <sup>📺</sup>  | Required                                                |
+| `channel_id`                  | The channel ID to use for the feed <sup>📺</sup>  | ""                                                      |
+| `playlist_id`                 | The playlist ID to use for the feed <sup>📺</sup> | ""                                                      |
 | `lang`                        | The locale for views and timestamps <sup>💬</sup> | "en"                                                    |
 | `comment_tag_name`            | The text in the comment tag for replacing content | "YOUTUBE-CARDS"                                         |
 | `youtube_api_key`             | The API key to use for features marked with 🔑    | ""                                                      |
@@ -129,7 +130,7 @@ Check out the [Wiki](https://github.com/DenverCoder1/github-readme-youtube-cards
 | `output_only`                 | Whether to skip writing to the readme file        | "false"                                                 |
 | `output_type`                 | The output syntax to use ("markdown" or "html")   | "markdown"                                              |
 
-<sup>📺</sup> A Channel ID is required. See [How to Locate Your Channel ID](https://github.com/DenverCoder1/github-readme-youtube-cards/wiki/How-to-Locate-Your-Channel-ID) in the wiki for more information.
+<sup>📺</sup> A Channel ID or Playlist ID is required. See [How to Locate Your Channel ID](https://github.com/DenverCoder1/github-readme-youtube-cards/wiki/How-to-Locate-Your-Channel-ID) in the wiki for more information. To only show Shorts, see [How to Show Only Short Videos on Your Channel](https://github.com/DenverCoder1/github-readme-youtube-cards/wiki/How-to-Show-Only-Short-Videos-on-Your-Channel).
 
 <sup>🔑</sup> Some features require a YouTube API key. See [Setting Up the Action with a YouTube API Key](https://github.com/DenverCoder1/github-readme-youtube-cards/wiki/Setting-Up-the-Action-with-a-YouTube-API-Key) in the wiki for more information.
 
@@ -194,6 +195,31 @@ jobs:
           readme_path: README.md
           output_only: false
           output_type: markdown
+```
+
+### Example Playlist Workflow
+
+This is an example workflow for using a playlist instead of a channel.
+
+```yaml
+name: GitHub Readme YouTube Cards
+on:
+  schedule:
+    # Runs every hour, on the hour
+    - cron: "0 * * * *"
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    # Allow the job to commit to the repository
+    permissions:
+      contents: write
+    # Run the GitHub Readme YouTube Cards action
+    steps:
+      - uses: DenverCoder1/github-readme-youtube-cards@main
+        with:
+          playlist_id: PL9YUC9AZJGFFAErr_ZdK2FV7sklMm2K0J
 ```
 
 ## Contributing
