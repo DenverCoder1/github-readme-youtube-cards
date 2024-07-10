@@ -3,23 +3,26 @@ import re
 
 from action import FileUpdater, VideoParser
 
-video_parser = VideoParser(
-    base_url="https://ytcards.demolab.com/",
-    channel_id="UCipSxT7a3rn81vGLw9lqRkg",
-    lang="en",
-    max_videos=6,
-    card_width=250,
-    border_radius=5,
-    background_color="#0d1117",
-    title_color="#ffffff",
-    stats_color="#dedede",
-    youtube_api_key="",
-    theme_context_light={},
-    theme_context_dark={},
-    max_title_lines=1,
-    show_duration=False,
-    output_type="markdown",
-)
+
+def create_video_parser(**kwargs):
+    return VideoParser(
+        base_url=kwargs.get("base_url", "https://ytcards.demolab.com/"),
+        channel_id=kwargs.get("channel_id", "UCipSxT7a3rn81vGLw9lqRkg"),
+        playlist_id=kwargs.get("playlist_id", None),
+        lang=kwargs.get("lang", "en"),
+        max_videos=kwargs.get("max_videos", 6),
+        card_width=kwargs.get("card_width", 250),
+        border_radius=kwargs.get("border_radius", 5),
+        background_color=kwargs.get("background_color", "#0d1117"),
+        title_color=kwargs.get("title_color", "#ffffff"),
+        stats_color=kwargs.get("stats_color", "#dedede"),
+        youtube_api_key=kwargs.get("youtube_api_key", ""),
+        theme_context_light=kwargs.get("theme_context_light", {}),
+        theme_context_dark=kwargs.get("theme_context_dark", {}),
+        max_title_lines=kwargs.get("max_title_lines", 1),
+        show_duration=kwargs.get("show_duration", False),
+        output_type=kwargs.get("output_type", "markdown"),
+    )
 
 
 def test_parse_iso8601_duration():
@@ -30,6 +33,7 @@ def test_parse_iso8601_duration():
 
 
 def test_parse_videos():
+    video_parser = create_video_parser()
     videos = video_parser.parse_videos()
 
     assert len(videos.splitlines()) == 6
@@ -48,16 +52,18 @@ def test_parse_videos():
 
 
 def test_parse_videos_with_theme_context():
-    video_parser._theme_context_light = {
-        "background_color": "#ffffff",
-        "title_color": "#000000",
-        "stats_color": "#000000",
-    }
-    video_parser._theme_context_dark = {
-        "background_color": "#000000",
-        "title_color": "#ffffff",
-        "stats_color": "#ffffff",
-    }
+    video_parser = create_video_parser(
+        theme_context_light={
+            "background_color": "#ffffff",
+            "title_color": "#000000",
+            "stats_color": "#000000",
+        },
+        theme_context_dark={
+            "background_color": "#000000",
+            "title_color": "#ffffff",
+            "stats_color": "#ffffff",
+        },
+    )
     videos = video_parser.parse_videos()
 
     assert len(videos.splitlines()) == 6
@@ -70,7 +76,29 @@ def test_parse_videos_with_theme_context():
 
 
 def test_parse_videos_html():
-    video_parser._output_type = "html"
+    video_parser = create_video_parser(output_type="html")
+    videos = video_parser.parse_videos()
+
+    assert len(videos.splitlines()) == 6
+
+    line_regex = r"<a href=\".*\"><img src=\".*\" [^>]*></a>"
+    assert all(re.match(line_regex, line) for line in videos.splitlines())
+
+
+def test_parse_videos_html_theme_context():
+    video_parser = create_video_parser(
+        theme_context_light={
+            "background_color": "#ffffff",
+            "title_color": "#000000",
+            "stats_color": "#000000",
+        },
+        theme_context_dark={
+            "background_color": "#000000",
+            "title_color": "#ffffff",
+            "stats_color": "#ffffff",
+        },
+        output_type="html",
+    )
     videos = video_parser.parse_videos()
 
     assert len(videos.splitlines()) == 36
@@ -91,6 +119,18 @@ def test_parse_videos_html():
     assert "width=" in videos
     assert "border_radius=" in videos
     assert "max_title_lines=" in videos
+
+
+def test_playlist_id():
+    video_parser = create_video_parser(
+        channel_id=None, playlist_id="PL9YUC9AZJGFFAErr_ZdK2FV7sklMm2K0J"
+    )
+    videos = video_parser.parse_videos()
+
+    assert len(videos.splitlines()) == 6
+
+    line_regex = r"^\[!\[.*\]\(.* \"(.*)\"\)\]\(.*\)$"
+    assert all(re.match(line_regex, line) for line in videos.splitlines())
 
 
 def test_update_file():

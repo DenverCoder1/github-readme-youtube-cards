@@ -107,7 +107,8 @@ Check out the [Wiki](https://github.com/DenverCoder1/github-readme-youtube-cards
 
 | Option                        | Description                                       | Default                                                 |
 | ----------------------------- | ------------------------------------------------- | ------------------------------------------------------- |
-| `channel_id`                  | The channel ID to use for the feed <sup>📺</sup>  | Required                                                |
+| `channel_id`                  | The channel ID to use for the feed <sup>📺</sup>  | "" (A channel_id or playlist_id must be provided)       |
+| `playlist_id`                 | The playlist ID to use for the feed <sup>📺</sup> | "" (A channel_id or playlist_id must be provided)       |
 | `lang`                        | The locale for views and timestamps <sup>💬</sup> | "en"                                                    |
 | `comment_tag_name`            | The text in the comment tag for replacing content | "YOUTUBE-CARDS"                                         |
 | `youtube_api_key`             | The API key to use for features marked with 🔑    | ""                                                      |
@@ -194,6 +195,31 @@ jobs:
           readme_path: README.md
           output_only: false
           output_type: markdown
+```
+
+### Example Playlist Workflow
+
+This is an example workflow for using a playlist instead of a channel.
+
+```yaml
+name: GitHub Readme YouTube Cards
+on:
+  schedule:
+    # Runs every hour, on the hour
+    - cron: "0 * * * *"
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    # Allow the job to commit to the repository
+    permissions:
+      contents: write
+    # Run the GitHub Readme YouTube Cards action
+    steps:
+      - uses: DenverCoder1/github-readme-youtube-cards@main
+        with:
+          playlist_id: PL9YUC9AZJGFHTUP3vzq4UfQ76ScBnOi-9
 ```
 
 ## Contributing

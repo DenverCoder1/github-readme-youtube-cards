@@ -8,7 +8,12 @@ branding:
 inputs:
   channel_id:
     description: "The channel ID to use for the feed"
-    required: true
+    required: false
+    default: ""
+  playlist_id:
+    description: "The playlist ID to use for the feed"
+    required: false
+    default: ""
   lang:
     description: "The language you want your cards description to use"
     required: false
@@ -128,6 +133,7 @@ runs:
       run: |
         UPDATE=$(python ${{ github.action_path }}/action.py \
                 --channel "${{ inputs.channel_id }}" \
+                --playlist "${{ inputs.playlist_id }}" \
                 --lang "${{ inputs.lang }}" \
                 --comment-tag-name "${{ inputs.comment_tag_name }}" \
                 --max-videos ${{ inputs.max_videos }} \
