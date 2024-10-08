@@ -12,13 +12,13 @@ repos:
         name: Running isort in all files.
 
   - repo: https://github.com/psf/black
-    rev: 24.8.0
+    rev: 24.10.0
     hooks:
       - id: black
         name: Running black in all files.
 
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.6.0
+    rev: v5.0.0
     hooks:
       - id: check-ast
         name: Check if python files are valid syntax for the ast parser
