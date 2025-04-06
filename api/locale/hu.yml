@@ -1,0 +1,3 @@
+hu:
+  view: "1 megtekintés"
+  views: "%{number} megtekintés"
