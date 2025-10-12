@@ -1,0 +1,3 @@
+pl:
+  view: "1 wyświetlenie"
+  views: "%{number} wyświetleń"
