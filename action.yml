@@ -125,7 +125,7 @@ runs:
 
     - name: Install Python dependencies
       shell: bash
-      run: python -m pip install -r ${{ github.action_path }}/requirements-action.txt
+      run: cd ${{ github.action_path }} && pip install '.[action]'
 
     - name: Generate Readme Update
       id: "generate-readme-update"

@@ -7,12 +7,14 @@ Make sure your request is meaningful and you have tested the app locally before 
 ### Installing dependencies
 
 ```bash
-# Dependencies for running the Flask server
-pip install -r requirements.txt
-# Dependencies for testing and development
-pip install -r requirements-dev.txt
-# Dependencies for running the action script
-pip install -r requirements-action.txt
+# Install dependencies for running the Flask server
+pip install .
+
+# Install dependencies for testing and development
+pip install '.[dev]'
+
+# Install dependencies for running the action script
+pip install '.[action]'
 ```
 
 ### Running the Flask server
