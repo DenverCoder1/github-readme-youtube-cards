@@ -11,6 +11,27 @@ version = "1.7.0"
 description = "Workflow for displaying recent YouTube videos as SVG cards in your readme"
 authors = [{name = "Jonah Lawrence", email = "jonah@freshidea.com"}]
 readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "Flask==3.1.1",
+    "gunicorn>=20.1.0",
+    "orjson==3.10.18",
+    "python-i18n[yaml]==0.3.9",
+    "Babel==2.17.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "tox",
+    "pytest",
+    "black",
+    "pre-commit",
+    "taskipy",
+    "pyright",
+]
+action = [
+    "feedparser==6.0.11",
+]
 
 [tool.black]
 line-length = 100
