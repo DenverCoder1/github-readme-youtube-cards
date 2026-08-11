@@ -116,7 +116,7 @@ class VideoParser:
             "id": video_id,
             "title": video["title"],
             "lang": self._lang,
-            #"timestamp": int(time.mktime(video["published_parsed"])),
+            "timestamp": int(time.mktime(video["published_parsed"])),
             "background_color": self._background_color,
             "title_color": self._title_color,
             "stats_color": self._stats_color,
