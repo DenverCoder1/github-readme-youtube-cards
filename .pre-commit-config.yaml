@@ -5,7 +5,7 @@ ci:
 
 repos:
   - repo: https://github.com/pycqa/isort
-    rev: 9.0.0a3
+    rev: 9.0.2
     hooks:
       - id: isort
         args: ["--profile", "black"]
@@ -34,7 +34,7 @@ repos:
         name: Check for debug statements.
 
   - repo: https://github.com/PyCQA/autoflake
-    rev: v2.3.3
+    rev: v2.4.0
     hooks:
       - id: autoflake
         name: Remove unused imports with autoflake.
