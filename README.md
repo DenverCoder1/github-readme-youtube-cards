@@ -111,7 +111,7 @@ Check out the [Wiki](https://github.com/DenverCoder1/github-readme-youtube-cards
 | `playlist_id`                 | The playlist ID to use for the feed <sup>📺</sup> | ""                                                      |
 | `lang`                        | The locale for views and timestamps <sup>💬</sup> | "en"                                                    |
 | `comment_tag_name`            | The text in the comment tag for replacing content | "YOUTUBE-CARDS"                                         |
-| `youtube_api_key`             | The API key to use for features marked with 🔑    | ""                                                      |
+| `youtube_api_key`             | The API key to use for features marked with 🔑, also used to fetch the videos when YouTube's RSS feed is unavailable | ""                                                      |
 | `max_videos`                  | The maximum number of videos to display           | 6                                                       |
 | `base_url`                    | The base URL to use for the cards                 | "https://ytcards.demolab.com/"                          |
 | `card_width`                  | The width of the SVG cards in pixels              | 250                                                     |
