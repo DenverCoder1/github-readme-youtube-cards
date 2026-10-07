@@ -105,30 +105,30 @@ Check out the [Wiki](https://github.com/DenverCoder1/github-readme-youtube-cards
 
 ### Inputs
 
-| Option                        | Description                                       | Default                                                 |
-| ----------------------------- | ------------------------------------------------- | ------------------------------------------------------- |
-| `channel_id`                  | The channel ID to use for the feed <sup>📺</sup>  | ""                                                      |
-| `playlist_id`                 | The playlist ID to use for the feed <sup>📺</sup> | ""                                                      |
-| `lang`                        | The locale for views and timestamps <sup>💬</sup> | "en"                                                    |
-| `comment_tag_name`            | The text in the comment tag for replacing content | "YOUTUBE-CARDS"                                         |
+| Option                        | Description                                                                                                          | Default                                                 |
+| ----------------------------- | -------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------- |
+| `channel_id`                  | The channel ID to use for the feed <sup>📺</sup>                                                                     | ""                                                      |
+| `playlist_id`                 | The playlist ID to use for the feed <sup>📺</sup>                                                                    | ""                                                      |
+| `lang`                        | The locale for views and timestamps <sup>💬</sup>                                                                    | "en"                                                    |
+| `comment_tag_name`            | The text in the comment tag for replacing content                                                                    | "YOUTUBE-CARDS"                                         |
 | `youtube_api_key`             | The API key to use for features marked with 🔑, also used to fetch the videos when YouTube's RSS feed is unavailable | ""                                                      |
-| `max_videos`                  | The maximum number of videos to display           | 6                                                       |
-| `base_url`                    | The base URL to use for the cards                 | "https://ytcards.demolab.com/"                          |
-| `card_width`                  | The width of the SVG cards in pixels              | 250                                                     |
-| `border_radius`               | The border radius of the SVG cards                | 5                                                       |
-| `background_color`            | The background color of the SVG cards             | "#0d1117"                                               |
-| `title_color`                 | The color of the title text                       | "#ffffff"                                               |
-| `stats_color`                 | The color of the stats text                       | "#dedede"                                               |
-| `theme_context_light`         | JSON object with light mode colors <sup>🎨</sup>  | "{}"                                                    |
-| `theme_context_dark`          | JSON object with dark mode colors <sup>🎨</sup>   | "{}"                                                    |
-| `max_title_lines`             | The maximum number of lines to use for the title  | 1                                                       |
-| `show_duration` <sup>🔑</sup> | Whether to show the duration of the videos        | "false"                                                 |
-| `author_name`                 | The name of the commit author                     | "GitHub Actions"                                        |
-| `author_email`                | The email address of the commit author            | "41898282+github-actions[bot]@users.noreply.github.com" |
-| `commit_message`              | The commit message to use for the commit          | "docs(readme): Update YouTube cards"                    |
-| `readme_path`                 | The path to the Markdown or HTML file to update   | "README.md"                                             |
-| `output_only`                 | Whether to skip writing to the readme file        | "false"                                                 |
-| `output_type`                 | The output syntax to use ("markdown" or "html")   | "markdown"                                              |
+| `max_videos`                  | The maximum number of videos to display                                                                              | 6                                                       |
+| `base_url`                    | The base URL to use for the cards                                                                                    | "https://ytcards.demolab.com/"                          |
+| `card_width`                  | The width of the SVG cards in pixels                                                                                 | 250                                                     |
+| `border_radius`               | The border radius of the SVG cards                                                                                   | 5                                                       |
+| `background_color`            | The background color of the SVG cards                                                                                | "#0d1117"                                               |
+| `title_color`                 | The color of the title text                                                                                          | "#ffffff"                                               |
+| `stats_color`                 | The color of the stats text                                                                                          | "#dedede"                                               |
+| `theme_context_light`         | JSON object with light mode colors <sup>🎨</sup>                                                                     | "{}"                                                    |
+| `theme_context_dark`          | JSON object with dark mode colors <sup>🎨</sup>                                                                      | "{}"                                                    |
+| `max_title_lines`             | The maximum number of lines to use for the title                                                                     | 1                                                       |
+| `show_duration` <sup>🔑</sup> | Whether to show the duration of the videos                                                                           | "false"                                                 |
+| `author_name`                 | The name of the commit author                                                                                        | "GitHub Actions"                                        |
+| `author_email`                | The email address of the commit author                                                                               | "41898282+github-actions[bot]@users.noreply.github.com" |
+| `commit_message`              | The commit message to use for the commit                                                                             | "docs(readme): Update YouTube cards"                    |
+| `readme_path`                 | The path to the Markdown or HTML file to update                                                                      | "README.md"                                             |
+| `output_only`                 | Whether to skip writing to the readme file                                                                           | "false"                                                 |
+| `output_type`                 | The output syntax to use ("markdown" or "html")                                                                      | "markdown"                                              |
 
 <sup>📺</sup> A Channel ID or Playlist ID is required. See [How to Locate Your Channel ID](https://github.com/DenverCoder1/github-readme-youtube-cards/wiki/How-to-Locate-Your-Channel-ID) in the wiki for more information. To filter videos by type such as removing shorts or showing only popular videos, see [How to Filter Videos by Type](https://github.com/DenverCoder1/github-readme-youtube-cards/wiki/How-to-Filter-Videos-by-Type).
 
