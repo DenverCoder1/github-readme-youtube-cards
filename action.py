@@ -4,7 +4,7 @@ import time
 import urllib.parse
 import urllib.request
 from argparse import ArgumentParser
-from typing import Any, Dict, Optional
+from typing import Any, Dict, List, Optional
 
 import feedparser
 
@@ -109,6 +109,37 @@ class VideoParser:
             data = json.loads(response.read())
         return {video["id"]: video for video in data["items"]}
 
+    def get_playlist_videos(self, playlist_id: str) -> List[Dict[str, Any]]:
+        """Fetch the latest videos of a playlist from the youtube API, in the same shape as feed entries"""
+        params = {
+            "part": "snippet,contentDetails",
+            "playlistId": playlist_id,
+            "maxResults": 50,
+            "key": self._youtube_api_key,
+        }
+        url = f"https://youtube.googleapis.com/youtube/v3/playlistItems?{urllib.parse.urlencode(params)}"
+        req = urllib.request.Request(url)
+        req.add_header("Accept", "application/json")
+        req.add_header("User-Agent", "GitHub Readme YouTube Cards GitHub Action")
+        with urllib.request.urlopen(req) as response:
+            data = json.loads(response.read())
+        videos = []
+        for item in data["items"]:
+            published = item["contentDetails"].get("videoPublishedAt")
+            # private and deleted videos stay in playlists without a publish date
+            if not published:
+                continue
+            video_id = item["contentDetails"]["videoId"]
+            videos.append(
+                {
+                    "yt_videoid": video_id,
+                    "title": item["snippet"]["title"],
+                    "link": f"https://www.youtube.com/watch?v={video_id}",
+                    "published_parsed": time.strptime(published, "%Y-%m-%dT%H:%M:%SZ"),
+                }
+            )
+        return videos
+
     def parse_video(self, video: Dict[str, Any]) -> str:
         """Parse video entry and return the contents for the readme"""
         video_id = video["yt_videoid"]
@@ -167,6 +198,16 @@ class VideoParser:
             raise RuntimeError("Either `channel_id` or `playlist_id` must be provided")
         feed = feedparser.parse(url)
         videos = feed["entries"][: self._max_videos]
+        feed_failed = feed.get("status", 200) >= 400 or (not videos and feed.get("bozo"))
+        if feed_failed and self._youtube_api_key:
+            # The RSS feed can return 404 for every channel; read the same playlist through the API
+            playlist_id = self._playlist_id or f"UU{self._channel_id[2:]}"
+            videos = self.get_playlist_videos(playlist_id)[: self._max_videos]
+        elif feed_failed:
+            raise RuntimeError(
+                f"Could not read the YouTube feed {url} (HTTP {feed.get('status', 'error')}). "
+                "Set `youtube_api_key` to fetch videos through the YouTube Data API instead."
+            )
         self._youtube_data = self.get_youtube_data(*videos)
         return "\n".join(map(self.parse_video, videos))
 
