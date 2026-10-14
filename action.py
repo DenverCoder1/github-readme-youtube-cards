@@ -201,8 +201,11 @@ class VideoParser:
         feed_failed = feed.get("status", 200) >= 400 or (not videos and feed.get("bozo"))
         if feed_failed and self._youtube_api_key:
             # The RSS feed can return 404 for every channel; read the same playlist through the API
-            playlist_id = self._playlist_id or f"UU{self._channel_id[2:]}"
-            videos = self.get_playlist_videos(playlist_id)[: self._max_videos]
+            playlist_id = self._playlist_id or (
+                f"UU{self._channel_id[2:]}" if self._channel_id else None
+            )
+            if playlist_id:
+                videos = self.get_playlist_videos(playlist_id)[: self._max_videos]
         elif feed_failed:
             raise RuntimeError(
                 f"Could not read the YouTube feed {url} (HTTP {feed.get('status', 'error')}). "
