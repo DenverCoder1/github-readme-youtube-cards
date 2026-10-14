@@ -1,4 +1,5 @@
 import codecs
+import re
 import textwrap
 import unicodedata as ud
 from datetime import datetime, timedelta
@@ -6,7 +7,6 @@ from typing import Optional
 from urllib.request import Request, urlopen
 
 import i18n
-import orjson
 from babel.dates import format_timedelta
 from babel.numbers import format_compact_decimal
 
@@ -95,13 +95,14 @@ def format_views_value(value: str, lang: str = "en") -> str:
 def fetch_views(video_id: str, lang: str = "en") -> str:
     """Get number of views for a YouTube video as a formatted metric"""
     try:
-        req = Request(f"https://img.shields.io/youtube/views/{video_id}.json")
+        req = Request(f"https://www.youtube.com/watch?v={video_id}")
         req.add_header("User-Agent", "GitHub Readme YouTube Cards")
         with urlopen(req) as response:
-            value = orjson.loads(response.read()).get("value", "")
-            return format_views_value(value, lang)
+            html = response.read().decode("utf-8", "replace")
+            match = re.search(r'"viewCount"\s*:\s*"(\d+)"', html)
     except Exception:
         return ""
+    return format_views_value(match.group(1), lang) if match else ""
 
 
 def seconds_to_duration(seconds: int) -> str:

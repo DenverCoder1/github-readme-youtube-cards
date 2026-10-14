@@ -1,5 +1,7 @@
 import re
 from datetime import datetime
+from io import BytesIO
+from unittest.mock import patch
 
 from api.utils import (
     data_uri_from_file,
@@ -16,7 +18,16 @@ from api.utils import (
 
 def test_fetch_views():
     metric_regex = re.compile(r"^\d+(?:\.\d)?[KMBT]? views$")
-    assert metric_regex.match(fetch_views("dQw4w9WgXcQ"))
+    response = BytesIO(b'"videoDetails":{"viewCount":"1826563435"}')
+    with patch("api.utils.urlopen", return_value=response):
+        views = fetch_views("dQw4w9WgXcQ")
+    assert metric_regex.match(views)
+
+
+def test_fetch_views_returns_empty_when_view_count_is_missing():
+    response = BytesIO(b'"videoDetails":{"title":"Video without a count"}')
+    with patch("api.utils.urlopen", return_value=response):
+        assert fetch_views("dQw4w9WgXcQ") == ""
 
 
 def test_format_views_value():
