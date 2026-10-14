@@ -16,7 +16,7 @@ def create_video_parser(**kwargs):
         background_color=kwargs.get("background_color", "#0d1117"),
         title_color=kwargs.get("title_color", "#ffffff"),
         stats_color=kwargs.get("stats_color", "#dedede"),
-        youtube_api_key=kwargs.get("youtube_api_key", ""),
+        youtube_api_key=kwargs.get("youtube_api_key", os.environ.get("YOUTUBE_API_KEY", "")),
         theme_context_light=kwargs.get("theme_context_light", {}),
         theme_context_dark=kwargs.get("theme_context_dark", {}),
         max_title_lines=kwargs.get("max_title_lines", 1),
