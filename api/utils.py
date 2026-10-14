@@ -95,9 +95,7 @@ def format_views_value(value: str, lang: str = "en") -> str:
 def fetch_views(video_id: str, lang: str = "en") -> str:
     """Get number of views for a YouTube video as a formatted metric"""
     try:
-        req = Request(
-            f"https://returnyoutubedislikeapi.com/votes?videoId={video_id}"
-        )
+        req = Request(f"https://returnyoutubedislikeapi.com/votes?videoId={video_id}")
         req.add_header("User-Agent", "GitHub Readme YouTube Cards")
         with urlopen(req) as response:
             data = json.loads(response.read())
