@@ -1,5 +1,5 @@
 import codecs
-import re
+import json
 import textwrap
 import unicodedata as ud
 from datetime import datetime, timedelta
@@ -95,14 +95,18 @@ def format_views_value(value: str, lang: str = "en") -> str:
 def fetch_views(video_id: str, lang: str = "en") -> str:
     """Get number of views for a YouTube video as a formatted metric"""
     try:
-        req = Request(f"https://www.youtube.com/watch?v={video_id}")
+        req = Request(
+            f"https://returnyoutubedislikeapi.com/votes?videoId={video_id}"
+        )
         req.add_header("User-Agent", "GitHub Readme YouTube Cards")
         with urlopen(req) as response:
-            html = response.read().decode("utf-8", "replace")
-            match = re.search(r'"viewCount"\s*:\s*"(\d+)"', html)
+            data = json.loads(response.read())
+            value = data.get("viewCount")
+            if value is None:
+                return ""
+            return format_views_value(str(value), lang)
     except Exception:
         return ""
-    return format_views_value(match.group(1), lang) if match else ""
 
 
 def seconds_to_duration(seconds: int) -> str:

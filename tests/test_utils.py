@@ -18,14 +18,17 @@ from api.utils import (
 
 def test_fetch_views():
     metric_regex = re.compile(r"^\d+(?:\.\d)?[KMBT]? views$")
-    response = BytesIO(b'"videoDetails":{"viewCount":"1826563435"}')
-    with patch("api.utils.urlopen", return_value=response):
+    response = BytesIO(b'{"id":"XfELJU1mRMg","viewCount":92397}')
+    with patch("api.utils.urlopen", return_value=response) as mock_urlopen:
         views = fetch_views("dQw4w9WgXcQ")
+    assert mock_urlopen.call_args.args[0].full_url == (
+        "https://returnyoutubedislikeapi.com/votes?videoId=dQw4w9WgXcQ"
+    )
     assert metric_regex.match(views)
 
 
 def test_fetch_views_returns_empty_when_view_count_is_missing():
-    response = BytesIO(b'"videoDetails":{"title":"Video without a count"}')
+    response = BytesIO(b'{"id":"dQw4w9WgXcQ","likes":100}')
     with patch("api.utils.urlopen", return_value=response):
         assert fetch_views("dQw4w9WgXcQ") == ""
 
