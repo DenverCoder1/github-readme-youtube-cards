@@ -223,14 +223,14 @@ class FileUpdater:
         """Replace the text between the begin and end tags with the replace content"""
         begin_tag = f"<!-- BEGIN {comment_tag} -->"
         end_tag = f"<!-- END {comment_tag} -->"
-        with open(readme_path, "r") as readme_file:
+        with open(readme_path, "r", encoding="utf-8") as readme_file:
             readme = readme_file.read()
         begin_index = readme.find(begin_tag)
         end_index = readme.find(end_tag)
         if begin_index == -1 or end_index == -1:
             raise RuntimeError(f"Could not find tags {begin_tag} and {end_tag} in {readme_path}")
         readme = f"{readme[:begin_index + len(begin_tag)]}\n{replace_content}\n{readme[end_index:]}"
-        with open(readme_path, "w") as readme_file:
+        with open(readme_path, "w", encoding="utf-8") as readme_file:
             readme_file.write(readme)
 
 
