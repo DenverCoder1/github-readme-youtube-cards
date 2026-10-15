@@ -1,5 +1,6 @@
 import os
 import re
+from functools import partial
 
 from action import FileUpdater, VideoParser
 
@@ -164,3 +165,16 @@ def test_update_file():
     finally:
         # remove the file
         os.remove(path)
+
+
+def test_update_file_utf8(tmp_path, monkeypatch):
+    path = tmp_path / "README.md"
+    before = "Before \U0001f490\n<!-- BEGIN YOUTUBE-CARDS -->\n"
+    after = "\n<!-- END YOUTUBE-CARDS -->\nAfter \u4e16\u754c\n"
+    path.write_text(before + "Old content" + after, encoding="utf-8")
+    monkeypatch.setattr("action.open", partial(open, encoding="cp1252"), raising=False)
+
+    replacement = "Video \U0001f3a5 \u65e5\u672c\u8a9e"
+    FileUpdater.update(str(path), "YOUTUBE-CARDS", replacement)
+
+    assert path.read_text(encoding="utf-8") == before + replacement + after
